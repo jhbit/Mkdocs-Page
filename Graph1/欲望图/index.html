@@ -1,0 +1,848 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../Graph1/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>欲望图 - MMY's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MMY&#39;s Notebook" class="md-header__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MMY's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              欲望图
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MMY&#39;s Notebook" class="md-nav__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MMY's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Graph
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      “人的欲望是他者的欲望”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      欲望图式一
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="欲望图式一">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      能指主体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      图解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      详解
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      欲望图式二
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="欲望图式二">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      上半部分：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      下半部分：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Graph1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Graph2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NEMU PA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            NEMU PA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA/PA1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PA1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      “人的欲望是他者的欲望”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      欲望图式一
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="欲望图式一">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      能指主体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      图解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      详解
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      欲望图式二
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="欲望图式二">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      上半部分：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      下半部分：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>欲望图</h1>
+
+<p>大他者：A，特指 Other。大他者就是符号秩序，是一个能指库。
+小他者：a
+他者：一般他者，可以是人可以是物</p>
+<h2 id="_1"><strong><em>“人的欲望是他者的欲望”</em></strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>四要素：主体、他者、主体的欲望、他者的欲望</p>
+<p>这句话的解读：</p>
+<p>1.主观的维度：
+对于主体而言，他者的欲望是一个谜，但是这并不意味着主体无法想象。
+<mark>我欲望着他者欲望我</mark>
+欲望的返回（开头和结尾都是“我”），我与他者必须相遇，相遇才有欲望，才有我。
+划杠的主体的杠就是欲望，欲望是大他者在我们身上留下的印记。欲望是有意识和无意识分裂的证明。（你知道要减肥（意识），但是你想吃东西（欲望））</p>
+<p>2.客观的维度：（欲望一定与大他者有关，他者的存在是客观的，欲望是客观的）
+他者的欲望=他者。
+==我欲望着他者</p>
+<p>总结1和2
+和他者相遇 vs 可以和他者不相遇
+我欲望着他者欲望我（我欲望着他者认可我），这句话可以体现在图二的终点<strong><em>I(A)</em></strong> 自我理想。它代表了对他者凝视的辨别/识别。从他者身上我认识到我。</p>
+<p>3.拉康的立场，来自客观的维度
+<mark>我欲望着（我假设）他者所欲望的</mark>
+他者的欲望是二手的，不存在原初的欲望</p>
+<p>他想要什么
+你想要什么
+我们在询问他想要什么，我们永远都无法得知，为了探究他想要什么，问题就转译成了他问我，你想要什么。（转向）
+研讨班六：问孩子：你想要什么 孩子：我能给这个人什么来满足他想要知道我要什么的欲望</p>
+<p>4.不区分主客观
+<mark>我欲望着他者的享乐</mark>
+欲望被归为了实在之物、自在之物。
+欲望不再停留在符号和想象的维度，而变成了</p>
+<p>拎得清别人的欲望就知道了自己的欲望
+学生欲望老师的表扬，其实是欲望着教育体系的认同，而拎不清的会归结于自己的个人魅力和能力强。拎得清的老师会意识到</p>
+<h2 id="_2"><strong><em>欲望图式<a href="https://www.bilibili.com/video/BV1t7421d7hA?spm_id_from=333.788.videopod.sections&amp;vd_source=bca40517a4e6c2b830f187ab070fb9a1">一</a></em></strong><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>图一是欲望图式的基本结构/基础细胞。
+这幅图用来显示==欲望与(能指意义上的)主体的关系==。
+<img alt="image.png" src="https://raw.githubusercontent.com/jhbit/image-bed/main/Obsidian_image/20250709204717711.png" /></p>
+<h6 id="_3">能指主体<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h6>
+<p>当我们讨论主体，我们是在<strong>能指的层面</strong>定位主体。
+定位主体的能指是哪个能指？是一元特征。
+研讨班一：一元特征unary trait (也就是S1，主人能指，它空无一物) 是无意识主体出现的必要条件。
+S1继承自弗洛伊德的自我理想。</p>
+<h6 id="_4">图解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h6>
+<p>1.向量S到S‘，能指链，表示符号化symbolization
+2.向量△到$(划杠的主体)，表示主体化
+3.向量相交</p>
+<h6 id="_5">详解<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h6>
+<p>1.△：动物的一生，活着的轨迹，出于本能的need
+从△到$的过程：
+海德格尔的解释：从<strong><em>存在者</em></strong>变成<strong><em>此在</em></strong>
+拉康的解释：主体化，主体遭遇了两次语言，变成了能指的主体。动物的need转化为了欲望desire。</p>
+<p>2.箭头的方向：
+S到S‘：能指链的方向，表示历时
+△到$：鱼钩，表示返回，返回意味着好像没有出去过</p>
+<p>3.逆向交叉，先交叉右边的点，再交叉左边的点。交叉产生意义。语言的意义是通过起始的点(右边的点)回溯性地起作用的。
+按照时间的维度，一句话只有在说完之后才有意义。所以是右边的点。
+△不产生意义，只有被语言俘获才产生意义。</p>
+<p>图一的重点是<strong>整体</strong>。对于生物，细胞是基本功能单位，对于主体，是在能指的层面(也就是基础的功能单位)讨论主体。</p>
+<h2 id="_6"><strong><em>欲望图式<a href="https://www.bilibili.com/video/BV1dS421d7D3?spm_id_from=333.788.videopod.sections&amp;vd_source=bca40517a4e6c2b830f187ab070fb9a1">二</a></em></strong><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p><img alt="image.png" src="https://raw.githubusercontent.com/jhbit/image-bed/main/Obsidian_image/20250709220843245.png" /></p>
+<h3 id="_7">上半部分：<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>A:(the Other)
+ 符号秩序，是能指宝库，是一个地点</p>
+<p><code>A as the "treasure trove of signifiers":language in its disconnected, uncoordinated status, the locus where signifiers exist outside signification and yet, by simply being there, function as a break with the real.</code></p>
+<p>s(A):signification/meaning 意指、意义</p>
+<p>A和s(A)的关系：“词不达意”，二者在图中是循环的结构</p>
+<p><mark>通路：</mark></p>
+<p>逻辑时间的第一次相遇：$向上遭遇到了A(只有被能指拦截，才能和实在拦截，意义和真理才成为可能)，A此时是一个地点(locus,place)</p>
+<p>逻辑时间的第二次相遇：$和s(A)相遇。s(A)是一个转折/时刻。第二次相遇回溯性地通过起始点起作用。</p>
+<p>在逻辑时间上，A成为了s(A)。
+$第一次遭遇语言的时候，是完全的困惑，和语言第二次遭遇的时候，A才有了意义，被回溯性地建构起来。</p>
+<p><mark>重点：循环</mark>
+s(A)到A：意义诞生，被投射给了A，代表意义的诞生，语言弥合了能指
+A到s(A)：主体抹去了回溯的痕迹，主体错误地认为
+人之所以能够体验到线性时间，是因为A和s(A)的密封效果。</p>
+<p>A和s(A)的循环就是S1：主人话语是无意识话语</p>
+<p>拉康的主张：意义(也就是s(A))不产生于语言和现实的关联，意义产生于语言本身，产生于能指本身的表达。</p>
+<p>主体被抛入世界，遭遇了语言A，第二次遭遇的时候回溯性地建构出了意义s(A)，又误认意义是随着线性时间生成的（因为一句话只有在线性时间结束后才具有意义）</p>
+<p>第一次遭遇语言之后，就会不停阐释它的意思</p>
+<h3 id="_8">下半部分：<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>图一是从need意义上的存在者到desire意义上的存在。</p>
+<p>从欲望图一中的鱼钩向量变成了从$到I(A)自我理想的通路。</p>
+<p><code>'is aretroactive effect by which the subject, at each stage, becomes what he was (to be) [était] before that, and 'he will have been' is only announced in the future perfect tense" (684, 6).</code></p>
+<p>自我理想：我从他者的角度看我自己。</p>
+<p>鱼钩意味着追溯。图二意味着通过追溯效果，主体到达了它的自我理想。</p>
+<p><code>"Here arises the ambiguity of a misrecognizing that is essential to knowing myself [un méconnaitre essentiel au me connaitre]" (684, 7). Effectively, the graph tells us that the split subject ($) looks back and all he can be sure of "is the anticipated image which he had caught of himself in his mirror in coming to meet him" (684, 7).</code></p>
+<p>当主体来到了自我理想，它才能想象出/回溯建构出一个所谓的“本真的我 i(a)”，但也只是一瞥而已。分裂的主体回头看对时候，只能看到一个预期的图像 i(a)（与镜像阶段的自我相遇）。</p>
+<p>图二只能回到想象的理想自我。</p>
+<p><mark>重点：想象</mark>
+想象支持了语言在主体化过程中所起的作用。</p>
+<p>1930-1940，想象界是拉康的中心。
+1950-1960，为了缝自己的理论，把想象界编排到符号界之后。</p>
+<p>拉康的理论本身的开篇是能指主体（图一），拉康的事业的理论开篇是镜像阶段。</p>
+<p>想象在自我(m)的形成中起到重要的作用，想象是由符号所决定的（因为方的圆在符号世界不存在，所以也无法想象一个方的圆）。</p>
+<p><mark>镜像阶段：第二幅图下半部分</mark></p>
+<p>i(a)：理想自我</p>
+<p><code>ideal ego as imaginary projection of the ego, which brings comfort by anticipating a sense of selfness, at the same time this unity is perceived as detached</code></p>
+<p>拉康的断言：理想自我一定承载着无法消除的错误认知</p>
+<p>i(a)永远都回不到$ ，一切的想象都是基于理想自我，i(a)事实上是替代了$</p>
+<p>灵修、冥想、催眠预设了一个本真的我，但拉康看来，这个理想自我一定承载着错误的认知，i(a)一定会不可避免地导致自恋。</p>
+<p><code>"what the subject finds in this altered image of his body is the paradigm of all the forms of resemblance that will cast a shade of hostility onto the world of a objects, by projecting onto them the avatar of his narcissistic image, which, from the jubilation derived from encountering it in the mirror, becomes - in confronting his semblables the outlet for his most intimate aggressiveness." (685, 2)</code></p>
+<p>ego/moi 自我</p>
+<p><code>a function of mastery, a game of bearing, and constituted rivalry" (685,3)</code></p>
+<p>从i(a)到m的路径是<strong>想象的向量</strong>，双重地铭刻在自我形成的辩证法中。</p>
+<p>如何双重？
+1.从$到I(A)的短路（短路确保了主体的存在，在不遭遇他者的情况下仍然可以保全自我）
+2.从A到s(A)的返回路线
+<mark>我既有一个话语中的位置（A到s(A)）,也有一个想象中的位置($到I(A)的短路)</mark></p>
+<p>从m到I(A)：
+1.从s(A)下来</p>
+<p>2.通过i(a)到m的短路过来(从小天使&lt;让父母快乐&gt;到圣母&lt;要让不快乐的男人快乐&gt;)</p>
+<p>想象的是以符号的作为基础的例证：小短路也需要大他者去支持。（当小孩子做了很简单的一件事，父母就对小孩灌输以很多的夸奖。此时的父母还可以满足孩子，他们保留了象征性的权威A。后续在短路的时候，曾经的父母的象征性的权威A作为支撑）</p>
+<p>定义主语的动词是将来完成(每个人实际上是“本来就是”，在我了解我之前，我所谓的那个真正的我和别人眼里的关于我的信息是密切相关的)</p>
+<p>总结：逻辑时间（共时性，一切都是已经有了，只是回溯性的建构出一个时间上的发生学）</p>
+<p>先有了理想自我，再回溯性地构建缺失。
+而不是因为意识到缺失了，才有自我理想。
+理想自我是为了弥补主体在接触语言时经历的缺失。身体是不会被语言覆盖的，想象提供一个自身统一的形象。
+i(a)和$的差异体现了自我分析的不可能。</p>
+<p><code>For in the imaginary register, the subject structurally fails to recognizethe transcendence of its origin; it fails to recognize that it borrows its identity from the Other. It believes, rather, that it is master of it itself, and it is blind to its alienation in the symbolic.'</code></p>
+<p>分析师不开摄像头：开摄像头会让来访集中于自我的镜像认同（理想自我），阻碍自由联想，阻碍$的言说。某种意义上，不需要分析的设置，也可以说自恋的话。开摄像头也会阻碍到分析师。标准设置是躺椅，分析师对着天花板说话。分析师的工作立足于符号和话语，而不是想象。</p>
+<p>拉康/精神分析和心理学对于移情的理解和应用是完全不同的。精神分析不移情，是转移。无意识的转喻。</p>
+<p>图二对分析工作的实践：（图二本身是分析师用的）</p>
+<p>强迫症：沉浸在全能幻想中，在理想自我和自我理想中打转。断路作为对创伤的防御，是一种后撤。但是它无法持久，会带来焦虑。拒绝他者，意味着失去他者。</p>
+<p>图二是俄狄浦斯阶段之前的镜像阶段。
+图三主体决定自己是男是女
+图四主体是一个社会人，有了稳定的框架</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
