@@ -1,0 +1,1122 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%C2%B7%20GitBook/">
+      
+      
+        <link rel="next" href="../../../about/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>表达式求值 · GitBook - MMY's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-header__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MMY's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              表达式求值 · GitBook
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-nav__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MMY's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Graph
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/%E6%AC%B2%E6%9C%9B%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NEMU PA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            NEMU PA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            PA1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9C%A8%E5%BC%80%E5%A7%8B%E6%84%89%E5%BF%AB%E7%9A%84%20PA%20%E4%B9%8B%E6%97%85%E4%B9%8B%E5%89%8D%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开始之前
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%BC%80%E5%A4%A9%E8%BE%9F%E5%9C%B0%E7%9A%84%E7%AF%87%E7%AB%A0%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开天辟地
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.RTFSC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码架构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    求值
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    求值
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      表达式求值
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表达式求值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      数学表达式求值
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数学表达式求值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      词法分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      递归求值
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何测试你的代码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      表达式求值
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="表达式求值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      数学表达式求值
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数学表达式求值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      词法分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      递归求值
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何测试你的代码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>求值</h1>
+
+<h2 id="_1">表达式求值<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>在 TRM 中, 寄存器 (包括 PC) 和内存中的值唯一地确定了计算机的一个状态. 因此从道理上来讲, 打印寄存器和扫描内存这两个功能一定可以帮助我们调试出所有的问题. 但为了方便使用, 我们还希望简易调试器能帮我们计算一些带有寄存器和内存的表达式. 所以你需要在简易调试器中添加表达式求值的功能. 为了简单起见, 我们先来考虑数学表达式的求值实现.</p>
+<h3 id="_2">数学表达式求值<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>给你一个表达式的字符串</p>
+<div class="highlight"><pre><span></span><code>&quot;5 + 4 * 3 / 2 - 1&quot;
+</code></pre></div>
+<p>你如何求出它的值? 表达式求值是一个很经典的问题, 以至于有很多方法来解决它. 我们在所需知识和难度两方面做了权衡, 在这里使用如下方法来解决表达式求值的问题:</p>
+<ol>
+<li>首先识别出表达式中的单元</li>
+<li>根据表达式的归纳定义进行递归求值</li>
+</ol>
+<h4 id="_3">词法分析<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>"词法分析" 这个词看上去很高端, 说白了就是做上面的第 1 件事情, "识别出表达式中的单元". 这里的 "单元" 是指有独立含义的子串, 它们正式的称呼叫 token. 具体地说, 我们需要在上述表达式中识别出<code>5</code>, <code>+</code>, <code>4</code>, <code>*</code>, <code>3</code>, <code>/</code>, <code>2</code>, <code>-</code>, <code>1</code>这些 token. 你可能会觉得这是一件很简单的事情, 但考虑以下的表达式:</p>
+<div class="highlight"><pre><span></span><code>&quot;0x80100000+   ($a0 +5)*4 - *(  $t1 + 8) + number&quot;
+</code></pre></div>
+<p>它包含更多的功能, 例如十六进制整数 (<code>0x80100000</code>), 小括号, 访问寄存器 (<code>$a0</code>), 指针解引用 (第二个<code>*</code>), 访问变量 (<code>number</code>). 事实上, 这种复杂的表达式在调试过程中经常用到, 而且你需要在空格数目不固定 (0 个或多个) 的情况下仍然能正确识别出其中的 token. 当然你仍然可以手动进行处理(如果你喜欢挑战性的工作的话), 一种更方便快捷的做法是使用正则表达式. 正则表达式可以很方便地匹配出一些复杂的 pattern, 是程序员必须掌握的内容. 如果你从来没有接触过正则表达式, 请查阅相关资料. 在实验中, 你只需要了解正则表达式的一些基本知识就可以了(例如元字符).</p>
+<p>学会使用简单的正则表达式之后, 你就可以开始考虑如何利用正则表达式来识别出 token 了. 我们先来处理一种简单的情况 -- 算术表达式, 即待求值表达式中只允许出现以下的 token 类型:</p>
+<ul>
+<li>十进制整数</li>
+<li><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code></li>
+<li><code>(</code>, <code>)</code></li>
+<li>空格串 (一个或多个空格)</li>
+</ul>
+<p>首先我们需要使用正则表达式分别编写用于识别这些 token 类型的规则. 在框架代码中, 一条规则是由正则表达式和 token 类型组成的二元组. 框架代码中已经给出了<code>+</code>和空格串的规则, 其中空格串的 token 类型是<code>TK_NOTYPE</code>, 因为空格串并不参加求值过程, 识别出来之后就可以将它们丢弃了; <code>+</code>的 token 类型是<code>'+'</code>. 事实上 token 类型只是一个整数, 只要保证不同的类型的 token 被编码成不同的整数就可以了. 框架代码中还有一条用于识别双等号的规则, 不过我们现在可以暂时忽略它.</p>
+<p>这些规则会在简易调试器初始化的时候通过<code>init_regex()</code>被编译成一些用于进行 pattern 匹配的内部信息, 这些内部信息是被库函数使用的, 而且它们会被反复使用, 但你不必关心它们如何组织. 但如果正则表达式的编译不通过, NEMU 将会触发 assertion fail, 此时你需要检查编写的规则是否符合正则表达式的语法.</p>
+<p>给出一个待求值表达式, 我们首先要识别出其中的 token, 进行这项工作的是<code>make_token()</code>函数. <code>make_token()</code>函数的工作方式十分直接, 它用<code>position</code>变量来指示当前处理到的位置, 并且按顺序尝试用不同的规则来匹配当前位置的字符串. 当一条规则匹配成功, 并且匹配出的子串正好是<code>position</code>所在位置的时候, 我们就成功地识别出一个 token, <code>Log()</code>宏会输出识别成功的信息. 你需要做的是将识别出的 token 信息记录下来 (一个例外是空格串), 我们使用<code>Token</code>结构体来记录 token 的信息:</p>
+<div class="highlight"><pre><span></span><code>typedef struct token {
+  int type;
+  char str[32];
+} Token;
+</code></pre></div>
+<p>其中<code>type</code>成员用于记录 token 的类型. 大部分 token 只要记录类型就可以了, 例如<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, 但这对于有些 token 类型是不够的: 如果我们只记录了一个十进制整数 token 的类型, 在进行求值的时候我们还是不知道这个十进制整数是多少. 这时我们应该将 token 相应的子串也记录下来, <code>str</code>成员就是用来做这件事情的. <mark><strong>需要注意的是, <code>str</code>成员的长度是有限的</strong></mark>, 当你发现缓冲区将要溢出的时候, 要进行相应的处理 (思考一下, 你会如何进行处理?), 否则将会造成难以理解的 bug. <code>tokens</code>数组用于按顺序存放已经被识别出的 token 信息, <code>nr_token</code>指示已经被识别出的 token 数目.</p>
+<p>如果尝试了所有的规则都无法在当前位置识别出 token, 识别将会失败, 框架代码会输出当前 token 的位置 (当表达式过长导致在终端里输出需要换行时, <code>^</code>可能无法指示正确的位置, 此时建议通过输出的<code>position</code>值来定位 token 的位置). 这通常是待求值表达式并不合法造成的, <code>make_token()</code>函数将返回<code>false</code>, 表示词法分析失败.</p>
+<div class="admonition warning">
+<p class="admonition-title">实现算术表达式的词法分析</p>
+<p>你需要完成以下的内容:</p>
+<ul>
+<li>为算术表达式中的各种 token 类型添加规则, 你需要注意 C 语言字符串中转义字符的存在和正则表达式中元字符的功能.</li>
+<li>在成功识别出 token 后, 将 token 的信息依次记录到<code>tokens</code>数组中.</li>
+</ul>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">调试公理</p>
+<ul>
+<li>The machine is always right. (机器永远是对的)</li>
+<li>Corollary: If the program does not produce the desired output, it is the programmer's fault.</li>
+<li>Every line of untested code is always wrong. (未测试代码永远是错的)</li>
+<li>Corollary: Mistakes are likely to appear in the "must-be-correct" code.</li>
+</ul>
+<p>这两条公理的意思是: 抱怨是没有用的, 接受代码有 bug 的现实, 耐心调试.</p>
+<p>jyy 曾经将它们作为 fact 提出. 事实上无数程序员 (包括你的学长学姐) 在实践当中一次又一次验证了它们的正确性, 因此它们在这里作为公理出现.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">如何调试</p>
+<ul>
+<li>不要使用 "目光调试法", 要思考如何用正确的工具和方法帮助调试</li>
+<li>程序设计课上盯着几十行的程序, 你或许还能在大脑中像 NEMU 那样模拟程序的执行过程; 但程序规模大了之后, 很快你就会放弃的: 你的大脑不可能模拟得了一个巨大的状态机</li>
+<li>我们学习计算机是为了学习计算机的工作原理, 而不是学习如何像计算机那样机械地工作</li>
+<li>使用<code>assert()</code>设置检查点, 拦截非预期情况</li>
+<li>例如<code>assert(p != NULL)</code>就可以拦截由空指针解引用引起的段错误</li>
+<li>结合对程序执行行为的理解, 使用<code>printf()</code>查看程序执行的情况 (注意字符串要换行)</li>
+<li><code>printf()</code>输出任意信息可以检查代码可达性: 输出了相应信息, 当且仅当相应的代码块被执行</li>
+<li><code>printf()</code>输出变量的值, 可以检查其变化过程与原因</li>
+<li>使用 GDB 观察程序的任意状态和行为</li>
+<li>打印变量, 断点, 监视点, 函数调用栈...</li>
+</ul>
+<p>如果你突然觉得上述方法很有道理, 说明你在程序设计课上没有受到该有的训练.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">为什么 printf() 的输出要换行?</p>
+<p>如果不换行, 可能会发生什么? 你可以在代码中尝试一下, 并思考原因, 然后 STFW 对比你的想法.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">系统设计的黄金法则 -- KISS 法则</p>
+<p>这里的<code>KISS</code>是<code>Keep It Simple, Stupid</code>的缩写, 它的中文翻译是: 不要在一开始追求绝对的完美.</p>
+<p>你已经学习过程序设计基础, 这意味着你已经学会写程序了, 但这并不意味着你可以顺利地完成 PA, 因为在现实世界中, 我们需要的是可以运行的 system, 而不是求阶乘的小程序. NEMU 作为一个麻雀虽小, 五脏俱全的小型系统, 其代码量达到 3000 多行 (不包括空行). 随着 PA 的进行, 代码量会越来越多, 各个模块之间的交互也越来越复杂, 工程的维护变得越来越困难, 一个很弱智的 bug 可能需要调好几天. 在这种情况下, 系统能跑起来才是王道, 跑不起来什么都是浮云, 追求面面俱到只会增加代码维护的难度.</p>
+<p>唯一可以把你从 bug 的混沌中拯救出来的就是 KISS 法则, 它的宗旨是<strong>从易到难, 逐步推进</strong>, 一次只做一件事, 少做无关的事. 如果你不知道这是什么意思, 我们以上文提到的<code>str</code>成员缓冲区溢出问题来作为例子. KISS 法则告诉你, 你应该使用<code>assert(0)</code>, 就算不 "得体" 地处理上述问题, 仍然不会影响表达式求值的核心功能的正确性. 如果你还记得调试公理, 你会发现两者之间是有联系的: 调试公理第二点告诉你, 未测试代码永远是错的. 与其一下子写那么多 "错误" 的代码, 倒不如使用<code>assert(0)</code>来有效帮助你减少这些 "错误".</p>
+<p>如果把 KISS 法则放在软件工程领域来解释, 它强调的就是多做<a href="http://en.wikipedia.org/wiki/Unit_testing">单元测试</a>: 写一个函数, 对它进行测试, 正确之后再写下一个函数, 再对它进行测试... 一种好的测试方式是使用 assertion 进行验证, <code>reg_test()</code>就是这样的例子. 学会使用 assertion, 对程序的测试和调试都百利而无一害.</p>
+<p>KISS 法则不但广泛用在计算机领域, 就连其它很多领域也视其为黄金法则, <a href="http://blog.sciencenet.cn/blog-414166-562616.html">这里</a>有一篇文章举出了很多的例子, 我们强烈建议你阅读它, 体会 KISS 法则的重要性.</p>
+</div>
+<h4 id="_4">递归求值<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>把待求值表达式中的 token 都成功识别出来之后, 接下来我们就可以进行求值了. 需要注意的是, 我们现在是在对 tokens 数组进行处理, 为了方便叙述, 我们称它为 "token 表达式". 例如待求值表达式</p>
+<div class="highlight"><pre><span></span><code>&quot;4 +3*(2- 1)&quot;
+</code></pre></div>
+<p>的 token 表达式为</p>
+<div class="highlight"><pre><span></span><code>+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+| NUM | &#39;+&#39; | NUM | &#39;*&#39; | &#39;(&#39; | NUM | &#39;-&#39; | NUM | &#39;)&#39; |
+| &quot;4&quot; |     | &quot;3&quot; |     |     | &quot;2&quot; |     | &quot;1&quot; |     |
++-----+-----+-----+-----+-----+-----+-----+-----+-----+
+</code></pre></div>
+<p>根据表达式的归纳定义特性, 我们可以很方便地使用递归来进行求值. 首先我们给出算术表达式的归纳定义:</p>
+<div class="highlight"><pre><span></span><code>&lt;expr&gt; ::= &lt;number&gt;    # 一个数是表达式
+  | &quot;(&quot; &lt;expr&gt; &quot;)&quot;     # 在表达式两边加个括号也是表达式
+  | &lt;expr&gt; &quot;+&quot; &lt;expr&gt;  # 两个表达式相加也是表达式
+  | &lt;expr&gt; &quot;-&quot; &lt;expr&gt;  # 接下来你全懂了
+  | &lt;expr&gt; &quot;*&quot; &lt;expr&gt;
+  | &lt;expr&gt; &quot;/&quot; &lt;expr&gt;
+</code></pre></div>
+<p>上面这种表示方法就是大名鼎鼎的 <a href="http://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form">BNF</a>, 任何一本正规的程序设计语言教程都会使用 BNF 来给出这种程序设计语言的语法.</p>
+<p>根据上述 BNF 定义, 一种解决方案已经逐渐成型了: 既然长表达式是由短表达式构成的, 我们就先对短表达式求值, 然后再对长表达式求值. 这种十分自然的解决方案就是<a href="http://en.wikipedia.org/wiki/Divide_and_conquer_algorithms">分治法</a>的应用, 就算你没听过这个高大上的名词, 也不难理解这种思路. 而要实现这种解决方案, 递归是你的不二选择.</p>
+<p>为了在 token 表达式中指示一个子表达式, 我们可以使用两个整数<code>p</code>和<code>q</code>来指示这个子表达式的开始位置和结束位置. 这样我们就可以很容易把求值函数的框架写出来了:</p>
+<div class="highlight"><pre><span></span><code>eval(p, q) {
+  if (p &gt; q) {
+
+  }
+  else if (p == q) {
+
+  }
+  else if (check_parentheses(p, q) == true) {
+
+    return eval(p + 1, q - 1);
+  }
+  else {
+
+  }
+}
+</code></pre></div>
+<p>其中<code>check_parentheses()</code>函数用于判断表达式是否被一对匹配的括号包围着, 同时检查表达式的左右括号是否匹配, 如果不匹配, 这个表达式肯定是不符合语法的, 也就不需要继续进行求值了. 我们举一些例子来说明<code>check_parentheses()</code>函数的功能:</p>
+<div class="highlight"><pre><span></span><code>&quot;(2 - 1)&quot;             // true
+&quot;(4 + 3 * (2 - 1))&quot;   // true
+&quot;4 + 3 * (2 - 1)&quot;     // false, the whole expression is not surrounded by a matched
+                      // pair of parentheses
+&quot;(4 + 3)) * ((2 - 1)&quot; // false, bad expression
+&quot;(4 + 3) * (2 - 1)&quot;   // false, the leftmost &#39;(&#39; and the rightmost &#39;)&#39; are not matched
+</code></pre></div>
+<p>至于怎么检查左右括号是否匹配, 就当作一个程序设计作业, 留给聪明的你来思考吧!</p>
+<p>上面的框架已经考虑了 BNF 中算术表达式的开头两种定义, 接下来我们来考虑剩下的情况 (即上述伪代码中最后一个<code>else</code>中的内容). 一个问题是, 给出一个最左边和最右边不同时是括号的长表达式, 我们要怎么正确地将它分裂成两个子表达式? 我们定义 "主运算符" 为表达式人工求值时, 最后一步进行运行的运算符, 它指示了表达式的类型 (例如当一个表达式的最后一步是减法运算时, 它本质上是一个减法表达式). 要正确地对一个长表达式进行分裂, 就是要找到它的主运算符. 我们继续使用上面的例子来探讨这个问题:</p>
+<div class="highlight"><pre><span></span><code>&quot;4 + 3 * ( 2 - 1 )&quot;
+/*********************/
+case 1:
+    &quot;+&quot;
+   /   \
+&quot;4&quot;     &quot;3 * ( 2 - 1 )&quot;
+
+
+case 2:
+        &quot;*&quot;
+       /   \
+&quot;4 + 3&quot;     &quot;( 2 - 1 )&quot;
+
+
+case 3:
+              &quot;-&quot;
+             /   \
+&quot;4 + 3 * ( 2&quot;     &quot;1 )&quot;
+</code></pre></div>
+<p>上面列出了 3 种可能的分裂, 注意到我们不可能在非运算符的 token 处进行分裂, 否则分裂得到的结果均不是合法的表达式. 根据主运算符的定义, 我们很容易发现, 只有第一种分裂才是正确的. 这其实也符合我们人工求值的过程: 先算<code>4</code>和<code>3 * ( 2 - 1 )</code>, 最后把它们的结果相加. 第二种分裂违反了算术运算的优先级, 它会导致加法比乘法更早进行. 第三种分裂破坏了括号的平衡, 分裂得到的结果均不是合法的表达式.</p>
+<p>通过上面这个简单的例子, 我们就可以总结出如何在一个 token 表达式中寻找主运算符了:</p>
+<ul>
+<li>非运算符的 token 不是主运算符.</li>
+<li>出现在一对括号中的 token 不是主运算符. 注意到这里不会出现有括号包围整个表达式的情况, 因为这种情况已经在<code>check_parentheses()</code>相应的<code>if</code>块中被处理了.</li>
+<li>主运算符的优先级在表达式中是最低的. 这是因为主运算符是最后一步才进行的运算符.</li>
+<li>当有多个运算符的优先级都是最低时, 根据结合性, 最后被结合的运算符才是主运算符. 一个例子是<code>1 + 2 + 3</code>, 它的主运算符应该是右边的<code>+</code>.</li>
+</ul>
+<p>要找出主运算符, 只需要将 token 表达式全部扫描一遍, 就可以按照上述方法唯一确定主运算符.</p>
+<p>找到了正确的主运算符之后, 事情就变得很简单了: 先对分裂出来的两个子表达式进行递归求值, 然后再根据主运算符的类型对两个子表达式的值进行运算即可. 于是完整的求值函数如下:</p>
+<div class="highlight"><pre><span></span><code>eval(p, q) {
+  if (p &gt; q) {
+
+  }
+  else if (p == q) {
+
+  }
+  else if (check_parentheses(p, q) == true) {
+
+    return eval(p + 1, q - 1);
+  }
+  else {
+    op = the position of 主运算符 in the token expression;
+    val1 = eval(p, op - 1);
+    val2 = eval(op + 1, q);
+
+    switch (op_type) {
+      case &#39;+&#39;: return val1 + val2;
+      case &#39;-&#39;: 
+      case &#39;*&#39;: 
+      case &#39;/&#39;: 
+      default: assert(0);
+    }
+  }
+}
+</code></pre></div>
+<p>需要注意的是, 上述框架中并没有进行错误处理, 在求值过程中发现表达式不合法的时候, 应该给上层函数返回一个表示出错的标识, 告诉上层函数 "求值的结果是无效的". 例如在<code>check_parentheses()</code>函数中, <code>(4 + 3)) * ((2 - 1)</code>和<code>(4 + 3) * (2 - 1)</code>这两个表达式虽然都返回<code>false</code>, 因为前一种情况是表达式不合法, 是没有办法成功进行求值的; 而后一种情况是一个合法的表达式, 是可以成功求值的, 只不过它的形式不属于 BNF 中的<code>"(" &lt;expr&gt; ")"</code>, 需要使用主运算符的方式进行处理, 因此你还需要想办法把它们区别开来. 当然, 你也可以在发现非法表达式的时候使用<code>assert(0)</code>终止程序. 不过这样的话, 你在使用表达式求值功能的时候就要十分谨慎了.</p>
+<p>最后, 为了方便统一, 我们认为所有结果都是<code>uint32_t</code>类型.</p>
+<div class="admonition warning">
+<p class="admonition-title">实现算术表达式的递归求值</p>
+<p>由于 ICS 不是算法课, 我们已经把递归求值的思路和框架都列出来了. 你需要做的是理解这一思路, 然后在框架中填充相应的内容. 实现表达式求值的功能之后, <code>p</code>命令也就不难实现了.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">实现带有负数的算术表达式的求值 (选做)</p>
+<p>在上述实现中, 我们并没有考虑负数的问题, 例如</p>
+</div>
+<div class="highlight"><pre><span></span><code>    &quot;1 + -1&quot;
+    &quot;--1&quot;    /* 我们不实现自减运算, 这里应该解释成 -(-1) = 1 */
+</code></pre></div>
+<pre><code>它们会被判定为不合法的表达式. 为了实现负数的功能, 你需要考虑两个问题:
+
+*   负号和减号都是`-`, 如何区分它们?
+*   负号是个单目运算符, 分裂的时候需要注意什么?
+
+你可以选择不实现负数的功能, 但你很快就要面临类似的问题了.
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">从表达式求值窥探编译器</p>
+<p>你在程序设计课上已经知道, 编译是一个将高级语言转换成机器语言的过程. 但你是否曾经想过, 机器是怎么读懂你的代码的? 回想你实现表达式求值的过程, 你是否有什么新的体会?</p>
+<p>事实上, 词法分析也是编译器编译源代码的第一个步骤, 编译器也需要从你的源代码中识别出 token, 这个功能也可以通过正则表达式来完成, 只不过 token 的类型更多, 更复杂而已. 这也解释了你为什么可以在源代码中插入任意数量的空白字符 (包括空格, tab, 换行), 而不会影响程序的语义; 你也可以将所有源代码写到一行里面, 编译仍然能够通过.</p>
+<p>一个和词法分析相关的有趣的应用是语法高亮. 在程序设计课上, 你可能完全没有想过可以自己写一个语法高亮的程序. 事实是, 这些看似这么神奇的东西, 其实也没那么复杂, 你现在确实有能力来实现它: 把源代码看作一个字符串输入到语法高亮程序中, 在循环中识别出一个 token 之后, 根据 token 类型用不同的颜色将它的内容重新输出一遍就可以了. 如果你打算将高亮的代码输出到终端里, 你可以使用 <a href="http://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI 转义码的颜色功能</a>.</p>
+<p>在表达式求值的递归求值过程中, 逻辑上其实做了两件事情: 第一件事是根据 token 来分析表达式的结构 (属于 BNF 中的哪一种情况), 第二件事才是求值. 它们在编译器中也有对应的过程: 语法分析就好比分析表达式的结构, 只不过编译器分析的是程序的结构, 例如哪些是函数, 哪些是语句等等. 当然程序的结构要比表达式的结构更复杂, 因此编译器一般会使用一种标准的框架来分析程序的结构, 理解这种框架需要更多的知识, 这里就不展开叙述了. 另外如果你有兴趣, 可以看看 C 语言语法的 BNF.</p>
+<p>和表达式最后的求值相对的, 在编译器中就是代码生成. ICS 理论课会有专门的章节来讲解 C 代码和汇编指令的关系, 即使你不了解代码具体是怎么生成的, 你仍然可以理解它们之间的关系. 这是因为 C 代码天生就和汇编代码有密切的联系, 高水平 C 程序员的思维甚至可以在 C 代码和汇编代码之间相互转换. 如果要深究代码生成的过程, 你也不难猜到是用递归实现的: 例如要生成一个函数的代码, 就先生成其中每一条语句的代码, 然后通过某种方式将它们连接起来.</p>
+<p>我们通过表达式求值的实现来窥探编译器的组成, 是为了落实一个道理: 学习汽车制造专业不仅仅是为了学习开汽车, 是要学习发动机怎么设计. 我们也强烈推荐你在将来修读 "编译原理" 课程, 深入学习 "如何设计发动机".</p>
+</div>
+<h3 id="_5">如何测试你的代码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>你将来是要使用你自己实现的表达式求值功能来帮助你来进行后续的调试的, 这意味着程序设计课上那种 "代码随便测试一下就交上去然后就可以撒手不管" 的日子已经一去不复返了. 测试需要测试用例, 通过越多测试, 你就会对代码越有信心. 但如果让你来设计测试用例, 设计十几个你就会觉得没意思了, 有没有一种方法来自动产生测试用例呢?</p>
+<p>一种常用的方法是<a href="https://en.wikipedia.org/wiki/Random_testing">随机测试</a>. 首先我们需要来思考如何随机生成一个合法的表达式. 事实上, 表达式生成比表达式求值要容易得多. 同样是上面的 BNF, 我们可以很容易写出生成表达式的框架:</p>
+<div class="highlight"><pre><span></span><code>void gen_rand_expr() {
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen(&#39;(&#39;); gen_rand_expr(); gen(&#39;)&#39;); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
+}
+</code></pre></div>
+<p>你应该一眼就能明白上述代码是如何工作的: 其中<code>uint32_t choose(uint32_t n)</code>是一个很简单又很重要的函数, 它的作用是生成一个小于<code>n</code>的随机数, 所有随机生成的内容几乎都是通过它来选择的.</p>
+<p>有了这些随机表达式作为测试输入, 我们怎么知道输出对不对呢? 如果要我们把这些表达式手动算一遍, 那就太麻烦了. 如果可以在生成这些表达式的同时, 也能生成它们的结果, 这样我们就能得到类似 OJ 的测试用例啦! 但我们在 NEMU 中实现的表达式求值是经过了一些简化的, 所以我们需要一种满足以下条件的 "计算器":</p>
+<ul>
+<li>进行的都是无符号运算</li>
+<li>数据宽度都是 32bit</li>
+<li>溢出后不处理</li>
+</ul>
+<p>嘿! 如果我们把这些表达式塞到如下 C 程序的源文件里面:</p>
+<div class="highlight"><pre><span></span><code>#include &lt;stdio.h&gt;
+int main() {
+  unsigned result = ???; 
+  printf(&quot;%u&quot;, result);
+  return 0;
+}
+</code></pre></div>
+<p>然后用 gcc 编译它并执行, 让它输出表达式的结果, 这不就是我们想要的 "计算器" 吗?</p>
+<p>还真能这样做! 我们已经准备好这个表达式生成器的框架代码了 (在<code>nemu/tools/gen-expr/gen-expr.c</code>中). 你需要实现其中的<code>void gen_rand_expr()</code>函数, 将随机生成的表达式输出到缓冲区<code>buf</code>中. <code>main</code>函数中的代码会调用你实现的<code>gen_rand_expr()</code>, 然后把<code>buf</code>中的随机表达式放入上述 C 程序的代码中. 剩下的事情就是编译运行这个 C 程序了, 代码中使用了<code>system()</code>和<code>popen()</code>等库函数来实现这一功能. 最后, 框架代码将这个 C 程序的打印结果和之前随机生成的表达式一同输出, 这样就生成了一组测试用例.</p>
+<p>!!! note 表达式生成器如何获得 C 程序的打印结果?"</p>
+<pre><code>代码中这部分的内容没有任何注释, 聪明的你也许马上就反应过来: 竟然是个 RTFM 的圈套! 阅读手册了解 API 的具体行为可是程序员的基本功. 如果觉得去年一整年的程序员都白当了, 就从现在开始好好锻炼吧.
+
+不过实现的时候, 你很快就会发现需要面对一些细节的问题:
+
+*   如何保证表达式进行无符号运算?
+*   如何随机插入空格?
+*   如何生成长表达式, 同时不会使`buf`溢出?
+*   如何过滤求值过程中有除 0 行为的表达式?
+
+这些问题大多都和 C 语言相关, 就当作是 C 语言的又一个编程练习吧.
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">为什么要使用无符号类型? (建议二周目思考)</p>
+<p>我们在表达式求值中约定, 所有运算都是无符号运算. 你知道为什么要这样约定吗? 如果进行有符号运算, 有可能会发生什么问题?</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">除 0 的确切行为</p>
+<p>如果生成的表达式有除 0 行为, 你编写的表达式生成器的行为又会怎么样呢?</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">过滤除 0 行为的表达式</p>
+<p>乍看之下这个问题不好解决, 因为框架代码只负责生成表达式, 而检测除 0 行为至少要对表达式进行求值. 结合前两个蓝框题的回答 (前提是你对它们的理解都足够深入了), 你就会找到解决方案了, 而且解决方案不唯一喔!</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">实现表达式生成器</p>
+<p>根据上文内容, 实现表达式生成器. 实现后, 就可以用来生成表达式求值的测试用例了.</p>
+</div>
+<div class="highlight"><pre><span></span><code>./gen-expr 10000 &gt; input
+</code></pre></div>
+<pre><code>将会生成 10000 个测试用例到`input`文件中, 其中每行为一个测试用例, 其格式为
+</code></pre>
+<div class="highlight"><pre><span></span><code>结果 表达式
+</code></pre></div>
+<pre><code>再稍微改造一下 NEMU 的`main()`函数, 让其读入`input`文件中的测试表达式后, 直接调用`expr()`, 并与结果进行比较. 为了容纳长表达式的求值, 你还需要对`tokens`数组的大小进行修改.
+
+随着你的程序通过越来越多的测试, 你会对你的代码越来越有信心.
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">温馨提示</p>
+<p>PA1阶段2到此结束</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

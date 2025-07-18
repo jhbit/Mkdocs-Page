@@ -1,0 +1,902 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../3.RTFSC%20%C2%B7%20GitBook/">
+      
+      
+        <link rel="next" href="../5.%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%20%C2%B7%20GitBook/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>基础设施 - MMY's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-header__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MMY's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              基础设施
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-nav__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MMY's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Graph
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/%E6%AC%B2%E6%9C%9B%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NEMU PA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            NEMU PA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            PA1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9C%A8%E5%BC%80%E5%A7%8B%E6%84%89%E5%BF%AB%E7%9A%84%20PA%20%E4%B9%8B%E6%97%85%E4%B9%8B%E5%89%8D%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开始之前
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%BC%80%E5%A4%A9%E8%BE%9F%E5%9C%B0%E7%9A%84%E7%AF%87%E7%AB%A0%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开天辟地
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.RTFSC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码架构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础设施: 简易调试器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础设施: 简易调试器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      解析命令
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      单步执行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      打印寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描内存
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    求值
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础设施: 简易调试器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础设施: 简易调试器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      解析命令
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      单步执行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      打印寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      扫描内存
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>基础设施</h1>
+
+<h2 id="_1">基础设施: 简易调试器<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">基础设施 - 提高项目开发的效率</p>
+<p>在 PA 中, 基础设施是指支撑项目开发的各种工具和手段. 原则上基础设施并不属于课本知识的范畴, 但是作为一个有一定规模的项目, 基础设施的好坏会影响到项目的推进, 甚至决定项目的成败, 这是你在程序设计课上体会不到的.</p>
+<p>事实上, 你已经体会过基础设施给你带来的便利了. 我们的框架代码已经提供了 Makefile 来对 NEMU 进行一键编译. 假设我们并没有提供一键编译的功能, 你需要通过手动键入<code>gcc</code>命令的方式来编译源文件: 假设你手动输入一条<code>gcc</code>命令需要 10 秒的时间 (你还需要输入很多编译选项, 能用 10 秒输入完已经是非常快的了), 而 NEMU 工程下有 30 个源文件, 为了编译出 NEMU 的可执行文件, 你需要花费多少时间? 然而你还需要在开发 NEMU 的过程中不断进行编译, 假设你需要编译 500 次 NEMU 才能完成 PA, 一学期下来, 你仅仅花在键入编译命令上的时间有多少?</p>
+<p>有的项目即使使用工具也需要花费较多时间来构建. 例如硬件开发平台<code>vivado</code>/<code>quartus</code>一般需要花费半小时到一小时不等的时间来生成比特文件, 也就是说, 你编写完代码之后, 可能需要等待一小时之后才能验证你的代码是否正确. 这是因为, 这个过程不像编译程序这么简单, 其中需要处理很多算法上的 NPC 问题. 为了生成一个质量还不错的比特文件, 硬件开发工具需要付出比<code>gcc</code>更大的代价来解决这些 NPC 问题. 这时候基础设施的作用就更加重要了, 如果能有工具可以帮助你一次进行多个方面的验证, 就会帮助你节省下来无数个 "一小时".</p>
+<p>Google 内部的开发团队非常重视基础设施的建设, 他们把可以让一个项目得益的工具称为 Adder, 把可以让多个项目得益的工具称为 Multiplier. 顾名思义, 这些工具可以成倍提高项目开发的效率. 在学术界, 不少科研工作的目标也是提高开发效率, 例如 bug 自动检测和修复, 自动化验证, 易于开发的编程模型等等. 在 PA 中, 基础设施也会体现在不同的方面, 我们会在将来对其它方面进行讨论.</p>
+<p>你将来肯定会参与比 PA 更大的项目, 如何提高项目开发的效率也是一个很重要的问题. 希望在完成 PA 的过程中, 你能够对基础设施有新的认识: 有代码的地方, 就有基础设施. 随着知识的积累, 将来的你或许也会投入到这些未知的领域当中, 为全世界的开发者作出自己的贡献.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">真实故事</p>
+<p>yzh 的小组里曾经发生过一件由于基础设施不完善而导致在论文投稿截止前科研成果质量不佳的事件.</p>
+<p>这一科研工作需要运行各种不同的测试来验证效果, 在两台 4 核 8 线程的 PC 机上运行完所有的测试需要花费约 24 小时. 每次对设计进行改动之后, 都需要重新运行所有测试, 可以说是, 改一行代码, 要过 24 小时后才能得到结果. 事实上, 在投稿截止 3 个月之前, 我们已经得知有一台 112 核的服务器可以使用. 如果在这台服务器上部署测试环境, 预计可以使测试总时间减少到原来的 1/5 (多核服务器的主频比 PC 机低 1 倍, 架构也落后两代, 1/5 是一个综合考虑之后的数字).</p>
+<p>但是带领这一项目的同学并没有意识到基础设施的重要性: 他一直在 PC 机上进行测试. 事实上, 测试总时间减少到原来的 1/5, 其实意味着改进设计的机会是原来的 5 倍. 结果到投稿截止之前, 设计还在修改, 测试还在反复运行, 最终只能无奈地采用一个质量有待提高的设计版本提交论文.</p>
+</div>
+<p>简易调试器 (Simple Debugger, sdb) 是 NEMU 中一项非常重要的基础设施. 我们知道 NEMU 是一个用来执行其它客户程序的程序, 这意味着, NEMU 可以随时了解客户程序执行的所有信息. 然而这些信息对外面的调试器 (例如 GDB) 来说, 是不容易获取的. 例如在通过 GDB 调试 NEMU 的时候, 你将很难在 NEMU 中运行的客户程序中设置断点, 但对于 NEMU 来说, 这是一件不太困难的事情.</p>
+<p>为了提高调试的效率, 同时也作为熟悉框架代码的练习, 我们需要在 monitor 中实现一个具有如下功能的简易调试器 (相关部分的代码在<code>nemu/src/monitor/sdb/</code>目录下), 如果你不清楚命令的格式和功能, 请参考如下表格:</p>
+<table><thead><tr><th>命令</th><th>格式</th><th>使用举例</th><th>说明</th></tr></thead><tbody><tr><td>帮助 (1)</td><td><code>help</code></td><td><code>help</code></td><td>打印命令的帮助信息</td></tr><tr><td>继续运行 (1)</td><td><code>c</code></td><td><code>c</code></td><td>继续运行被暂停的程序</td></tr><tr><td>退出 (1)</td><td><code>q</code></td><td><code>q</code></td><td>退出 NEMU</td></tr><tr><td>单步执行</td><td><code>si [N]</code></td><td><code>si 10</code></td><td>让程序单步执行<code>N</code>条指令后暂停执行,<br>当<code>N</code>没有给出时, 缺省为<code>1</code></td></tr><tr><td>打印程序状态</td><td><code>info SUBCMD</code></td><td><code>info r</code><br><code>info w</code></td><td>打印寄存器状态<br>打印监视点信息</td></tr><tr><td>扫描内存 (2)</td><td><code>x N EXPR</code></td><td><code>x 10 $esp</code></td><td>求出表达式<code>EXPR</code>的值, 将结果作为起始内存<br>地址, 以十六进制形式输出连续的<code>N</code>个 4 字节</td></tr><tr><td>表达式求值</td><td><code>p EXPR</code></td><td><code>p $eax + 1</code></td><td>求出表达式<code>EXPR</code>的值, <code>EXPR</code>支持的<br>运算请见<a href="https://nju-projectn.github.io/ics-pa-gitbook/ics2022/1.6.html">调试中的表达式求值</a>小节</td></tr><tr><td>设置监视点</td><td><code>w EXPR</code></td><td><code>w *0x2000</code></td><td>当表达式<code>EXPR</code>的值发生变化时, 暂停程序执行</td></tr><tr><td>删除监视点</td><td><code>d N</code></td><td><code>d 2</code></td><td>删除序号为<code>N</code>的监视点</td></tr></tbody></table>
+
+<p>备注:</p>
+<ul>
+<li>(1) 命令已实现</li>
+<li>(2) 与 GDB 相比, 我们在这里做了简化, 更改了命令的格式</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">总有一天会找上门来的 bug</p>
+<p>你需要在将来的 PA 中使用这些功能来帮助你进行 NEMU 的调试. 如果你的实现是有问题的, 将来你有可能会面临以下悲惨的结局: 你实现了某个新功能之后, 打算对它进行测试, 通过扫描内存的功能来查看一段内存, 发现输出并非预期结果. 你认为是刚才实现的新功能有问题, 于是对它进行调试. 经过了几天几夜的调试之后, 你泪流满面地发现, 原来是扫描内存的功能有 bug!</p>
+<p>如果你想避免类似的悲惨结局, 你需要在实现一个功能之后对它进行充分的测试. 随着时间的推移, 发现同一个 bug 所需要的代价会越来越大.</p>
+</div>
+<h3 id="_2">解析命令<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>为了让简易调试器易于使用, NEMU 通过<code>readline</code>库与用户交互, 使用<code>readline()</code>函数从键盘上读入命令. 与<code>gets()</code>相比, <code>readline()</code>提供了 "行编辑" 的功能, 最常用的功能就是通过上, 下方向键翻阅历史记录. 事实上, shell 程序就是通过<code>readline()</code>读入命令的. 关于<code>readline()</code>的功能和返回值等信息, 请查阅</p>
+<div class="highlight"><pre><span></span><code>man readline
+</code></pre></div>
+<p>从键盘上读入命令后, NEMU 需要解析该命令, 然后执行相关的操作. 解析命令的目的是识别命令中的参数, 例如在<code>si 10</code>的命令中识别出<code>si</code>和<code>10</code>, 从而得知这是一条单步执行 10 条指令的命令. 解析命令的工作是通过一系列的字符串处理函数来完成的, 例如框架代码中的<code>strtok()</code>. <code>strtok()</code>是 C 语言中的标准库函数, 如果你从来没有使用过<code>strtok()</code>, 并且打算继续使用框架代码中的<code>strtok()</code>来进行命令的解析, 请务必查阅</p>
+<div class="highlight"><pre><span></span><code>man strtok
+</code></pre></div>
+<p>另外, <code>cmd_help()</code>函数中也给出了使用<code>strtok()</code>的例子. 事实上, 字符串处理函数有很多, 键入以下内容:</p>
+<div class="highlight"><pre><span></span><code>man 3 str&lt;TAB&gt;&lt;TAB&gt;
+</code></pre></div>
+<p>其中<code>&lt;TAB&gt;</code>代表键盘上的 TAB 键. 你会看到很多以 str 开头的函数, 其中有你应该很熟悉的<code>strlen()</code>, <code>strcpy()</code>等函数. 你最好都先看看这些字符串处理函数的 manual page, 了解一下它们的功能, 因为你很可能会用到其中的某些函数来帮助你解析命令. 当然你也可以编写你自己的字符串处理函数来解析命令.</p>
+<p>!!! "如何测试字符串处理函数?"</p>
+<pre><code>你可能会抑制不住编码的冲动: 与其 RTFM, 还不如自己写. 如果真是这样, 你可以考虑一下, 你会如何测试自己编写的字符串处理函数?
+
+如果你愿意 RTFM, 也不妨思考一下这个问题, 因为你会在 PA2 中遇到类似的问题.
+</code></pre>
+<p>另外一个值得推荐的字符串处理函数是<code>sscanf()</code>, 它的功能和<code>scanf()</code>很类似, 不同的是<code>sscanf()</code>可以从字符串中读入格式化的内容, 使用它有时候可以很方便地实现字符串的解析. 如果你从来没有使用过它们, RTFM, 或者 STFW.</p>
+<h3 id="_3">单步执行<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>单步执行的功能十分简单, 而且框架代码中已经给出了模拟 CPU 执行方式的函数, 你只要使用相应的参数去调用它就可以了. 如果你仍然不知道要怎么做, RTFSC.</p>
+<h3 id="_4">打印寄存器<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>打印寄存器就更简单了. 不过既然寄存器的结构是 ISA 相关的, 我们希望能为简易调试器屏蔽 ISA 的差异. 框架代码已经为大家准备了如下的 API:</p>
+<div class="highlight"><pre><span></span><code>// nemu/src/isa/$ISA/reg.c
+void isa_reg_display(void);
+</code></pre></div>
+<p>执行<code>info r</code>之后, 就调用<code>isa_reg_display()</code>, 在里面直接通过<code>printf()</code>输出所有寄存器的值即可. 如果你从来没有使用过<code>printf()</code>, 请 RTFM 或者 STFW. 如果你不知道要输出什么, 你可以参考 GDB 中的输出.</p>
+<h3 id="_5">扫描内存<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>扫描内存的实现也不难, 对命令进行解析之后, 先求出表达式的值. 但你还没有实现表达式求值的功能, 现在可以先实现一个简单的版本: 规定表达式<code>EXPR</code>中只能是一个十六进制数, 例如</p>
+<div class="highlight"><pre><span></span><code>x 10 0x80000000
+</code></pre></div>
+<p>这样的简化可以让你暂时不必纠缠于表达式求值的细节. 解析出待扫描内存的起始地址之后, 就可以使用循环将指定长度的内存数据通过十六进制打印出来. 如果你不知道要怎么输出, 同样的, 你可以参考 GDB 中的输出. 问题是, 我们要如何访问客户计算机的内存数据呢? (答案早就说了喂)</p>
+<p>实现了扫描内存的功能之后, 你可以打印<code>0x80000000</code>或者<code>0x100000</code>附近的内存, 你应该会看到程序的代码, 和内置客户程序的内容进行对比, 检查你的实现是否正确.</p>
+<div class="admonition warning">
+<p class="admonition-title">实现单步执行, 打印寄存器, 扫描内存</p>
+<p>熟悉了 NEMU 的框架之后, 这些功能实现起来都很简单, 同时我们对输出的格式不作硬性规定, 就当做是熟悉 GNU/Linux 编程的一次练习吧.</p>
+<p>NEMU 默认会把单步执行的指令打印出来 (这里面埋了一些坑, 你需要 RTFSC 看看指令是在哪里被打印的), 这样你就可以验证单步执行的效果了.</p>
+<p>不知道如何下手? 嗯, 看来你需要再阅读一遍 <a href="https://nju-projectn.github.io/ics-pa-gitbook/ics2022/1.3.html">RTFSC 小节</a>的内容了. 如果你已经忘记了某些注意事项, 重新去阅读一遍也是应该的.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">我怕代码写错了啊, 怎么办?</p>
+<p>2014 年图灵奖得主 <a href="https://en.wikipedia.org/wiki/Michael_Stonebraker">Michael Stonebraker</a> 在一次访谈中提到, 他当时花了 5 年时间开发了世界上第一个关系数据库系统 Ingres, 其中 90% 的时间用于将它运行起来. 也就是说, 在开发过程中, 有 90% 的时间系统都是运行不起来的, 是有 bug 的, 需要调试.</p>
+<p>所以, 接受现实吧: 代码出错是很正常的, 你需要从当年程序设计实验里感受到的那种 "代码可以一次编译通过成功运行" 的幻觉中清醒过来. 重要的是, 我们需要使用正确的方法和工具来帮助我们测试和调试, 最终让程序运行起来. 一个例子是版本控制工具<code>git</code>, 它可以跟踪代码的变化, 从而发现 bug 是何时引入的, 而且能够在必要的时候回退到上一个程序可以运行的版本.</p>
+<p>总之, 只有掌握正确的方法和工具, 才能真正驱散心中对 bug 的恐惧.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">温馨提示</p>
+<p>PA1阶段1到此结束</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

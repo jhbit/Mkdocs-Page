@@ -1,0 +1,1331 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../2.%E5%BC%80%E5%A4%A9%E8%BE%9F%E5%9C%B0%E7%9A%84%E7%AF%87%E7%AB%A0%20%C2%B7%20GitBook/">
+      
+      
+        <link rel="next" href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%C2%B7%20GitBook/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>RTFSC · GitBook - MMY's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rtfsc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-header__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MMY's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RTFSC · GitBook
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-nav__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MMY's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Graph
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/%E6%AC%B2%E6%9C%9B%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Graph1/Graph3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NEMU PA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            NEMU PA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            PA1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9C%A8%E5%BC%80%E5%A7%8B%E6%84%89%E5%BF%AB%E7%9A%84%20PA%20%E4%B9%8B%E6%97%85%E4%B9%8B%E5%89%8D%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开始之前
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%BC%80%E5%A4%A9%E8%BE%9F%E5%9C%B0%E7%9A%84%E7%AF%87%E7%AB%A0%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开天辟地
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    源码架构
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码架构
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rtfsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      RTFSC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RTFSC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      框架代码初探
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置系统和项目构建
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置系统和项目构建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置系统 kconfig
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      项目构建和 Makefile
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="项目构建和 Makefile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      与配置系统进行关联
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filelist" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件列表 (filelist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      编译和链接
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      准备第一个客户程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      运行第一个客户程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      就是这么简单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    求值
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rtfsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      RTFSC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RTFSC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      框架代码初探
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置系统和项目构建
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置系统和项目构建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      配置系统 kconfig
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      项目构建和 Makefile
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="项目构建和 Makefile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      与配置系统进行关联
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filelist" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件列表 (filelist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      编译和链接
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      准备第一个客户程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      运行第一个客户程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      就是这么简单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>源码架构</h1>
+
+<h2 id="rtfsc">RTFSC<a class="headerlink" href="#rtfsc" title="Permanent link">&para;</a></h2>
+<p>事实上, TRM 的实现是如此的简单, 以至于框架代码已经实现它了. 接下来让我们看看, 构成 TRM 的那些数字电路, 在 NEMU 的 C 代码中都是何方神圣. 为了方便叙述, 我们将在 NEMU 中模拟的计算机称为 "客户 (guest) 计算机", 在 NEMU 中运行的程序称为 "客户程序".</p>
+<h3 id="_1">框架代码初探<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>框架代码内容众多, 其中包含了很多在后续阶段中才使用的代码. 随着实验进度的推进, 我们会逐渐解释所有的代码. 因此在阅读代码的时候, 你只需要关心和当前进度相关的模块就可以了, 不要纠缠于和当前进度无关的代码, 否则将会给你的心灵带来不必要的恐惧.</p>
+<div class="highlight"><pre><span></span><code>ics2022
+├── abstract-machine   # 抽象计算机
+├── am-kernels         # 基于抽象计算机开发的应用程序
+├── fceux-am           # 红白机模拟器
+├── init.sh            # 初始化脚本
+├── Makefile           # 用于工程打包提交
+├── nemu               # NEMU
+└── README.md
+</code></pre></div>
+<p>目前我们只需要关心 NEMU 子项目中的内容, 其它子项目会在将来进行介绍. NEMU 主要由 4 个模块构成: monitor, CPU, memory, 设备. 我们已经在上一小节简单介绍了 CPU 和 memory 的功能, 设备会在 PA2 中介绍, 目前不必关心.</p>
+<p>Monitor(监视器)模块是为了方便地监控客户计算机的运行状态而引入的. 它除了负责与 GNU/Linux 进行交互 (例如读入客户程序) 之外, 还带有调试器的功能, 为 NEMU 的调试提供了方便的途径. 从概念上来说, monitor 并不属于一个计算机的必要组成部分, 但对 NEMU 来说, 它是必要的基础设施. 如果缺少 monitor 模块, 对 NEMU 的调试将会变得十分困难.</p>
+<p>代码中<code>nemu/</code>目录下的源文件组织如下 (并未列出所有文件):</p>
+<div class="highlight"><pre><span></span><code>nemu
+├── configs                    # 预先提供的一些配置文件
+├── include                    # 存放全局使用的头文件
+│   ├── common.h               # 公用的头文件
+│   ├── config                 # 配置系统生成的头文件, 用于维护配置选项更新的时间戳
+│   ├── cpu
+│   │   ├── cpu.h
+│   │   ├── decode.h           # 译码相关
+│   │   ├── difftest.h
+│   │   └── ifetch.h           # 取指相关
+│   ├── debug.h                # 一些方便调试用的宏
+│   ├── device                 # 设备相关
+│   ├── difftest-def.h
+│   ├── generated
+│   │   └── autoconf.h         # 配置系统生成的头文件, 用于根据配置信息定义相关的宏
+│   ├── isa.h                  # ISA相关
+│   ├── macro.h                # 一些方便的宏定义
+│   ├── memory                 # 访问内存相关
+│   └── utils.h
+├── Kconfig                    # 配置信息管理的规则
+├── Makefile                   # Makefile构建脚本
+├── README.md
+├── resource                   # 一些辅助资源
+├── scripts                    # Makefile构建脚本
+│   ├── build.mk
+│   ├── config.mk
+│   ├── git.mk                 # git版本控制相关
+│   └── native.mk
+├── src                        # 源文件
+│   ├── cpu
+│   │   └── cpu-exec.c         # 指令执行的主循环
+│   ├── device                 # 设备相关
+│   ├── engine
+│   │   └── interpreter        # 解释器的实现
+│   ├── filelist.mk
+│   ├── isa                    # ISA相关的实现
+│   │   ├── mips32
+│   │   ├── riscv32
+│   │   ├── riscv64
+│   │   └── x86
+│   ├── memory                 # 内存访问的实现
+│   ├── monitor
+│   │   ├── monitor.c
+│   │   └── sdb                # 简易调试器
+│   │       ├── expr.c         # 表达式求值的实现
+│   │       ├── sdb.c          # 简易调试器的命令处理
+│   │       └── watchpoint.c   # 监视点的实现
+│   ├── nemu-main.c            # 你知道的...
+│   └── utils                  # 一些公共的功能
+│       ├── log.c              # 日志文件相关
+│       ├── rand.c
+│       ├── state.c
+│       └── timer.c
+└── tools                      # 一些工具
+    ├── fixdep                 # 依赖修复, 配合配置系统进行使用
+    ├── gen-expr
+    ├── kconfig                # 配置系统
+    ├── kvm-diff
+    ├── qemu-diff
+    └── spike-diff
+</code></pre></div>
+<p>为了支持不同的 ISA, 框架代码把 NEMU 分成两部分: ISA 无关的基本框架和 ISA 相关的具体实现. NEMU 把 ISA 相关的代码专门放在<code>nemu/src/isa/</code>目录下, 并通过<code>nemu/include/isa.h</code>提供 ISA 相关 API 的声明. 这样以后, <code>nemu/src/isa/</code>之外的其它代码就展示了 NEMU 的基本框架. 这样做有两点好处:</p>
+<ul>
+<li>有助于我们认识不同 ISA 的共同点: 无论是哪种 ISA 的客户计算机, 它们都具有相同的基本框架</li>
+<li>体现抽象的思想: 框架代码将 ISA 之间的差异抽象成 API, 基本框架会调用这些 API, 从而无需关心 ISA 的具体细节. 如果你将来打算选择一个不同的 ISA 来进行二周目的攻略, 你就能明显体会到抽象的好处了: 基本框架的代码完全不用修改!</li>
+</ul>
+<p><a href="https://nju-projectn.github.io/ics-pa-gitbook/ics2022/nemu-isa-api.html">这个页面</a>对上述 API 进行了整理, 供将来查阅使用, 目前你无需完全明白它们的作用. "抽象" 是计算机系统中一个非常重要的概念, 如果你现在不明白抽象的意义, 不必担心, 在 PA 的后续内容中, 你会一次又一次地遇到它.</p>
+<p>大致了解上述的目录树之后, 你就可以开始阅读代码了. 至于从哪里开始, 就不用多费口舌了吧.</p>
+<div class="admonition note">
+<p class="admonition-title">需要多费口舌吗？</p>
+<p>嗯... 如果你觉得提示还不够, 那就来一个劲爆的: 回忆程序设计课的内容, 一个程序从哪里开始执行呢?</p>
+<p>如果你不屑于回答这个问题, 不妨先冷静下来. 其实这是一个值得探究的问题, 你会在将来重新审视它.</p>
+</div>
+<h3 id="_2">配置系统和项目构建<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>在真正开始阅读代码之前, 我们先来简单介绍一下 NEMU 项目中的配置系统和项目构建.</p>
+<h4 id="kconfig">配置系统 kconfig<a class="headerlink" href="#kconfig" title="Permanent link">&para;</a></h4>
+<p>在一个有一定规模的项目中, 可配置选项的数量可能会非常多, 而且配置选项之间可能会存在关联, 比如打开配置选项 A 之后, 配置选项 B 就必须是某个值. 直接让开发者去管理这些配置选项是很容易出错的, 比如修改选项 A 之后, 可能会忘记修改和选项 A 有关联的选项 B. 配置系统的出现则是为了解决这个问题.</p>
+<p>NEMU 中的配置系统位于<code>nemu/tools/kconfig</code>, 它来源于 GNU/Linux 项目中的 kconfig, 我们进行了少量简化. kconfig 定义了一套简单的语言, 开发者可以使用这套语言来编写 "配置描述文件". 在 "配置描述文件" 中, 开发者可以描述:</p>
+<ul>
+<li>配置选项的属性, 包括类型, 默认值等</li>
+<li>不同配置选项之间的关系</li>
+<li>配置选项的层次关系</li>
+</ul>
+<p>在 NEMU 项目中, "配置描述文件" 的文件名都为<code>Kconfig</code>, 如<code>nemu/Kconfig</code>. 当你键入<code>make menuconfig</code>的时候, 背后其实发生了如下事件:</p>
+<ul>
+<li>检查<code>nemu/tools/kconfig/build/mconf</code>程序是否存在, 若不存在, 则编译并生成<code>mconf</code></li>
+<li>检查<code>nemu/tools/kconfig/build/conf</code>程序是否存在, 若不存在, 则编译并生成<code>conf</code></li>
+<li>运行命令<code>mconf nemu/Kconfig</code>, 此时<code>mconf</code>将会解析<code>nemu/Kconfig</code>中的描述, 以菜单树的形式展示各种配置选项, 供开发者进行选择</li>
+<li>退出菜单时, <code>mconf</code>会把开发者选择的结果记录到<code>nemu/.config</code>文件中</li>
+<li>运行命令<code>conf --syncconfig nemu/Kconfig</code>, 此时<code>conf</code>将会解析<code>nemu/Kconfig</code>中的描述, 并读取选择结果<code>nemu/.config</code>, 结合两者来生成如下文件:<ul>
+<li>可以被包含到 C 代码中的宏定义 (<code>nemu/include/generated/autoconf.h</code>), 这些宏的名称都是形如<code>CONFIG_xxx</code>的形式</li>
+<li>可以被包含到 Makefile 中的变量定义 (<code>nemu/include/config/auto.conf</code>)</li>
+<li>可以被包含到 Makefile 中的, 和 "配置描述文件" 相关的依赖规则 (<code>nemu/include/config/auto.conf.cmd</code>), 为了阅读代码, 我们可以不必关心它</li>
+<li>通过时间戳来维护配置选项变化的目录树<code>nemu/include/config/</code>, 它会配合另一个工具<code>nemu/tools/fixdep</code>来使用, 用于在更新配置选项后节省不必要的文件编译, 为了阅读代码, 我们可以不必关心它</li>
+</ul>
+</li>
+</ul>
+<p>所以, 目前我们只需要关心配置系统生成的如下文件:</p>
+<ul>
+<li><code>nemu/include/generated/autoconf.h</code>, 阅读 C 代码时使用</li>
+<li><code>nemu/include/config/auto.conf</code>, 阅读 Makefile 时使用</li>
+</ul>
+<h4 id="makefile">项目构建和 Makefile<a class="headerlink" href="#makefile" title="Permanent link">&para;</a></h4>
+<p>NEMU 的 Makefile 会稍微复杂一些, 它具备如下功能:</p>
+<h5 id="_3">与配置系统进行关联<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h5>
+<p>通过包含<code>nemu/include/config/auto.conf</code>, 与 kconfig 生成的变量进行关联. 因此在通过 menuconfig 更新配置选项后, Makefile 的行为可能也会有所变化.</p>
+<h5 id="filelist">文件列表 (filelist)<a class="headerlink" href="#filelist" title="Permanent link">&para;</a></h5>
+<p>通过文件列表 (filelist) 决定最终参与编译的源文件. 在<code>nemu/src</code>及其子目录下存在一些名为<code>filelist.mk</code>的文件, 它们会根据 menuconfig 的配置对如下 4 个变量进行维护:</p>
+<ul>
+<li><code>SRCS-y</code> - 参与编译的源文件的候选集合</li>
+<li><code>SRCS-BLACKLIST-y</code> - 不参与编译的源文件的黑名单集合</li>
+<li><code>DIRS-y</code> - 参与编译的目录集合, 该目录下的所有文件都会被加入到<code>SRCS-y</code>中</li>
+<li><code>DIRS-BLACKLIST-y</code> - 不参与编译的目录集合, 该目录下的所有文件都会被加入到<code>SRCS-BLACKLIST-y</code>中</li>
+</ul>
+<p>Makefile 会包含项目中的所有<code>filelist.mk</code>文件, 对上述 4 个变量的追加定义进行汇总, 最终会过滤出在<code>SRCS-y</code>中但不在<code>SRCS-BLACKLIST-y</code>中的源文件, 来作为最终参与编译的源文件的集合.</p>
+<p>上述 4 个变量还可以与 menuconfig 的配置结果中的布尔选项进行关联, 例如<code>DIRS-BLACKLIST-$(CONFIG_TARGET_AM) += src/monitor/sdb</code>, 当我们在 menuconfig 中选择了<code>TARGET_AM</code>相关的布尔选项时, kconfig 最终会在<code>nemu/include/config/auto.conf</code>中生成形如<code>CONFIG_TARGET_AM=y</code>的代码, 对变量进行展开后将会得到<code>DIRS-BLACKLIST-y += src/monitor/sdb</code>; 当我们在 menuconfig 中未选择<code>TARGET_AM</code>相关的布尔选项时, kconfig 将会生成形如<code>CONFIG_TARGET_AM=n</code>的代码, 或者未对<code>CONFIG_TARGET_AM</code>进行定义, 此时将会得到<code>DIRS-BLACKLIST-n += src/monitor/sdb</code>, 或者<code>DIRS-BLACKLIST- += src/monitor/sdb</code>, 这两种情况都不会影响<code>DIRS-BLACKLIST-y</code>的值, 从而实现了如下效果:</p>
+<div class="highlight"><pre><span></span><code>在menuconfig中选中TARGET_AM时, nemu/src/monitor/sdb目录下的所有文件都不会参与编译.
+</code></pre></div>
+<h5 id="_4">编译和链接<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h5>
+<p>Makefile 的编译规则在<code>nemu/scripts/build.mk</code>中定义:</p>
+<div class="highlight"><pre><span></span><code>$(OBJ_DIR)/%.o: %.c
+  @echo + CC $&lt;
+  @mkdir -p $(dir $@)
+  @$(CC) $(CFLAGS) -c -o $@ $&lt;
+  $(call call_fixdep, $(@:.o=.d), $@)
+</code></pre></div>
+<p>其中关于<code>$@</code>和<code>$&lt;</code>等符号的含义, 可以 RTFM 进行了解. <code>call_fixdep</code>的调用用于生成更合理的依赖关系, 目前我们主要关注编译的命令, 因此可以先忽略<code>call_fixdep</code>.</p>
+<p>我们可以先查看<code>make</code>过程中都运行了哪些命令, 然后反过来理解<code>$(CFLAGS)</code>等变量的值. 为此, 我们可以键入<code>make -nB</code>, 它会让<code>make</code>程序以 "只输出命令但不执行" 的方式强制构建目标. 运行后, 你可以看到很多形如</p>
+<div class="highlight"><pre><span></span><code>gcc -O2 -MMD -Wall -Werror -I/home/user/ics2022/nemu/include
+-I/home/user/ics2022/nemu/src/engine/interpreter -I/home/use
+r/ics2022/nemu/src/isa/riscv32/include -O2    -D__GUEST_ISA__
+=riscv32  -c -o /home/user/ics2022/nemu/build/obj-riscv32-nem
+u-interpreter/src/utils/timer.o src/utils/timer.c
+</code></pre></div>
+<p>的输出, 这样你就很容易理解上述 Makefile 变量的值了:</p>
+<div class="highlight"><pre><span></span><code>$(CC) -&gt; gcc
+$@ -&gt; /home/user/ics2022/nemu/build/obj-riscv32-nemu-interpreter/src/utils/timer.o
+$&lt; -&gt; src/utils/timer.c
+$(CFLAGS) -&gt; 剩下的内容
+</code></pre></div>
+<p>于是你就可以根据上述输出结果和 Makefile 反推<code>$(CFLAGS)</code>的值是如何形成的. 因为编译每个文件的命令都很类似, 当你理解了一个源文件的编译之后, 你就能类推到其它源文件的编译过程了. 同理, 你也可以按照上述方法理解最后的链接命令.</p>
+<h3 id="_5">准备第一个客户程序<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>我们已经知道, NEMU 是一个用来执行客户程序的程序, 但客户程序一开始并不存在于客户计算机中. 我们需要将客户程序读入到客户计算机中, 这件事是 monitor 来负责的. 于是 NEMU 在开始运行的时候, 首先会调用<code>init_monitor()</code>函数 (在<code>nemu/src/monitor/monitor.c</code>中定义) 来进行一些和 monitor 相关的初始化工作.</p>
+<div class="admonition kconfig生成的宏与条件编译">
+<p class="admonition-title">Kconfig生成的宏与条件编译</p>
+<p>我们已经在上文提到过, kconfig 会根据配置选项的结果在 <code>nemu/include/generated/autoconf.h</code>中定义一些形如<code>CONFIG_xxx</code>的宏, 我们可以在 C 代码中通过条件编译的功能对这些宏进行测试, 来判断是否编译某些代码. 例如, 当<code>CONFIG_DEVICE</code>这个宏没有定义时, 设备相关的代码就无需进行编译.</p>
+<p>为了编写更紧凑的代码, 我们在<code>nemu/include/macro.h</code>中定义了一些专门用来对宏进行测试的宏. 例如<code>IFDEF(CONFIG_DEVICE, init_device());</code>表示, 如果定义了<code>CONFIG_DEVICE</code>, 才会调用<code>init_device()</code>函数; 而<code>MUXDEF(CONFIG_TRACE, "ON", "OFF")</code>则表示, 如果定义了<code>CONFIG_TRACE</code>, 则预处理结果为<code>"ON"</code>(<code>"OFF"</code>在预处理后会消失), 否则预处理结果为<code>"OFF"</code>.</p>
+<p>这些宏的功能非常神奇, 你知道这些宏是如何工作的吗?</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">为什么全部都是函数?</p>
+<p>阅读<code>init_monitor()</code>函数的代码, 你会发现里面全部都是函数调用. 按道理, 把相应的函数体在<code>init_monitor()</code>中展开也不影响代码的正确性. 相比之下, 在这里使用函数有什么好处呢?</p>
+<p>我们对这些初始化工作进行一些说明. <code>parse_args()</code>, <code>init_rand()</code>, <code>init_log()</code>和<code>init_mem()</code>并没有什么深奥的内容, 直接 RTFSC 就行.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">参数的处理过程</p>
+<p><code>parse_args()</code>中调用了一个你也许不太熟悉的函数<code>getopt_long()</code>, 框架代码通过它来对参数进行解析, 具体的行为可以查阅<code>man 3 getopt_long</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">参数的处理过程</p>
+<p>另外的一个问题是, 这些参数是从哪里来的呢?</p>
+</div>
+<p>接下来 monitor 会调用<code>init_isa()</code>函数 (在<code>nemu/src/isa/$ISA/init.c</code>中定义), 来进行一些 ISA 相关的初始化工作.</p>
+<p>第一项工作就是将一个内置的客户程序读入到内存中. 为了理解这项工作, 我们还需要理清三个问题:</p>
+<ol>
+<li>
+<p>客户程序是什么? 我们知道, 程序是由指令构成的, 而不同 ISA 的指令也各不相同 (想象一下用不同的语言来表达 "你好" 的意思), 因而程序本身肯定是 ISA 相关的. 因此, 我们把内置客户程序放在<code>nemu/src/isa/$ISA/init.c</code>中. 内置客户程序的行为非常简单, 它只包含少数几条指令, 甚至算不上在做一些有意义的事情.</p>
+</li>
+<li>
+<p>内存是什么? 我们可以把内存看作一段连续的存储空间, 而内存又是字节编址的 (即一个内存位置存放一个字节的数据), 在 C 语言中我们就很自然地使用一个<code>uint8_t</code>类型的数组来对内存进行模拟. NEMU 默认为客户计算机提供 128MB 的物理内存 (见<code>nemu/src/memory/paddr.c</code>中定义的<code>pmem</code>),</p>
+</li>
+<li>
+<p>需要将客户程序读入到内存的什么位置? 为了让客户计算机的 CPU 可以执行客户程序, 因此我们需要一种方式让客户计算机的 CPU 知道客户程序的位置. 我们采取一种最简单的方式: 约定. 具体地, 我们让 monitor 直接把客户程序读入到一个固定的内存位置<code>RESET_VECTOR</code>. <code>RESET_VECTOR</code>的值在<code>nemu/include/memory/paddr.h</code>中定义.</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">BIOS 和计算机启动</p>
+<p>我们知道内存是一种 RAM, 是一种易失性的存储介质, 这意味着计算机刚启动的时候, 内存中的数据都是无意义的; 而 BIOS 是固化在 ROM/Flash 中的, 它们都是非易失性的存储介质, BIOS 中的内容不会因为断电而丢失.</p>
+<p>因此在真实的计算机系统中, 计算机启动后首先会把控制权交给 BIOS, BIOS 经过一系列初始化工作之后, 再从磁盘中将有意义的程序读入内存中执行. 对这个过程的模拟需要了解很多超出本课程范围的细节, 我们在 PA 中做了简化: 采取约定的方式让 CPU 直接从约定的内存位置开始执行.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">初探操作系统启动</p>
+<p>你使用 windows 的时候, 开机过程一般都会播放相应的开机动画, 然后不知道怎么就进入登录画面了, 这显然不能满足 CSer 的求知欲. 事实上, 在 GNU/Linux 中, 你可以很容易得知操作系统在背后做了些什么. 键入<code>sudo dmesg</code>, 就可以输出操作系统的启动日志, 操作系统的行为一览无余.</p>
+<p>不过, 目前你的知识可能还无法理解其中的奥秘. 但你无需为此感到沮丧, 在 PA 的中后期, 你将会在 NEMU 上运行一个小型操作系统 Nanos-lite. 虽然和 GNU/Linux 相比, Nanos-lite 可以说是沧海一粟, 但你将会完全明白操作系统启动过程中的一些关键步骤, 操作系统的大门也将会为你敞开.</p>
+</div>
+<p><code>init_isa()</code>的第二项任务是初始化寄存器, 这是通过<code>restart()</code>函数来实现的. 在 CPU 中, 寄存器是一个结构化特征较强的存储部件, 在 C 语言中我们就很自然地使用相应的结构体来描述 CPU 的寄存器结构. 不同 ISA 的寄存器结构也各不相同, 为此我们把寄存器结构体<code>CPU_state</code>的定义放在<code>nemu/src/isa/$ISA/include/isa-def.h</code>中, 并在<code>nemu/src/cpu/cpu-exec.c</code>中定义一个全局变量<code>cpu</code>. 初始化寄存器的一个重要工作就是设置<code>cpu.pc</code>的初值, 我们需要将它设置成刚才加载客户程序的内存位置, 这样就可以让 CPU 从我们约定的内存位置开始执行客户程序了. 对于 mips32 和 riscv32, 它们的 0 号寄存器总是存放<code>0</code>, 因此我们也需要对其进行初始化.</p>
+<div class="admonition note">
+<p class="admonition-title">物理内存的起始地址</p>
+<p>x86 的物理内存是从 0 开始编址的, 但对于一些 ISA 来说却不是这样, 例如 mips32 和 riscv32 的物理地址均从<code>0x80000000</code>开始. 因此对于 mips32 和 riscv32, 其<code>CONFIG_MBASE</code>将会被定义成<code>0x80000000</code>. 将来 CPU 访问内存时, 我们会将 CPU 将要访问的内存地址映射到<code>pmem</code>中的相应偏移位置, 这是通过<code>nemu/src/memory/paddr.c</code>中的<code>guest_to_host()</code>函数实现的. 例如如果 mips32 的 CPU 打算访问内存地址<code>0x80000000</code>, 我们会让它最终访问<code>pmem[0]</code>, 从而可以正确访问客户程序的第一条指令. 这种机制有一个专门的名字, 叫地址映射, 在后续的 PA 中我们还会再遇到它.</p>
+</div>
+<p>对于 x86, 我们把寄存器结构体的实现作为作业. 为了检查你的实现是否正确, 我们在<code>init_isa()</code>中还调用了<code>reg_test()</code>函数 (在<code>nemu/src/isa/x86/reg.c</code>中定义). 具体会在下文的必做题中进行介绍.</p>
+<p>Monitor 读入客户程序并对寄存器进行初始化后, 这时内存的布局如下:</p>
+<div class="highlight"><pre><span></span><code>pmem:
+
+CONFIG_MBASE      RESET_VECTOR
+      |                 |
+      v                 v
+      -----------------------------------------------
+      |                 |                  |
+      |                 |    guest prog    |
+      |                 |                  |
+      -----------------------------------------------
+                        ^
+                        |
+                       pc
+</code></pre></div>
+<p>NEMU 返回到<code>init_monitor()</code>函数中, 继续调用<code>load_img()</code>函数 (在<code>nemu/src/monitor/monitor.c</code>中定义). 这个函数会将一个有意义的客户程序从<a href="https://en.wikipedia.org/wiki/Disk_image">镜像文件</a>读入到内存, 覆盖刚才的内置客户程序. 这个镜像文件是运行 NEMU 的一个可选参数, 在运行 NEMU 的命令中指定. 如果运行 NEMU 的时候没有给出这个参数, NEMU 将会运行内置客户程序.</p>
+<p>monitor 剩余的初始化工作我们会在后续实验内容中介绍, 目前你无需关心它们的细节, 最后 monitor 会调用<code>welcome()</code>函数输出欢迎信息. 现在你可以在<code>nemu/</code>目录下编译并运行 NEMU 了:</p>
+<div class="highlight"><pre><span></span><code>make run
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">实现 x86 的寄存器结构体</p>
+<p>如果你选择了 x86, 框架代码并没有正确地实现用于模拟 x86 寄存器的结构体<code>x86_CPU_state</code>, 现在你需要实现它了 (结构体的定义在<code>nemu/src/isa/x86/include/isa-def.h</code>中). 在<code>init_isa()</code>中调用的<code>reg_test()</code>函数会生成一些随机的数据,     对寄存器结构体的实现进行测试. 若实现不正确, 将会触发 assertion fail. 实现正确后, NEMU 将不会再触发 assertion fail,     而是输出上文提到的欢迎信息. 如果你选择的 ISA 不是 x86, 你可以忽略这道题.</p>
+<p>x86 的寄存器结构如下:</p>
+<div class="highlight"><pre><span></span><code> 31                23                15                7               0
++-----------------+-----------------+-----------------+-----------------+
+|                                  EAX       AH       AX      AL        |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  EDX       DH       DX      DL        |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  ECX       CH       CX      CL        |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  EBX       BH       BX      BL        |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  EBP                BP                |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  ESI                SI                |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  EDI                DI                |
+|-----------------+-----------------+-----------------+-----------------|
+|                                  ESP                SP                |
++-----------------+-----------------+-----------------+-----------------+
+</code></pre></div>
+<p>其中</p>
+<ul>
+<li><code>EAX</code>, <code>EDX</code>, <code>ECX</code>, <code>EBX</code>, <code>EBP</code>, <code>ESI</code>, <code>EDI</code>, <code>ESP</code>是 32 位寄存器;</li>
+<li><code>AX</code>, <code>DX</code>, <code>CX</code>, <code>BX</code>, <code>BP</code>, <code>SI</code>, <code>DI</code>, <code>SP</code>是 16 位寄存器;</li>
+<li><code>AL</code>, <code>DL</code>, <code>CL</code>, <code>BL</code>, <code>AH</code>, <code>DH</code>, <code>CH</code>, <code>BH</code>是 8 位寄存器.</li>
+</ul>
+<p>但它们在物理上并不是相互独立的, 例如<code>EAX</code>的低 16 位是<code>AX</code>, 而<code>AX</code>又分成<code>AH</code>和<code>AL</code>.    这样的结构有时候在处理不同长度的数据时能提供一些便利. 关于 x86 寄存器的更多细节, 请 RTFM.</p>
+<p>Hint: 使用匿名 union.</p>
+<div class="admonition tip">
+<p class="admonition-title">什么是匿名 union?</p>
+<p>你有这个疑问是很正常的, 但你接下来应该意识到要去 STFW 了.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">reg_test() 是如何测试你的实现的?</p>
+<p>阅读<code>reg_test()</code>的代码, 思考代码中的<code>assert()</code>条件是根据什么写出来的.</p>
+</div>
+</div>
+<p>运行 NEMU 之后你应该能看到相应的欢迎信息, 以及你选择的 ISA. 请务必确认输出的 ISA 信息与你选择的 ISA 一致. 不过你会看到如下的错误信息:</p>
+<div class="highlight"><pre><span></span><code>[src/monitor/monitor.c:20 welcome] Exercise: Please remove me in the source code and compile NEMU again.
+riscv32-nemu-interpreter: src/monitor/monitor.c:21: welcome: Assertion `0&#39; failed.
+</code></pre></div>
+<p>事实上, 我们已经在 PA0 的最后介绍过这个错误了. 作为一个练习, 你需要根据错误信息回溯到报告错误的代码中, 然后删除相应代码. 删除后重新编译 NEMU, 你将看到这个错误不再出现.</p>
+<h3 id="_6">运行第一个客户程序<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>Monitor 的初始化工作结束后, <code>main()</code>函数会继续调用<code>engine_start()</code>函数 (在<code>nemu/src/engine/interpreter/init.c</code>中定义). 代码会进入简易调试器 (Simple Debugger) 的主循环<code>sdb_mainloop()</code> (在<code>nemu/src/monitor/sdb/sdb.c</code>中定义), 并输出 NEMU 的命令提示符:</p>
+<div class="highlight"><pre><span></span><code>(nemu)
+</code></pre></div>
+<p>简易调试器是 monitor 的核心功能, 我们可以在命令提示符中输入命令, 对客户计算机的运行状态进行监控和调试. 框架代码已经实现了几个简单的命令, 它们的功能和 GDB 是很类似的.</p>
+<p>在命令提示符后键入<code>c</code>后, NEMU 开始进入指令执行的主循环<code>cpu_exec()</code> (在<code>nemu/src/cpu/cpu-exec.c</code>中定义). <code>cpu_exec()</code>又会调用<code>execute()</code>, 后者模拟了 CPU 的工作方式: 不断执行指令. 具体地, 代码将在一个 for 循环中不断调用<code>exec_once()</code>函数, 这个函数的功能就是我们在上一小节中介绍的内容: 让 CPU 执行当前 PC 指向的一条指令, 然后更新 PC.</p>
+<div class="admonition note">
+<p class="admonition-title">究竟要执行多久?</p>
+<p>在<code>cmd_c()</code>函数中, 调用<code>cpu_exec()</code>的时候传入了参数<code>-1</code>, 你知道这是什么意思吗?</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">潜在的威胁 (建议二周目思考)</p>
+<p>" 调用<code>cpu_exec()</code>的时候传入了参数<code>-1</code>", 这一做法属于未定义行为吗? 请查阅 C99 手册确认你的想法.</p>
+</div>
+<p>不同的 ISA 有着不同的指令格式和含义, 因此执行指令的代码自然是 ISA 相关的. 这部分代码位于<code>nemu/src/isa/$ISA/inst.c</code>. 关于指令执行的详细说明需要涉及很多细节, 目前你无需关心, 我们将会在 PA2 中进行说明.</p>
+<p>由于刚才我们运行 NEMU 的时候并未给出客户程序的镜像文件, 此时 NEMU 将会运行上文提到的内置客户程序. NEMU 将不断执行指令, 直到遇到以下情况之一, 才会退出指令执行的循环:</p>
+<ul>
+<li>达到要求的循环次数.</li>
+<li>客户程序执行了<code>nemu_trap</code>指令. 这是一条虚构的特殊指令, 它是为了在 NEMU 中让客户程序指示执行的结束而加入的, NEMU 在 ISA 手册中选择了一些用于调试的指令, 并将<code>nemu_trap</code>的特殊含义赋予它们. 例如在 riscv32 的手册中, NEMU 选择了<code>ebreak</code>指令来充当<code>nemu_trap</code>. 为了表示客户程序是否成功结束, <code>nemu_trap</code>指令还会接收一个表示结束状态的参数. 当客户程序执行了这条指令之后, NEMU 将会根据这个结束状态参数来设置 NEMU 的结束状态, 并根据不同的状态输出不同的结束信息, 主要包括<ul>
+<li><code>HIT GOOD TRAP</code> - 客户程序正确地结束执行</li>
+<li><code>HIT BAD TRAP</code> - 客户程序错误地结束执行</li>
+<li><code>ABORT</code> - 客户程序意外终止, 并未结束执行</li>
+</ul>
+</li>
+</ul>
+<p>当你看到 NEMU 输出类似以下的内容时 (不同 ISA 的 pc 输出值会有所不同):</p>
+<div class="highlight"><pre><span></span><code>nemu: HIT GOOD TRAP at pc = 0x8000000c
+</code></pre></div>
+<p>说明客户程序已经成功地结束运行. NEMU 会在<code>cpu_exec()</code>函数的最后打印执行的指令数目和花费的时间, 并计算出指令执行的频率. 但由于内置客户程序太小, 执行很快就结束了, 目前无法计算出有意义的频率, 将来运行一些复杂的程序时, 此处输出的频率可以用于粗略地衡量 NEMU 的性能.</p>
+<p>退出<code>cpu_exec()</code>之后, NEMU 将返回到<code>sdb_mainloop()</code>, 等待用户输入命令. 但为了再次运行程序, 你需要键入<code>q</code>退出 NEMU, 然后重新运行.</p>
+<div class="admonition note">
+<p class="admonition-title">谁来指示程序的结束?</p>
+<p>在程序设计课上老师告诉你, 当程序执行到<code>main()</code>函数返回处的时候, 程序就退出了, 你对此深信不疑. 但你是否怀疑过, 凭什么程序执行到<code>main()</code>函数的返回处就结束了? 如果有人告诉你, 程序设计课上老师的说法是错的, 你有办法来证明 / 反驳吗? 如果你对此感兴趣, 请在互联网上搜索相关内容.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">有始有终 (建议二周目思考)</p>
+<p>对于 GNU/Linux 上的一个程序, 怎么样才算开始? 怎么样才算是结束? 对于在 NEMU 中运行的程序, 问题的答案又是什么呢?</p>
+<p>与此相关的问题还有: NEMU 中为什么要有<code>nemu_trap</code>? 为什么要有 monitor?</p>
+</div>
+<p>最后我们聊聊代码中一些值得注意的地方.</p>
+<ul>
+<li>
+<p>三个对调试有用的宏 (在<code>nemu/include/debug.h</code>中定义)</p>
+<ul>
+<li><code>Log()</code>是<code>printf()</code>的升级版, 专门用来输出调试信息, 同时还会输出使用<code>Log()</code>所在的源文件, 行号和函数. 当输出的调试信息过多的时候, 可以很方便地定位到代码中的相关位置</li>
+<li><code>Assert()</code>是<code>assert()</code>的升级版, 当测试条件为假时, 在 assertion fail 之前可以输出一些信息</li>
+<li><code>panic()</code>用于输出信息并结束程序, 相当于无条件的 assertion fail</li>
+</ul>
+<p>代码中已经给出了使用这三个宏的例子, 如果你不知道如何使用它们, RTFSC.</p>
+</li>
+<li>
+<p>内存通过在<code>nemu/src/memory/paddr.c</code>中定义的大数组<code>pmem</code>来模拟. 在客户程序运行的过程中, 总是使用<code>vaddr_read()</code>和<code>vaddr_write()</code> (在<code>nemu/src/memory/vaddr.c</code>中定义) 来访问模拟的内存. vaddr, paddr 分别代表虚拟地址和物理地址. 这些概念在将来才会用到, 目前不必深究, 但从现在开始保持接口的一致性可以在将来避免一些不必要的麻烦.</p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">理解框架代码</p>
+<p>你需要结合上述文字理解 NEMU 的框架代码.</p>
+<p>如果你不知道 "怎么才算是看懂了框架代码", 你可以先尝试进行后面的任务. 如果发现不知道如何下手, 再回来仔细阅读这一页面. 理解框架代码是一个螺旋上升的过程, 不同的阶段有不同的重点. 你不必因为看不懂某些细节而感到沮丧, 更不要试图一次把所有代码全部看明白.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">RTFSC != 盯着代码看</p>
+<p>你很可能是第一次接触到这么多源文件的项目, 看代码的时候可能会感到很迷茫: 不知道函数的定义在哪个文件, 不理解函数的功能是什么,     不清楚某段代码的行为具体如何... 同时你也很可能沿用以前看代码最原始的方式: 用眼睛看. 你坚持看了一段时间, 发现还是没什么收获,     于是你开始感到沮丧...</p>
+<p>对于只有一两个源文件, 代码只有几百行的项目, 直接 RTFSC 还是有效果的. 但如果源文件更多, 代码量更大,     你很快就会发现这种做法效率很低, 这是因为人脑的短期记忆能力是很有限的, 即使是静态的代码也无法完全记得住,    更何况程序的动态行为是一个巨大的状态机, 你的大脑在一段时间内只能模拟出这个状态机很小的一部分.</p>
+<p>有没有工具能够帮你模拟这个巨大的状态机呢? 这时我们在 PA0 里面提到的一个工具就派上用场了, 它就是 GDB. 在 GDB 中,    我们可以通过单步执行的方式让程序一次执行一条指令, 相当于让状态机一次只前进一步, 这样我们就可以观察程序任意时刻的状态了!    而且状态机前进的轨迹就是程序执行的真实顺序, 于是你就可以一边运行程序一边理解程序的行为了.   这对于一些指针相关的代码有着不错的效果, 尤其是函数指针, 因为你从静态代码上很可能看不出来程序运行的时候这个指针会指向哪个函数.</p>
+<p>GDB 还自带一个叫 TUI 的简单界面. 在一个高度较高的窗口中运行 GDB 后, 输入<code>layout split</code>就可以切换到 TUI,    这样你就可以同时从源代码和指令的角度来观察程序的行为了. 不过为了看到源代码, 你还需要在编译 NEMU 时添加 GDB 调试信息,    具体操作见下面的提示框. 如果你想了解 TUI 的更多内容, STFW.</p>
+<p>为了帮助你更高效地 RTFSC, 你最好通过 RTFM 和 STFW 多认识 GDB 的一些命令和操作, 比如:</p>
+<ul>
+<li>单步执行进入你感兴趣的函数</li>
+<li>单步执行跳过你不感兴趣的函数 (例如库函数)</li>
+<li>运行到函数末尾</li>
+<li>打印变量或寄存器的值</li>
+<li>扫描内存</li>
+<li>查看调用栈</li>
+<li>设置断点</li>
+<li>设置监视点</li>
+</ul>
+<p>如果你之前没有使用过 GDB, 然后在 PA0 中又跳过了 GDB 相关的内容, 现在你就要吃偷懒的亏了.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">为 NEMU 编译时添加 GDB 调试信息</p>
+<p>enuconfig 已经为大家准备好相应选项了, 你只需要打开它:</p>
+<div class="highlight"><pre><span></span><code>Build Options
+  [*] Enable debug information
+</code></pre></div>
+<p>然后清除编译结果并重新编译即可. 尝试阅读相关代码, 理解开启上述 menuconfig 选项后会导致编译 NEMU 时的选项产生什么变化.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">优美地退出</p>
+<p>为了测试大家是否已经理解框架代码, 我们给大家设置一个练习: 如果在运行 NEMU 之后直接键入<code>q</code>退出, 你会发现终端输出了一些错误信息. 请分析这个错误信息是什么原因造成的, 然后尝试在 NEMU 中修复它.</p>
+</div>
+<h3 id="_7">就是这么简单<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>事实上, TRM 的实现已经都蕴含在上述的介绍中了.</p>
+<ul>
+<li>存储器是个在<code>nemu/src/memory/paddr.c</code>中定义的大数组</li>
+<li>PC 和通用寄存器都在<code>nemu/src/isa/$ISA/include/isa-def.h</code>中的结构体中定义</li>
+<li>加法器在... 嗯, 这部分框架代码有点复杂, 不过它并不影响我们对 TRM 的理解, 我们还是在 PA2 里面再介绍它吧</li>
+<li>TRM 的工作方式通过<code>cpu_exec()</code>和<code>exec_once()</code>体现</li>
+</ul>
+<p>在 NEMU 中, 我们只需要一些很基础的 C 语言知识就可以理解最简单的计算机的工作方式, 真应该感谢先驱啊.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
