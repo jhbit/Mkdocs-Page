@@ -20,7 +20,7 @@
     
     
       
-        <title>基础设施 - MMY's Notebook</title>
+        <title>基础设施 · GitBook - MMY's Notebook</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              基础设施
+              基础设施 · GitBook
             
           </span>
         </div>
@@ -865,6 +865,28 @@
 <p>为了让简易调试器易于使用, NEMU 通过<code>readline</code>库与用户交互, 使用<code>readline()</code>函数从键盘上读入命令. 与<code>gets()</code>相比, <code>readline()</code>提供了 "行编辑" 的功能, 最常用的功能就是通过上, 下方向键翻阅历史记录. 事实上, shell 程序就是通过<code>readline()</code>读入命令的. 关于<code>readline()</code>的功能和返回值等信息, 请查阅</p>
 <div class="highlight"><pre><span></span><code>man readline
 </code></pre></div>
+<details class="note">
+<summary>readline函数( monitor/sdb/sdb.c )与代码</summary>
+<div class="highlight"><pre><span></span><code><span class="cm">/* We use the `readline&#39; library to provide more flexibility to read from stdin. */</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="nf">rl_gets</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">line_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">line_read</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">free</span><span class="p">(</span><span class="n">line_read</span><span class="p">);</span>
+<span class="w">   </span><span class="n">line_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="n">line_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readline</span><span class="p">(</span><span class="s">&quot;(nemu) &quot;</span><span class="p">);</span>
+
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">line_read</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">*</span><span class="n">line_read</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">add_history</span><span class="p">(</span><span class="n">line_read</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">line_read</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <p>从键盘上读入命令后, NEMU 需要解析该命令, 然后执行相关的操作. 解析命令的目的是识别命令中的参数, 例如在<code>si 10</code>的命令中识别出<code>si</code>和<code>10</code>, 从而得知这是一条单步执行 10 条指令的命令. 解析命令的工作是通过一系列的字符串处理函数来完成的, 例如框架代码中的<code>strtok()</code>. <code>strtok()</code>是 C 语言中的标准库函数, 如果你从来没有使用过<code>strtok()</code>, 并且打算继续使用框架代码中的<code>strtok()</code>来进行命令的解析, 请务必查阅</p>
 <div class="highlight"><pre><span></span><code>man strtok
 </code></pre></div>
@@ -872,11 +894,11 @@
 <div class="highlight"><pre><span></span><code>man 3 str&lt;TAB&gt;&lt;TAB&gt;
 </code></pre></div>
 <p>其中<code>&lt;TAB&gt;</code>代表键盘上的 TAB 键. 你会看到很多以 str 开头的函数, 其中有你应该很熟悉的<code>strlen()</code>, <code>strcpy()</code>等函数. 你最好都先看看这些字符串处理函数的 manual page, 了解一下它们的功能, 因为你很可能会用到其中的某些函数来帮助你解析命令. 当然你也可以编写你自己的字符串处理函数来解析命令.</p>
-<p>!!! "如何测试字符串处理函数?"</p>
-<pre><code>你可能会抑制不住编码的冲动: 与其 RTFM, 还不如自己写. 如果真是这样, 你可以考虑一下, 你会如何测试自己编写的字符串处理函数?
-
-如果你愿意 RTFM, 也不妨思考一下这个问题, 因为你会在 PA2 中遇到类似的问题.
-</code></pre>
+<div class="admonition note">
+<p class="admonition-title">如何测试字符串处理函数?</p>
+<p>你可能会抑制不住编码的冲动: 与其 RTFM, 还不如自己写. 如果真是这样, 你可以考虑一下, 你会如何测试自己编写的字符串处理函数?</p>
+<p>如果你愿意 RTFM, 也不妨思考一下这个问题, 因为你会在 PA2 中遇到类似的问题.</p>
+</div>
 <p>另外一个值得推荐的字符串处理函数是<code>sscanf()</code>, 它的功能和<code>scanf()</code>很类似, 不同的是<code>sscanf()</code>可以从字符串中读入格式化的内容, 使用它有时候可以很方便地实现字符串的解析. 如果你从来没有使用过它们, RTFM, 或者 STFW.</p>
 <h3 id="_3">单步执行<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>单步执行的功能十分简单, 而且框架代码中已经给出了模拟 CPU 执行方式的函数, 你只要使用相应的参数去调用它就可以了. 如果你仍然不知道要怎么做, RTFSC.</p>
@@ -904,16 +926,15 @@ void isa_reg_display(void);
 <p>所以, 接受现实吧: 代码出错是很正常的, 你需要从当年程序设计实验里感受到的那种 "代码可以一次编译通过成功运行" 的幻觉中清醒过来. 重要的是, 我们需要使用正确的方法和工具来帮助我们测试和调试, 最终让程序运行起来. 一个例子是版本控制工具<code>git</code>, 它可以跟踪代码的变化, 从而发现 bug 是何时引入的, 而且能够在必要的时候回退到上一个程序可以运行的版本.</p>
 <p>总之, 只有掌握正确的方法和工具, 才能真正驱散心中对 bug 的恐惧.</p>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">温馨提示</p>
-<p>PA1阶段1到此结束</p>
-</div>
 
 
 
 
 
 
+
+  
+  
 
 
 

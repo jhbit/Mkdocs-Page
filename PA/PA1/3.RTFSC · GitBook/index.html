@@ -964,6 +964,7 @@
 
   <h1>源码架构</h1>
 
+<hr />
 <h2 id="rtfsc">RTFSC<a class="headerlink" href="#rtfsc" title="Permanent link">&para;</a></h2>
 <p>事实上, TRM 的实现是如此的简单, 以至于框架代码已经实现它了. 接下来让我们看看, 构成 TRM 的那些数字电路, 在 NEMU 的 C 代码中都是何方神圣. 为了方便叙述, 我们将在 NEMU 中模拟的计算机称为 "客户 (guest) 计算机", 在 NEMU 中运行的程序称为 "客户程序".</p>
 <h3 id="_1">框架代码初探<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
@@ -1057,13 +1058,410 @@
 <p>在真正开始阅读代码之前, 我们先来简单介绍一下 NEMU 项目中的配置系统和项目构建.</p>
 <h4 id="kconfig">配置系统 kconfig<a class="headerlink" href="#kconfig" title="Permanent link">&para;</a></h4>
 <p>在一个有一定规模的项目中, 可配置选项的数量可能会非常多, 而且配置选项之间可能会存在关联, 比如打开配置选项 A 之后, 配置选项 B 就必须是某个值. 直接让开发者去管理这些配置选项是很容易出错的, 比如修改选项 A 之后, 可能会忘记修改和选项 A 有关联的选项 B. 配置系统的出现则是为了解决这个问题.</p>
-<p>NEMU 中的配置系统位于<code>nemu/tools/kconfig</code>, 它来源于 GNU/Linux 项目中的 kconfig, 我们进行了少量简化. kconfig 定义了一套简单的语言, 开发者可以使用这套语言来编写 "配置描述文件". 在 "配置描述文件" 中, 开发者可以描述:</p>
+<p>NEMU 中的配置系统位于<code>nemu/tools/kconfig</code>, 它来源于 GNU/Linux 项目中的 kconfig, 我们进行了少量简化. 
+<div class="highlight"><pre><span></span><code>future-is-bright:~/cs/pa/ics2022/nemu/tools/kconfig$ ls -l
+total 244
+drwxrwxr-x 4 future   4096  build
+-rw-rw-r-- 1 future  16112  conf.c
+-rw-rw-r-- 1 future  27837  confdata.c
+-rw-rw-r-- 1 future  30726  expr.c
+-rw-rw-r-- 1 future   9873  expr.h
+-rw-rw-r-- 1 future   9320  lexer.l
+-rw-rw-r-- 1 future   3749  list.h
+-rw-rw-r-- 1 future   4413  lkc.h
+-rw-rw-r-- 1 future   1929  lkc_proto.h
+drwxrwxr-x 2 future   4096  lxdialog
+-rw-rw-r-- 1 future    708  Makefile
+-rw-rw-r-- 1 future  28006  mconf.c
+-rw-rw-r-- 1 future  22753  menu.c
+-rw-rw-r-- 1 future  15694  parser.y
+-rw-rw-r-- 1 future  11254  preprocess.c
+-rw-rw-r-- 1 future  29322  symbol.c
+-rw-rw-r-- 1 future   2210  util.c
+</code></pre></div>
+kconfig 定义了一套简单的语言, 开发者可以使用这套语言来编写 "配置描述文件". 在 "配置描述文件" 中, 开发者可以描述:</p>
 <ul>
 <li>配置选项的属性, 包括类型, 默认值等</li>
 <li>不同配置选项之间的关系</li>
 <li>配置选项的层次关系</li>
 </ul>
-<p>在 NEMU 项目中, "配置描述文件" 的文件名都为<code>Kconfig</code>, 如<code>nemu/Kconfig</code>. 当你键入<code>make menuconfig</code>的时候, 背后其实发生了如下事件:</p>
+<p>在 NEMU 项目中, "配置描述文件" 的文件名都为<code>Kconfig</code>, 如<code>nemu/Kconfig</code>. </p>
+<details class="note">
+<summary>nemu/Kconfig代码</summary>
+<div class="highlight"><pre><span></span><code><span class="k">mainmenu</span><span class="w"> </span><span class="s2">&quot;NEMU Configuration Menu&quot;</span>
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Base ISA&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>ISA_riscv32
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA_x86
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;x86&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA_mips32
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;mips32&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA_riscv32
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;riscv32&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA_riscv64
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;riscv64&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA_loongarch32r
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;loongarch32r&quot;</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;x86&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_x86
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;mips32&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_mips32
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;riscv32&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_riscv32
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;riscv64&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_riscv64
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;loongarch32r&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_loongarch32r
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ISA64
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>ISA_riscv64
+<span class="w">        </span><span class="nb">bool</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>y
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;NEMU execution engine&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>ENGINE_INTERPRETER
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ENGINE_INTERPRETER
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Interpreter&quot;</span>
+<span class="w">        </span><span class="k">help</span>
+<span class="sd">          Interpreter guest instructions one by one.</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ENGINE
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;interpreter&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>ENGINE_INTERPRETER
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Running mode&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>MODE_SYSTEM
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>MODE_SYSTEM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;System mode&quot;</span>
+<span class="w">        </span><span class="k">help</span>
+<span class="sd">          Support full-system functionality, including privileged instructions, MMU and devices.</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Build target&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>TARGET_NATIVE_ELF
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TARGET_NATIVE_ELF
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Executable on Linux Native&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TARGET_SHARE
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Shared object (used as REF for differential testing)&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TARGET_AM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Application on Abstract-Machine (DON&#39;T CHOOSE)&quot;</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">menu</span><span class="w"> </span><span class="s2">&quot;Build Options&quot;</span>
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Compiler&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>CC_GCC
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_GCC
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;gcc&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_GPP
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;g++&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_CLANG
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span><span class="o">!</span>TARGET_AM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;clang&quot;</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;gcc&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_GCC
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;g++&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_GPP
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;clang&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_CLANG
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Optimization Level&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>CC_O2
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_O0
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;O0&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_O1
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;O1&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_O2
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;O2&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_O3
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;O3&quot;</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_OPT
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;-O0&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_O0
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;-O1&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_O1
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;-O2&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_O2
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;-O3&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>CC_O3
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_LTO
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span><span class="o">!</span>TARGET_AM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable link-time optimization&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>n
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_DEBUG
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable debug information&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>n
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>CC_ASAN
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>MODE_SYSTEM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable address sanitizer&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>n
+<span class="w">    </span><span class="k">endmenu</span>
+
+<span class="w">    </span><span class="k">menu</span><span class="w"> </span><span class="s2">&quot;Testing and Debugging&quot;</span>
+
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TRACE
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable tracer&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>y
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TRACE_START
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>TRACE
+<span class="w">        </span><span class="nb">int</span><span class="w"> </span><span class="s2">&quot;When tracing is enabled (unit: number of instructions)&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TRACE_END
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>TRACE
+<span class="w">        </span><span class="nb">int</span><span class="w"> </span><span class="s2">&quot;When tracing is disabled (unit: number of instructions)&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="mi">10000</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ITRACE
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>TRACE<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>TARGET_NATIVE_ELF<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ENGINE_INTERPRETER
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable instruction tracer&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>y
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>ITRACE_COND
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>ITRACE
+<span class="w">        </span><span class="nb">string</span><span class="w"> </span><span class="s2">&quot;Only trace instructions when the condition is true&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
+
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>TARGET_NATIVE_ELF
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable differential testing&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>n
+<span class="w">        </span><span class="k">help</span>
+<span class="sd">          Enable differential testing with a reference design.</span>
+<span class="sd">          Note that this will significantly reduce the performance of NEMU.</span>
+
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Reference design&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>DIFFTEST_REF_SPIKE<span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_riscv64<span class="w"> </span><span class="o">||</span><span class="w"> </span>ISA_riscv32
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>DIFFTEST_REF_KVM<span class="w"> </span><span class="k">if</span><span class="w"> </span>ISA_x86
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>DIFFTEST_REF_QEMU
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span>DIFFTEST
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST_REF_QEMU
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;QEMU, communicate with socket&quot;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>ISA_riscv64<span class="w"> </span><span class="o">||</span><span class="w"> </span>ISA_riscv32
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST_REF_SPIKE
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Spike&quot;</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>ISA_x86
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST_REF_KVM
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;KVM&quot;</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST_REF_PATH
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;tools/qemu-diff&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_QEMU
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;tools/kvm-diff&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_KVM
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;tools/spike-diff&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_SPIKE
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>DIFFTEST_REF_NAME
+<span class="w">        </span><span class="nb">string</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;qemu&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_QEMU
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;kvm&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_KVM
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;spike&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>DIFFTEST_REF_SPIKE
+<span class="w">        </span><span class="k">default</span><span class="w"> </span><span class="s2">&quot;none&quot;</span>
+<span class="w">    </span><span class="k">endmenu</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>MODE_SYSTEM
+<span class="w">    </span><span class="k">source</span><span class="w"> </span><span class="s2">&quot;src/memory/Kconfig&quot;</span>
+<span class="w">    </span><span class="k">source</span><span class="w"> </span><span class="s2">&quot;src/device/Kconfig&quot;</span>
+<span class="w">    </span><span class="k">endif</span>
+
+
+<span class="w">    </span><span class="k">menu</span><span class="w"> </span><span class="s2">&quot;Miscellaneous&quot;</span>
+<span class="w">    </span><span class="k">choice</span>
+<span class="w">        </span><span class="k">depends on</span><span class="w"> </span><span class="o">!</span>TARGET_AM
+<span class="w">        </span><span class="k">prompt</span><span class="w"> </span><span class="s2">&quot;Host timer&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>TIMER_GETTIMEOFDAY
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TIMER_GETTIMEOFDAY
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;gettimeofday&quot;</span>
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>TIMER_CLOCK_GETTIME
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;clock_gettime&quot;</span>
+<span class="w">    </span><span class="k">endchoice</span>
+
+<span class="w">    </span><span class="k">config</span><span class="w"> </span>RT_CHECK
+<span class="w">        </span><span class="nb">bool</span><span class="w"> </span><span class="s2">&quot;Enable runtime checking&quot;</span>
+<span class="w">        </span><span class="k">default</span><span class="w"> </span>y
+
+<span class="w">    </span><span class="k">endmenu</span>
+</code></pre></div>
+</details>
+<p>当你键入<code>make menuconfig</code>的时候, 背后其实发生了如下事件:</p>
+<details class="tip">
+<summary>关于make menuconfig命令</summary>
+<div class="highlight"><pre><span></span><code><span class="err">在/nemu下运行make</span><span class="w"> </span><span class="err">menuconfig的时候，工具首先寻找/nemu下的Makefile。</span><span class="w">  </span>
+
+<span class="err">/nemu/Makefile中有这么一行：</span>
+
+<span class="c"># Include rules for menuconfig include</span>
+<span class="k">$(</span><span class="nv">NEMU_HOME</span><span class="k">)</span><span class="err">/scripts/config.mk</span>
+
+<span class="err">当</span><span class="w"> </span><span class="err">make解析</span><span class="w"> </span><span class="err">Makefile</span><span class="w"> </span><span class="err">时，遇到</span><span class="w"> </span><span class="err">include</span><span class="w"> </span><span class="err">指令，它会立即暂停解析当前的</span><span class="w"> </span><span class="err">Makefile，转而去加载并解析被</span><span class="w"> </span><span class="err">include</span><span class="w"> </span><span class="err">的文件。当</span><span class="w"> </span><span class="err">make</span><span class="w"> </span><span class="err">解析到</span><span class="w"> </span><span class="err">scripts/config.mk文件时，它会发现以下内容：</span>
+
+<span class="nf">menuconfig</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">MCONF</span><span class="k">)</span> <span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span> <span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span>
+<span class="k">$(</span><span class="nv">Q</span><span class="k">)$(</span><span class="nv">MCONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">Kconfig</span><span class="k">)</span>
+<span class="k">$(</span><span class="nv">Q</span><span class="k">)$(</span><span class="nv">CONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">silent</span><span class="k">)</span><span class="w"> </span><span class="err">--syncconfig</span><span class="w"> </span><span class="k">$(</span><span class="nv">Kconfig</span><span class="k">)</span>
+
+<span class="w"> </span><span class="err">这一段就是</span><span class="w"> </span><span class="err">menuconfig</span><span class="w"> </span><span class="err">目标真正的定义。它告诉</span><span class="w"> </span><span class="err">make：</span>
+<span class="w"> </span><span class="err">依赖项</span><span class="w"> </span><span class="err">(</span><span class="k">$(</span><span class="nv">MCONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span><span class="err">)：在执行</span><span class="w"> </span><span class="err">menuconfig</span><span class="w"> </span><span class="err">的命令之前，必须确保</span><span class="w"> </span><span class="k">$(</span><span class="nv">MCONF</span><span class="k">)</span><span class="w"> </span><span class="err">(mconf</span><span class="w"> </span><span class="err">可执行文件),</span><span class="w"> </span><span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span><span class="w"> </span><span class="err">(conf</span><span class="w"> </span><span class="err">可执行文件)</span><span class="w"> </span><span class="err">和</span><span class="w"> </span><span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span><span class="w"> </span><span class="err">(fixdep</span><span class="w"> </span><span class="err">可执行文件)</span><span class="w"> </span><span class="err">都已经存在且是最新的。如果它们不存在，make</span><span class="w"> </span><span class="err">会去寻找并执行对应的规则来编译它们。</span>
+<span class="w"> </span><span class="err">命令</span><span class="w"> </span><span class="err">(</span><span class="k">$(</span><span class="nv">Q</span><span class="k">)$(</span><span class="nv">MCONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">Kconfig</span><span class="k">)</span><span class="w"> </span><span class="err">和</span><span class="w"> </span><span class="k">$(</span><span class="nv">Q</span><span class="k">)$(</span><span class="nv">CONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">silent</span><span class="k">)</span><span class="w"> </span><span class="err">--syncconfig</span><span class="w"> </span><span class="k">$(</span><span class="nv">Kconfig</span><span class="k">)</span><span class="err">)：这是</span><span class="w"> </span><span class="err">make</span><span class="w"> </span><span class="err">menuconfig实际执行的步骤。</span>
+<span class="w"> </span><span class="err">关于</span><span class="k">$(</span><span class="nv">MCONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span><span class="err">等宏的相关定义都在nemu/script/config.mk里被定义。</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>/nemu/script/config.mk代码</summary>
+<div class="highlight"><pre><span></span><code><span class="nv">COLOR_RED</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;\033[1;31m&quot;</span><span class="k">)</span>
+<span class="nv">COLOR_END</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;\033[0m&quot;</span><span class="k">)</span>
+
+<span class="cp">ifeq ($(wildcard .config),)</span>
+<span class="nf">$(warning $(COLOR_RED)Warning</span><span class="o">:</span><span class="w"> </span>.<span class="n">config</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exists</span>!<span class="k">$(</span><span class="nv">COLOR_END</span><span class="k">)</span>)
+<span class="k">$(</span><span class="nv">warning</span> <span class="k">$(</span><span class="nv">COLOR_RED</span><span class="k">)</span><span class="nv">To</span> <span class="nv">build</span> <span class="nv">the</span> <span class="nv">project</span>, <span class="nv">first</span> <span class="nv">run</span> &#39;<span class="nv">make</span> <span class="nv">menuconfig</span>&#39;<span class="nv">.</span><span class="k">$(</span><span class="nv">COLOR_END</span><span class="k">))</span>
+<span class="cp">endif</span>
+
+<span class="nv">Q</span><span class="w">            </span><span class="o">:=</span><span class="w"> </span>@
+<span class="nv">KCONFIG_PATH</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>NEMU_HOME<span class="k">)</span>/tools/kconfig
+<span class="nv">FIXDEP_PATH</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>NEMU_HOME<span class="k">)</span>/tools/fixdep
+<span class="nv">Kconfig</span><span class="w">      </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>NEMU_HOME<span class="k">)</span>/Kconfig
+<span class="nv">rm-distclean</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>include/generated<span class="w"> </span>include/config<span class="w"> </span>.config<span class="w"> </span>.config.old
+<span class="nv">silent</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-s
+
+<span class="nv">CONF</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>KCONFIG_PATH<span class="k">)</span>/build/conf
+<span class="nv">MCONF</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>KCONFIG_PATH<span class="k">)</span>/build/mconf
+<span class="nv">FIXDEP</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>FIXDEP_PATH<span class="k">)</span>/build/fixdep
+
+<span class="nf">$(CONF)</span><span class="o">:</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)$(</span>MAKE<span class="k">)</span><span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>-C<span class="w"> </span><span class="k">$(</span>KCONFIG_PATH<span class="k">)</span><span class="w"> </span><span class="nv">NAME</span><span class="o">=</span>conf
+
+<span class="nf">$(MCONF)</span><span class="o">:</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)$(</span>MAKE<span class="k">)</span><span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>-C<span class="w"> </span><span class="k">$(</span>KCONFIG_PATH<span class="k">)</span><span class="w"> </span><span class="nv">NAME</span><span class="o">=</span>mconf
+
+<span class="nf">$(FIXDEP)</span><span class="o">:</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)$(</span>MAKE<span class="k">)</span><span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>-C<span class="w"> </span><span class="k">$(</span>FIXDEP_PATH<span class="k">)</span>
+
+<span class="nf">menuconfig</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">MCONF</span><span class="k">)</span> <span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span> <span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)$(</span>MCONF<span class="k">)</span><span class="w"> </span><span class="k">$(</span>Kconfig<span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)$(</span>CONF<span class="k">)</span><span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>--syncconfig<span class="w"> </span><span class="k">$(</span>Kconfig<span class="k">)</span>
+
+<span class="nf">savedefconfig</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)</span>$&lt;<span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>--<span class="nv">$@</span><span class="o">=</span>configs/defconfig<span class="w"> </span><span class="k">$(</span>Kconfig<span class="k">)</span>
+
+<span class="nf">%defconfig</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">CONF</span><span class="k">)</span> <span class="k">$(</span><span class="nv">FIXDEP</span><span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)</span>$&lt;<span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>--defconfig<span class="o">=</span>configs/<span class="nv">$@</span><span class="w"> </span><span class="k">$(</span>Kconfig<span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>Q<span class="k">)</span>$&lt;<span class="w"> </span><span class="k">$(</span>silent<span class="k">)</span><span class="w"> </span>--syncconfig<span class="w"> </span><span class="k">$(</span>Kconfig<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">menuconfig</span> <span class="n">savedefconfig</span> <span class="n">defconfig</span>
+
+<span class="c"># Help text used by make help</span>
+<span class="nf">help</span><span class="o">:</span>
+<span class="w">    </span>@echo<span class="w">  </span><span class="s1">&#39;  menuconfig      - Update current config utilising a menu based program&#39;</span>
+<span class="w">    </span>@echo<span class="w">  </span><span class="s1">&#39;  savedefconfig   - Save current config as configs/defconfig (minimal config)&#39;</span>
+
+<span class="nf">distclean</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
+<span class="w">    </span>-@rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>rm-distclean<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">help</span> <span class="n">distclean</span>
+
+<span class="cp">define call_fixdep</span>
+<span class="w">    </span>@<span class="k">$(</span>FIXDEP<span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="m">1</span><span class="k">)</span><span class="w"> </span><span class="k">$(</span><span class="m">2</span><span class="k">)</span><span class="w"> </span>unused<span class="w"> </span>&gt;<span class="w"> </span><span class="k">$(</span><span class="m">1</span><span class="k">)</span>.tmp
+<span class="w">    </span>@mv<span class="w"> </span><span class="k">$(</span><span class="m">1</span><span class="k">)</span>.tmp<span class="w"> </span><span class="k">$(</span><span class="m">1</span><span class="k">)</span>
+<span class="cp">endef</span>
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>Makefile语法,以cofnig.mk为例</summary>
+<div class="highlight"><pre><span></span><code>:=:  表示立即赋值。定义时立即求值和展开。定义确定值的变量，常用于路径、编译器选项等静态配置。它避免了重复求值。
+
++=：追加到现有值，行为取决于原有变量的类型（递归或简单扩展）
+
+ @ 表示抑制“@所在的这一条命令的文本”的输出。但是不会抑制命令本身的输出。
+ 举例：@echo &#39;Hello&#39;
+ 在没有@的时候，会输出：
+ echo &#39;Hello&#39;
+ Hello
+ 加上@，会输出：
+ Hello
+
+ -s表示的是是否要把执行的make程序的输出打印出来。
+-s 是一个全局的命令行选项，它控制的是 `make` 程序本身的详细程度（是否显示它正在执行的命令）。而 `@` 符号是 Makefile 规则中一个特定命令的修饰符，它只影响该命令在 Make 输出中的显示方式。
+
+$(Q) $(CONF) $(silent) --syncconfig $(Kconfig)
+这里开头的@是为了消除这一行命令的输出。后续的-s是输入给$(CONF)函数作为参数使用的。
+
+MCONF := ...等的定义，这里定义的是可执行文件所在的路径。
+$(MCONF)还可以用作Makefile规则的目标。
+menuconfig中的一个依赖项就是 $(MCONF)，make 在执行menuconfig前会查看$(MCONF)文件是否存在，如果不存在，就先执行$(MCONF)下面的命令。
+这种模式确保了 mconf 工具只在需要时才会被编译一次，提高了构建效率。
+
+$(Q) $(MAKE) $(silent) -C $(KCONFIG_PATH) NAME=mconf
+$(MAKE)表示递归地执行Make命令。
+-C表示 change directionary，改变路径。
+这个命令表示进入 $(KCONFIG_PATH) 目录，找到这个目录下的Makefile，并且把这个Makefile中的NAME变量改为mconf，按照这个Makefile的规则编译并生成 mconf 可执行文件。
+
+$(Q) $(MCONF) $(Kconfig)
+表示执行mconf的命令，传递的参数是Kconfig的路径
+
+$(Q) $(CONF) $(silent) --syncconfig $(Kconfig)
+表示执行conf命令，并将 --syncconfig 选项和 $(Kconfig)的路径作为参数
+
+%defconfig: $(CONF) $(FIXDEP) 
+$(Q)$&lt; $(silent) --defconfig=configs/$@ $(Kconfig)
+%表示的是通配符，任何以_deconfig结尾的目标都可以匹配这个规则，并且目标中_deconfig之前的部分，可以通过$*来引用。
+%@代表的是整个目标名。例如arm_deconfig/riscv_deconfig等。 
+$&lt;在这里会被扩展为第一个强制条件。在这里指的是$(CONF)
+等于号是做什么的？这里需要先了解命令行参数的类型以及解析规则：
+命令行参数有两种类型：
+1.选项 (Options) 或标志 (Flags)：
+1.1通常以一个或两个连字符开头，如 -o 或 --output。
+1.2它们可以修改程序的行为，或者指定一个特定的模式。
+1.3带值的选项通常使用 = 来连接值（例如 --output=filename.txt），或者使用空格来分隔值（例如 -o filename.txt），这取决于程序的具体实现。使用 = 来绑定选项和值，会使得参数解析更加鲁棒和可预测。
+2.位置参数 (Positional Arguments)：
+2.1这些是不带连字符前缀的参数。
+2.2它们的值由它们在命令行中的位置决定。程序会根据参数出现的顺序来理解它们的含义。
+2.3例如，cp source_file destination_file 中，source_file 和 destination_file 就是位置参数。cp 程序知道第一个是源文件，第二个是目标文件。
+
+conf命令的格式：conf [OPTIONS] &lt;Kconfig_file&gt;
+
+define call_fixdep
+    @$(FIXDEP) $(1) $(2) unused &gt; $(1).tmp
+    @mv $(1).tmp $(1)
+endef
+
+这几行代码定义了一个自定义的函数。名字叫做call_fixdep，后续其他的函数可以通过$(call call_fixdep)调用它。这个调用出现在nemu/config/build.mk中。
+$(FIXDEP)表示它执行的是这个路径下的命令。$(1)$(2)表示的是Makefile调用call_fixdep时传递的第一个和第二个参数。
+@$(FIXDEP) $(1) $(2) unused &gt; $(1).tmp 表示把执行的$(FIXDEP)的输出导入到$(1).tmp文件中。
+
+.PHONY:这是为了防止文件名和命令名冲突而导致make不起作用。当声明.PHONY时，make就会把它识别为一个命令。
+
+详解：当你的 Makefile 中的一个目标 (target) 预期会生成一个同名文件时，Make 就会检查文件的存在性和时间戳。这是 Make 决定是否需要执行某项任务的核心机制。
+Make 的逻辑是这样的：
+目标 (Goal): Make 的最终目标是确保某个目标文件是最新的。
+依赖 (Dependencies): 一个目标文件通常依赖于其他文件（它的先决条件或前提条件）。
+检查过程 (The Check): Make 会比较目标文件的修改时间和它所有依赖文件的修改时间。
+
+具体表现如下：
+目标文件不存在: 如果目标文件不存在，Make 知道它需要创建这个文件，所以它会执行该目标下的命令。
+目标文件存在但更旧: 如果目标文件存在，但它的任何一个依赖文件比目标文件更新（意味着某个源文件或组件被修改得更晚），Make 就会执行命令来重新构建这个目标。
+目标文件存在且更新 (或同龄): 如果目标文件存在，并且比它所有的依赖文件都更新，Make 就会认为这个目标是“最新的”，并且不会执行该目标下的命令。它会直接跳过。
+</code></pre></div>
+</details>
 <ul>
 <li>检查<code>nemu/tools/kconfig/build/mconf</code>程序是否存在, 若不存在, 则编译并生成<code>mconf</code></li>
 <li>检查<code>nemu/tools/kconfig/build/conf</code>程序是否存在, 若不存在, 则编译并生成<code>conf</code></li>
@@ -1084,6 +1482,56 @@
 </ul>
 <h4 id="makefile">项目构建和 Makefile<a class="headerlink" href="#makefile" title="Permanent link">&para;</a></h4>
 <p>NEMU 的 Makefile 会稍微复杂一些, 它具备如下功能:</p>
+<details class="note">
+<summary>nemu/Makefile代码</summary>
+<div class="highlight"><pre><span></span><code><span class="c">    # Sanity check</span>
+<span class="cp">    ifeq ($(wildcard $(NEMU_HOME)/src/nemu-main.c),)</span>
+<span class="w">      </span><span class="k">$(</span>error<span class="w"> </span><span class="nv">NEMU_HOME</span><span class="o">=</span><span class="k">$(</span>NEMU_HOME<span class="k">)</span><span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>a<span class="w"> </span>NEMU<span class="w"> </span>repo<span class="k">)</span>
+<span class="cp">    endif</span>
+
+<span class="c">    # Include variables and rules generated by menuconfig</span>
+<span class="cp">    -include $(NEMU_HOME)/include/config/auto.conf</span>
+<span class="cp">    -include $(NEMU_HOME)/include/config/auto.conf.cmd</span>
+
+<span class="w">    </span><span class="nv">remove_quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span><span class="s2">&quot;%&quot;</span>,%,<span class="k">$(</span><span class="m">1</span><span class="k">))</span>
+
+<span class="c">    # Extract variabls from menuconfig</span>
+<span class="w">    </span>GUEST_ISA<span class="w"> </span>?<span class="o">=</span><span class="w"> </span><span class="k">$(</span>call<span class="w"> </span>remove_quote,<span class="k">$(</span>CONFIG_ISA<span class="k">))</span>
+<span class="w">    </span>ENGINE<span class="w"> </span>?<span class="o">=</span><span class="w"> </span><span class="k">$(</span>call<span class="w"> </span>remove_quote,<span class="k">$(</span>CONFIG_ENGINE<span class="k">))</span>
+<span class="w">    </span><span class="nv">NAME</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>GUEST_ISA<span class="k">)</span>-nemu-<span class="k">$(</span>ENGINE<span class="k">)</span>
+
+<span class="c">    # Include all filelist.mk to merge file lists</span>
+<span class="w">    </span><span class="nv">FILELIST_MK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>find<span class="w"> </span>./src<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;filelist.mk&quot;</span><span class="k">)</span>
+<span class="cp">    include $(FILELIST_MK)</span>
+
+<span class="c">    # Filter out directories and files in blacklist to obtain the final set of source files</span>
+<span class="w">    </span>DIRS-BLACKLIST-y<span class="w"> </span>+<span class="o">=</span><span class="w"> </span><span class="k">$(</span>DIRS-BLACKLIST<span class="k">)</span>
+<span class="w">    </span>SRCS-BLACKLIST-y<span class="w"> </span>+<span class="o">=</span><span class="w"> </span><span class="k">$(</span>SRCS-BLACKLIST<span class="k">)</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>find<span class="w"> </span><span class="k">$(</span>DIRS-BLACKLIST-y<span class="k">)</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.c&quot;</span><span class="k">)</span>
+<span class="w">    </span>SRCS-y<span class="w"> </span>+<span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>find<span class="w"> </span><span class="k">$(</span>DIRS-y<span class="k">)</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.c&quot;</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">SRCS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>filter-out<span class="w"> </span><span class="k">$(</span>SRCS-BLACKLIST-y<span class="k">)</span>,<span class="k">$(</span>SRCS-y<span class="k">))</span>
+
+<span class="c">    # Extract compiler and options from menuconfig</span>
+<span class="w">    </span><span class="nv">CC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>call<span class="w"> </span>remove_quote,<span class="k">$(</span>CONFIG_CC<span class="k">))</span>
+<span class="w">    </span><span class="nv">CFLAGS_BUILD</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(</span>call<span class="w"> </span>remove_quote,<span class="k">$(</span>CONFIG_CC_OPT<span class="k">))</span>
+<span class="w">    </span><span class="nv">CFLAGS_BUILD</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(if</span><span class="w"> </span><span class="k">$(</span>CONFIG_CC_LTO<span class="k">)</span>,-flto,<span class="k">)</span>
+<span class="w">    </span><span class="nv">CFLAGS_BUILD</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(if</span><span class="w"> </span><span class="k">$(</span>CONFIG_CC_DEBUG<span class="k">)</span>,-Og<span class="w"> </span>-ggdb3,<span class="k">)</span>
+<span class="w">    </span><span class="nv">CFLAGS_BUILD</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(if</span><span class="w"> </span><span class="k">$(</span>CONFIG_CC_ASAN<span class="k">)</span>,-fsanitize<span class="o">=</span>address,<span class="k">)</span>
+<span class="w">    </span><span class="nv">CFLAGS_TRACE</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-DITRACE_COND<span class="o">=</span><span class="k">$(if</span><span class="w"> </span><span class="k">$(</span>CONFIG_ITRACE_COND<span class="k">)</span>,<span class="k">$(</span>call<span class="w"> </span>remove_quote,<span class="k">$(</span>CONFIG_ITRACE_COND<span class="k">))</span>,true<span class="k">)</span>
+<span class="w">    </span><span class="nv">CFLAGS</span><span class="w">  </span><span class="o">+=</span><span class="w"> </span><span class="k">$(</span>CFLAGS_BUILD<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CFLAGS_TRACE<span class="k">)</span><span class="w"> </span>-D__GUEST_ISA__<span class="o">=</span><span class="k">$(</span>GUEST_ISA<span class="k">)</span>
+<span class="w">    </span><span class="nv">LDFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(</span>CFLAGS_BUILD<span class="k">)</span>
+
+<span class="c">    # Include rules for menuconfig</span>
+<span class="cp">    include $(NEMU_HOME)/scripts/config.mk</span>
+
+<span class="cp">    ifdef CONFIG_TARGET_AM</span>
+<span class="cp">    include $(AM_HOME)/Makefile</span>
+<span class="w">    </span><span class="nv">LINKAGE</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(</span>ARCHIVES<span class="k">)</span>
+<span class="cp">    else</span>
+<span class="c">    # Include rules to build NEMU</span>
+<span class="cp">    include $(NEMU_HOME)/scripts/native.mk</span>
+<span class="cp">    endif</span>
+</code></pre></div>
+</details>
 <h5 id="_3">与配置系统进行关联<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h5>
 <p>通过包含<code>nemu/include/config/auto.conf</code>, 与 kconfig 生成的变量进行关联. 因此在通过 menuconfig 更新配置选项后, Makefile 的行为可能也会有所变化.</p>
 <h5 id="filelist">文件列表 (filelist)<a class="headerlink" href="#filelist" title="Permanent link">&para;</a></h5>
@@ -1129,15 +1577,396 @@ $(CFLAGS) -&gt; 剩下的内容
 <p>为了编写更紧凑的代码, 我们在<code>nemu/include/macro.h</code>中定义了一些专门用来对宏进行测试的宏. 例如<code>IFDEF(CONFIG_DEVICE, init_device());</code>表示, 如果定义了<code>CONFIG_DEVICE</code>, 才会调用<code>init_device()</code>函数; 而<code>MUXDEF(CONFIG_TRACE, "ON", "OFF")</code>则表示, 如果定义了<code>CONFIG_TRACE</code>, 则预处理结果为<code>"ON"</code>(<code>"OFF"</code>在预处理后会消失), 否则预处理结果为<code>"OFF"</code>.</p>
 <p>这些宏的功能非常神奇, 你知道这些宏是如何工作的吗?</p>
 </div>
+<details class="note">
+<summary>/include/generated/autoconfig.h代码</summary>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm"> *</span>
+<span class="cm"> * Automatically generated file; DO NOT EDIT.</span>
+<span class="cm"> * NEMU Configuration Menu</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="cp">#define CONFIG_ISA_riscv64 1</span>
+<span class="cp">#define CONFIG_DIFFTEST_REF_NAME &quot;none&quot;</span>
+<span class="cp">#define CONFIG_ENGINE &quot;interpreter&quot;</span>
+<span class="cp">#define CONFIG_PC_RESET_OFFSET 0x0</span>
+<span class="cp">#define CONFIG_TARGET_NATIVE_ELF 1</span>
+<span class="cp">#define CONFIG_MSIZE 0x8000000</span>
+<span class="cp">#define CONFIG_CC_O2 1</span>
+<span class="cp">#define CONFIG_MODE_SYSTEM 1</span>
+<span class="cp">#define CONFIG_MEM_RANDOM 1</span>
+<span class="cp">#define CONFIG_ITRACE 1</span>
+<span class="cp">#define CONFIG_TRACE_END 10000</span>
+<span class="cp">#define CONFIG_MBASE 0x80000000</span>
+<span class="cp">#define CONFIG_TIMER_GETTIMEOFDAY 1</span>
+<span class="cp">#define CONFIG_ENGINE_INTERPRETER 1</span>
+<span class="cp">#define CONFIG_CC_OPT &quot;-O2&quot;</span>
+<span class="cp">#define CONFIG_RT_CHECK 1</span>
+<span class="cp">#define CONFIG_ISA64 1</span>
+<span class="cp">#define CONFIG_ITRACE_COND &quot;true&quot;</span>
+<span class="cp">#define CONFIG_CC &quot;gcc&quot;</span>
+<span class="cp">#define CONFIG_DIFFTEST_REF_PATH &quot;none&quot;</span>
+<span class="cp">#define CONFIG_CC_DEBUG 1</span>
+<span class="cp">#define CONFIG_TRACE_START 0</span>
+<span class="cp">#define CONFIG_CC_GCC 1</span>
+<span class="cp">#define CONFIG_TRACE 1</span>
+<span class="cp">#define CONFIG_ISA &quot;riscv64&quot;</span>
+<span class="cp">#define CONFIG_PMEM_GARRAY 1</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>/nemu/include/macro.h代码</summary>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef __MACRO_H__</span>
+<span class="cp">#define __MACRO_H__</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="c1">// macro stringizing</span>
+<span class="cp">#define str_temp(x) #x</span>
+<span class="cp">#define str(x) str_temp(x)</span>
+<span class="c1">// strlen() for string constant</span>
+<span class="cp">#define STRLEN(CONST_STR) (sizeof(CONST_STR) - 1)</span>
+
+<span class="c1">// calculate the length of an array</span>
+<span class="cp">#define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))</span>
+
+<span class="c1">// macro concatenation</span>
+<span class="cp">#define concat_temp(x, y) x ## y</span>
+<span class="cp">#define concat(x, y) concat_temp(x, y)</span>
+<span class="cp">#define concat3(x, y, z) concat(concat(x, y), z)</span>
+<span class="cp">#define concat4(x, y, z, w) concat3(concat(x, y), z, w)</span>
+<span class="cp">#define concat5(x, y, z, v, w) concat4(concat(x, y), z, v, w)</span>
+
+<span class="c1">// macro testing</span>
+<span class="c1">// See https://stackoverflow.com/questions/26099745/test-if-preprocessor-symbol-is-defined-inside-macro</span>
+<span class="cp">#define CHOOSE2nd(a, b, ...) b</span>
+<span class="cp">#define MUX_WITH_COMMA(contain_comma, a, b) CHOOSE2nd(contain_comma a, b)</span><span class="c1">//if contain_comma has a comma, choose a, if not, choose b</span>
+<span class="cp">#define MUX_MACRO_PROPERTY(p, macro, a, b) MUX_WITH_COMMA(concat(p, macro), a, b)</span>
+<span class="c1">// define placeholders for some property</span>
+<span class="cp">#define __P_DEF_0  X,</span>
+<span class="cp">#define __P_DEF_1  X,</span>
+<span class="cp">#define __P_ONE_1  X,</span>
+<span class="cp">#define __P_ZERO_0 X,</span>
+<span class="c1">// define some selection functions based on the properties of BOOLEAN macro</span>
+<span class="cp">#define MUXDEF(macro, X, Y)  MUX_MACRO_PROPERTY(__P_DEF_, macro, X, Y)</span>
+<span class="cp">#define MUXNDEF(macro, X, Y) MUX_MACRO_PROPERTY(__P_DEF_, macro, Y, X)</span>
+<span class="cp">#define MUXONE(macro, X, Y)  MUX_MACRO_PROPERTY(__P_ONE_, macro, X, Y)</span>
+<span class="cp">#define MUXZERO(macro, X, Y) MUX_MACRO_PROPERTY(__P_ZERO_,macro, X, Y)</span>
+
+<span class="c1">// test if a boolean macro is defined</span>
+<span class="cp">#define ISDEF(macro) MUXDEF(macro, 1, 0)</span>
+<span class="c1">// test if a boolean macro is undefined</span>
+<span class="cp">#define ISNDEF(macro) MUXNDEF(macro, 1, 0)</span>
+<span class="c1">// test if a boolean macro is defined to 1</span>
+<span class="cp">#define ISONE(macro) MUXONE(macro, 1, 0)</span>
+<span class="c1">// test if a boolean macro is defined to 0</span>
+<span class="cp">#define ISZERO(macro) MUXZERO(macro, 1, 0)</span>
+<span class="c1">// test if a macro of ANY type is defined</span>
+<span class="c1">// NOTE1: it ONLY works inside a function, since it calls `strcmp()`</span>
+<span class="c1">// NOTE2: macros defined to themselves (#define A A) will get wrong results</span>
+<span class="cp">#define isdef(macro) (strcmp(&quot;&quot; #macro, &quot;&quot; str(macro)) != 0)</span>
+
+<span class="c1">// simplification for conditional compilation</span>
+<span class="cp">#define __IGNORE(...)</span>
+<span class="cp">#define __KEEP(...) __VA_ARGS__</span>
+<span class="c1">// keep the code if a boolean macro is defined</span>
+<span class="cp">#define IFDEF(macro, ...) MUXDEF(macro, __KEEP, __IGNORE)(__VA_ARGS__)</span>
+<span class="c1">// keep the code if a boolean macro is undefined</span>
+<span class="cp">#define IFNDEF(macro, ...) MUXNDEF(macro, __KEEP, __IGNORE)(__VA_ARGS__)</span>
+<span class="c1">// keep the code if a boolean macro is defined to 1</span>
+<span class="cp">#define IFONE(macro, ...) MUXONE(macro, __KEEP, __IGNORE)(__VA_ARGS__)</span>
+<span class="c1">// keep the code if a boolean macro is defined to 0</span>
+<span class="cp">#define IFZERO(macro, ...) MUXZERO(macro, __KEEP, __IGNORE)(__VA_ARGS__)</span>
+
+<span class="c1">// functional-programming-like macro (X-macro)</span>
+<span class="c1">// apply the function `f` to each element in the container `c`</span>
+<span class="c1">// NOTE1: `c` should be defined as a list like:</span>
+<span class="c1">//   f(a0) f(a1) f(a2) ...</span>
+<span class="c1">// NOTE2: each element in the container can be a tuple</span>
+<span class="cp">#define MAP(c, f) c(f)</span>
+
+<span class="cp">#define BITMASK(bits) ((1ull &lt;&lt; (bits)) - 1)</span>
+<span class="cp">#define BITS(x, hi, lo) (((x) &gt;&gt; (lo)) &amp; BITMASK((hi) - (lo) + 1)) </span><span class="c1">// similar to x[hi:lo] in verilog</span>
+<span class="cp">#define SEXT(x, len) ({ struct { int64_t n : len; } __x = { .n = x }; (uint64_t)__x.n; })</span>
+
+<span class="cp">#define ROUNDUP(a, sz)   ((((uintptr_t)a) + (sz) - 1) &amp; ~((sz) - 1))</span>
+<span class="cp">#define ROUNDDOWN(a, sz) ((((uintptr_t)a)) &amp; ~((sz) - 1))</span>
+
+<span class="cp">#define PG_ALIGN __attribute((aligned(4096)))</span>
+
+<span class="cp">#if !defined(likely)</span>
+<span class="cp">#define likely(cond)   __builtin_expect(cond, 1)</span>
+<span class="cp">#define unlikely(cond) __builtin_expect(cond, 0)</span>
+<span class="cp">#endif</span>
+
+<span class="c1">// for AM IOE</span>
+<span class="cp">#define io_read(reg) \</span>
+<span class="cp">  ({ reg##_T __io_param; \</span>
+<span class="cp">    ioe_read(reg, &amp;__io_param); \</span>
+<span class="cp">    __io_param; })</span>
+
+<span class="cp">#define io_write(reg, ...) \</span>
+<span class="cp">  ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \</span>
+<span class="cp">    ioe_write(reg, &amp;__io_param); })</span>
+
+<span class="cp">#endif</span>
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>宏定义语法</summary>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="cp"># 代表字符串化操作符</span>
+<span class="w">    </span><span class="cp">## 代表连接操作符</span>
+<span class="w">    </span><span class="p">...</span><span class="err">：</span><span class="n">表示宏可以接受零个或多个额外的参数</span>
+
+<span class="w">    </span><span class="n">__VAR_ARGS__是</span><span class="w"> </span><span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">语言标准定义的一个预处理器宏</span><span class="p">,</span><span class="n">一般配合</span><span class="p">...</span><span class="n">使用</span><span class="err">，</span><span class="n">在宏展开时会被</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">所代表的实际参数列表替换</span><span class="err">。</span>
+
+<span class="w">    </span><span class="n">举例</span><span class="err">：</span>
+<span class="w">    </span><span class="mf">1.</span><span class="err">#：</span>
+<span class="w">    </span><span class="cp">#define str_temp(x) #x</span>
+<span class="w">    </span><span class="n">str_temp</span><span class="p">(</span><span class="n">Hello</span><span class="p">);</span><span class="c1">//展开结果是”Hello“</span>
+<span class="w">    </span><span class="n">注意</span><span class="err">，#</span><span class="n">不会对宏进行展开</span><span class="err">。</span><span class="n">比如</span><span class="err">：</span>
+<span class="w">    </span><span class="cp">#define FOO bar</span>
+<span class="w">    </span><span class="n">str_temp</span><span class="p">(</span><span class="n">FOO</span><span class="p">);</span><span class="c1">//展开结果是”FOO“而不是”bar“</span>
+<span class="w">    </span><span class="n">为了实现对宏展开</span><span class="err">，</span><span class="n">可以使用多个宏</span><span class="err">：</span>
+<span class="w">    </span><span class="cp">#define STRINGIFY(x) #x</span>
+<span class="w">    </span><span class="cp">#define TOSTRING(x) STRINGIFY(x)</span>
+<span class="w">    </span><span class="cp">#define FOO bar</span>
+<span class="w">    </span><span class="n">TOSTRING</span><span class="p">(</span><span class="n">FOO</span><span class="p">);</span><span class="w"> </span><span class="c1">// 宏展开后变成 &quot;bar&quot;</span>
+
+<span class="w">    </span><span class="mf">2.</span><span class="err">##：</span>
+<span class="w">    </span><span class="cp">#define concat_temp(x, y) x ## y</span>
+<span class="w">    </span><span class="n">concat_temp</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">bar</span><span class="p">)</span><span class="w"> </span><span class="c1">//展开结果是foobar</span>
+
+<span class="w">    </span><span class="mf">3.</span><span class="n">__VAR_ARGS__</span><span class="err">：</span>
+<span class="w">    </span><span class="cp">#define IFDEF(macro, ...) MUXDEF(macro, __KEEP, __IGNORE)(__VAR_ARGS__)</span>
+<span class="w">    </span><span class="n">首先要解析MUXDEF</span><span class="p">()</span><span class="err">，</span><span class="n">得出的结果是__KEEP</span><span class="o">/</span><span class="n">__IGNORE</span><span class="p">,</span><span class="n">之后执行__KEEP</span><span class="o">/</span><span class="n">__IGNORE</span><span class="p">(</span><span class="n">__VAR_ARGS__</span><span class="p">),</span><span class="n">此时的__VAR_ARGS__就是</span><span class="p">...</span><span class="n">的可变的多个参数的值</span><span class="err">。</span>
+
+<span class="w">    </span><span class="n">宏定义里的一些函数</span><span class="err">：</span>
+<span class="w">    </span><span class="mf">1.</span><span class="w"> </span><span class="err">#</span><span class="n">define</span><span class="w"> </span><span class="n">ISDEF</span><span class="p">(</span><span class="n">macro</span><span class="p">)</span><span class="w"> </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">macro</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="n">如果macro没有被定义</span><span class="err">，</span><span class="n">那么它既不是0</span><span class="err">，</span><span class="n">也不是1</span><span class="err">。</span><span class="n">在MUXDEF中也就不会触发__P_DEF_0</span><span class="o">/</span><span class="n">__P_DEF_1</span><span class="p">,</span><span class="n">那么会导致在判断逗号的函数那里没有新的逗号产生</span><span class="err">，</span><span class="n">会导致选择0作为宏定义展开的结果</span><span class="err">。</span>
+
+<span class="w">    </span><span class="mf">2.</span><span class="err">#</span><span class="n">define</span><span class="w"> </span><span class="n">isdef</span><span class="p">(</span><span class="n">macro</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="err">#</span><span class="n">macro</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="n">str</span><span class="p">(</span><span class="n">macro</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="n">是为了测试其他类型的宏是否被定义</span><span class="err">，“”</span><span class="n">是为了</span>
+
+<span class="w">    </span><span class="mf">3.</span><span class="err">#</span><span class="n">define</span><span class="w"> </span><span class="n">MAP</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="w">    </span><span class="n">直接举例</span><span class="err">：</span>
+<span class="w">    </span><span class="mf">3.1</span><span class="w"> </span><span class="n">定义列表</span><span class="err">：</span>
+<span class="w">    </span><span class="cp">#define FRUIT_LIST(X) \</span>
+<span class="cp">    X(APPLE)          \</span>
+<span class="cp">    X(BANANA)         \</span>
+<span class="cp">    X(ORANGE)</span>
+<span class="w">    </span><span class="c1">// 以后要加葡萄，只需要在这里加一行：</span>
+<span class="w">    </span><span class="c1">// X(GRAPE)</span>
+
+<span class="w">    </span><span class="n">注意</span><span class="err">：\</span><span class="n">在这里意味着换行</span><span class="err">，</span><span class="n">同时表示这是同一个define的内容而不要把它看作不同的define</span>
+<span class="w">    </span><span class="n">X在FRUIT_LIST</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="n">中表示的是FRUIT_LIST的参数</span><span class="err">，</span><span class="n">在X</span><span class="p">(</span><span class="n">APPLE</span><span class="p">)</span><span class="n">中表示的是函数的调用</span><span class="err">。</span>
+<span class="w">    </span><span class="n">即</span><span class="err">，</span><span class="n">X即作为FRUIT_LIST的一个参数</span><span class="err">，</span><span class="n">也作为一个函数的调用声明</span><span class="err">。</span>
+
+<span class="w">    </span><span class="mf">3.2</span><span class="n">定义函数f</span>
+<span class="w">    </span><span class="cp">#define DEFINE_ENUM(name) name, </span><span class="c1">//用于定义枚举成员的宏</span>
+<span class="w">    </span><span class="cp">#define DEFINE_STRING(name) #name, </span><span class="c1">//用于定义字符串的内容的宏</span>
+
+<span class="w">    </span><span class="mf">3.3</span><span class="n">应用</span><span class="err">：</span>
+<span class="w">    </span><span class="c1">// 定义枚举</span>
+<span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="n">Fruit</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MAP</span><span class="p">(</span><span class="n">FRUIT_LIST</span><span class="p">,</span><span class="w"> </span><span class="n">DEFINE_ENUM</span><span class="p">)</span><span class="w"> </span><span class="c1">// 关键行！</span>
+<span class="w">        </span><span class="n">NUM_FRUITS</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// 定义字符串数组</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">FruitNames</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MAP</span><span class="p">(</span><span class="n">FRUIT_LIST</span><span class="p">,</span><span class="w"> </span><span class="n">DEFINE_STRING</span><span class="p">)</span><span class="w"> </span><span class="c1">// 关键行！</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="mf">4.</span><span class="err">#</span><span class="n">define</span><span class="w"> </span><span class="n">SEXT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">__x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">__x</span><span class="p">.</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="n">这个宏的作用是把x扩展为int64_t</span><span class="err">，</span><span class="n">即64位有符号整数的形式</span><span class="err">。</span><span class="n">len指的是x原始的位宽</span><span class="err">。</span>
+<span class="w">    </span><span class="mf">4.1</span><span class="err">：</span><span class="p">({</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">})</span><span class="err">：</span><span class="w"> </span><span class="n">这是</span><span class="w"> </span><span class="n">GCC的一个扩展特性</span><span class="err">。</span><span class="n">它允许你在一个表达式中包含多条语句</span><span class="err">。</span><span class="n">整个</span><span class="w"> </span><span class="p">{...}</span><span class="n">块的最后一个表达式的值会作为整个语句表达式的结果</span><span class="err">。</span><span class="n">在这里</span><span class="err">，</span><span class="n">__x</span><span class="p">.</span><span class="n">n的值就是结果</span><span class="err">。</span>
+<span class="w">    </span><span class="mf">4.2</span><span class="err">：</span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">__x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="n">位域</span><span class="err">、</span><span class="n">匿名结构体和初始化</span>
+<span class="w">    </span><span class="n">位域是C和C</span><span class="o">++</span><span class="n">的一个特性</span><span class="err">，</span><span class="n">它允许你在一个结构体</span><span class="err">（</span><span class="n">或联合体</span><span class="err">）</span><span class="n">中</span><span class="err">，</span><span class="n">指定结构体成员所占用的精确比特位数</span><span class="err">。</span>
+<span class="w">    </span><span class="n">之所以是匿名结构体是因为struct后没有跟名称</span><span class="err">，</span><span class="n">并且__x紧跟在</span><span class="p">}</span><span class="n">后和</span><span class="p">;</span><span class="n">前</span><span class="err">。</span>
+<span class="w">    </span><span class="p">.</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x是对__x这个匿名结构体的初始化过程</span><span class="err">。</span><span class="n">之所以没使用__x</span><span class="p">.</span><span class="n">n是因为这个时候结构体的初始化还没有完成</span><span class="err">。</span><span class="n">所以可以不用加__x</span><span class="err">。</span>
+<span class="w">    </span><span class="mf">4.3</span><span class="err">：</span><span class="n">符号扩展是怎么实现的呢</span><span class="err">？</span><span class="n">为什么不可以直接使用</span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">x实现扩展呢</span><span class="err">？</span>
+<span class="w">    </span><span class="n">因为</span><span class="err">，</span><span class="n">当一个有符号整数</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">被强制转换为一个更大位宽的无符号整数时</span><span class="err">，</span><span class="n">标准</span><span class="w"> </span><span class="n">C</span><span class="o">/</span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="n">规定会发生</span><span class="w"> </span><span class="n">值保留</span><span class="err">（</span><span class="n">Value</span><span class="o">-</span><span class="n">Preserving</span><span class="err">）</span><span class="w"> </span><span class="n">转换</span><span class="err">。</span><span class="n">这意味着</span><span class="err">，</span><span class="n">它会保留</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">作为原始类型时的数值</span><span class="err">，</span><span class="n">然后将其解释为无符号类型</span><span class="err">。</span><span class="n">对于负数</span><span class="err">，</span><span class="n">这通常意味着它会将其原始的补码位模式复制到目标类型中</span><span class="err">，</span><span class="n">并在前面填充零</span><span class="err">。</span>
+<span class="w">    </span><span class="n">所以这样会导致错误</span><span class="err">。</span><span class="n">而我们巧妙地利用了C语言位域的一个特殊行为来巧妙地实现了符号扩展</span><span class="err">。</span>
+<span class="w">    </span><span class="n">关键是这个</span><span class="err">：</span><span class="n">__x</span><span class="p">.</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">同时注意匿名结构体中的类型是int64_t</span><span class="err">。</span>
+<span class="w">    </span><span class="n">当从一个有符号的位域中读取值时</span><span class="err">，</span><span class="n">C语言标准规定编译器会自动进行符号扩展</span><span class="err">，</span><span class="n">将其填充到位域的基础类型</span><span class="err">（</span><span class="n">这里是</span><span class="w"> </span><span class="kt">int64_t</span><span class="err">）</span><span class="n">的完整宽度</span><span class="err">。</span>
+<span class="w">    </span><span class="n">之后</span><span class="err">，</span><span class="n">通过</span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="n">再转换为无符号数</span><span class="err">。</span><span class="n">这里只是改变了解释的方式</span><span class="err">，</span><span class="n">值还是一样的</span><span class="err">。</span>
+
+<span class="w">    </span><span class="mf">5.</span><span class="err">#</span><span class="n">define</span><span class="w"> </span><span class="n">ROUNDUP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">sz</span><span class="p">)</span><span class="w"> </span><span class="p">((((</span><span class="kt">uintptr_t</span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">sz</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="o">~</span><span class="p">((</span><span class="n">sz</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">这个宏的作用是对地址a进行向上取整</span><span class="err">。</span><span class="n">注意</span><span class="err">，</span><span class="n">这里的sz必须是2的幂次</span><span class="err">。</span><span class="n">sz表示的是地址的对齐块的大小</span><span class="err">。</span>
+<span class="w">    </span><span class="n">通过</span><span class="o">+</span><span class="w"> </span><span class="n">sz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="n">的操作</span><span class="err">，</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">的结果</span><span class="err">，</span><span class="n">总是位于或超过</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">所属的下一个对齐块的起始地址</span><span class="err">。</span>
+<span class="w">    </span><span class="o">~</span><span class="p">((</span><span class="n">sz</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">会生成一个低log_2</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span><span class="n">都为0的bit</span><span class="err">，</span><span class="n">这样会清除低位</span><span class="err">，</span><span class="n">让结果以sz为最小单位</span><span class="err">。</span>
+<span class="w">    </span><span class="n">举例</span><span class="err">：</span><span class="n">sz是8</span><span class="err">，</span><span class="n">a是20</span><span class="err">，</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="mi">27</span><span class="n">二进制是0001_1011</span><span class="err">，</span><span class="n">把低三位全变为0后</span><span class="err">，</span><span class="n">结果是0001_1000</span><span class="err">，</span><span class="n">即24</span><span class="err">。</span><span class="n">说明a所在的区块的下一块是24</span><span class="p">.</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>/nemu/src/nemu-main.c 代码</summary>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;common.h&gt;</span><span class="c1">                    </span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">init_monitor</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">[]);</span><span class="w">      </span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">am_init_monitor</span><span class="p">();</span><span class="w">                </span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">engine_start</span><span class="p">();</span><span class="w">                   </span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">is_exit_status_bad</span><span class="p">();</span><span class="w">              </span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w">     </span>
+<span class="cm">/* Initialize the monitor. */</span><span class="w">        </span>
+<span class="w">    </span><span class="cp">#ifdef CONFIG_TARGET_AM                </span>
+<span class="w">        </span><span class="n">am_init_monitor</span><span class="p">();</span><span class="w">                   </span>
+<span class="w">    </span><span class="cp">#else                                  </span>
+<span class="w">        </span><span class="n">init_monitor</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w">            </span>
+<span class="w">    </span><span class="cp">#endif                                 </span>
+
+<span class="w">    </span><span class="cm">/* Start engine. */</span><span class="w">                  </span>
+<span class="w">    </span><span class="n">engine_start</span><span class="p">();</span><span class="w">                      </span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">is_exit_status_bad</span><span class="p">();</span><span class="w"> </span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <div class="admonition note">
 <p class="admonition-title">为什么全部都是函数?</p>
 <p>阅读<code>init_monitor()</code>函数的代码, 你会发现里面全部都是函数调用. 按道理, 把相应的函数体在<code>init_monitor()</code>中展开也不影响代码的正确性. 相比之下, 在这里使用函数有什么好处呢?</p>
 <p>我们对这些初始化工作进行一些说明. <code>parse_args()</code>, <code>init_rand()</code>, <code>init_log()</code>和<code>init_mem()</code>并没有什么深奥的内容, 直接 RTFSC 就行.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">参数的处理过程</p>
+<p class="admonition-title">参数的处理过程"</p>
 <p><code>parse_args()</code>中调用了一个你也许不太熟悉的函数<code>getopt_long()</code>, 框架代码通过它来对参数进行解析, 具体的行为可以查阅<code>man 3 getopt_long</code>.</p>
 </div>
+<details class="note">
+<summary>parse_args()函数、getopt_long系统函数讲解</summary>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">option</span><span class="w"> </span><span class="n">table</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="s">&quot;batch&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">no_argument</span><span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s">&quot;log&quot;</span><span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="n">required_argument</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;l&#39;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s">&quot;diff&quot;</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="n">required_argument</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;d&#39;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s">&quot;port&quot;</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="n">required_argument</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;p&#39;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s">&quot;help&quot;</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="n">no_argument</span><span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;h&#39;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">0</span><span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">o</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-bhl:d:p:&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">sdb_set_batch_mode</span><span class="p">();</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;p&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">sscanf</span><span class="p">(</span><span class="n">optarg</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">difftest_port</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;l&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">log_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">optarg</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;d&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">diff_so_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">optarg</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="n">img_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">optarg</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">default</span><span class="o">:</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s [OPTION...] IMAGE [args]</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-b,--batch              run with batch mode</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-l,--log=FILE           output log to FILE</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-d,--diff=REF_SO        run DiffTest with reference REF_SO</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-p,--port=PORT          run DiffTest with port PORT</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">getopt_long</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[],</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">optstring</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">option</span><span class="w"> </span><span class="o">*</span><span class="n">longopts</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">longindex</span><span class="p">);</span>
+
+
+
+<span class="n">longopts</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">pointer</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">option</span><span class="w"> </span><span class="n">declared</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">&lt;</span><span class="n">getopt</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span><span class="w"> </span><span class="err">：</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">option</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">;</span><span class="w">   </span><span class="c1">// 选项的长名称</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">has_arg</span><span class="p">;</span><span class="w">        </span><span class="c1">// 是否需要参数 (no_argument, required_argument, optional_argument)</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">flag</span><span class="p">;</span><span class="w">          </span><span class="c1">// 如果非 NULL, 则 getopt_long 返回 0, 并设置 *flag = val</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">            </span><span class="c1">// 如果 flag 为 NULL, 则 getopt_long 返回 val</span>
+<span class="p">};</span>
+<span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">filled</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">zeros</span><span class="p">.</span>
+
+<span class="nl">flag</span><span class="p">:</span>
+<span class="n">flag</span><span class="w">  </span><span class="n">specifies</span><span class="w"> </span><span class="n">how</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">option</span><span class="p">.</span><span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="n">getopt_long</span><span class="p">()</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">val</span><span class="p">.</span><span class="w">  </span><span class="p">(</span><span class="n">For</span><span class="w"> </span><span class="n">example</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">calling</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">equivalent</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">character</span><span class="p">.)</span><span class="w">  </span>
+
+<span class="n">Otherwise</span><span class="p">,</span><span class="w"> </span><span class="n">getopt_long</span><span class="p">()</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="n">points</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">unchanged</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">found</span><span class="p">.</span>
+
+<span class="n">If</span><span class="w"> </span><span class="n">longindex</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">points</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">longopts</span><span class="p">.</span>
+
+<span class="w"> </span><span class="n">总结</span><span class="err">：</span><span class="n">getopt_long函数的返回值取决于option数组里的flag标志</span><span class="err">。</span><span class="n">flag在NULL的时候</span><span class="err">，</span><span class="n">会直接返回val的值</span><span class="err">。</span><span class="n">在不为NULL的时候</span><span class="err">，</span><span class="n">会返回0</span><span class="err">，</span><span class="n">并且flag这个指针所指向的int的值会被设置为val的值</span><span class="err">。</span>
+<span class="w"> </span>
+<span class="n">应用</span><span class="err">：</span><span class="n">配合</span><span class="o">*</span><span class="n">longindex使用</span><span class="err">。</span>
+<span class="mi">1</span><span class="err">：</span><span class="n">flag为NULL</span><span class="err">，</span><span class="n">val不为0</span><span class="err">。</span>
+<span class="n">可以直接通过case</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="n">去判断接收到的选项</span><span class="err">。</span>
+<span class="mf">2.f</span><span class="n">lag为NULL</span><span class="err">，</span><span class="n">val为0</span><span class="p">.</span>
+<span class="n">返回值都是0</span><span class="err">，</span><span class="n">那么需要在case</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="n">下根据</span><span class="o">*</span><span class="n">longindex的值去判断触发了哪个选项</span><span class="err">。</span>
+<span class="mf">3.f</span><span class="n">lag非NULL</span>
+<span class="n">返回值都是0</span><span class="err">，</span><span class="n">需要在case</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="n">下根据flag指向的那个值的变化来判断是否触发了对应指令</span><span class="err">。</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">verbose_flag</span><span class="p">;</span><span class="w"> </span><span class="c1">// 全局或静态变量 </span>
+<span class="c1">// ... </span>
+<span class="p">{</span><span class="s">&quot;verbose&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">no_argument</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">verbose_flag</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span><span class="w"> </span><span class="c1">// 如果匹配到 --verbose </span>
+<span class="c1">// ... </span>
+<span class="c1">// 在循环中： case 0: // getopt_long 返回 0 // 此时 verbose_flag 已经被设置为 1</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">verbose_flag</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span><span class="w"> </span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Verbose mode enabled.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span>
+<span class="p">}</span><span class="w"> </span>
+<span class="k">break</span><span class="p">;</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>init_monitor、init_rand、init_log、init_mem</summary>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">init_monitor</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Perform some global initialization. */</span>
+<span class="w">  </span><span class="cm">/* Parse arguments. */</span>
+<span class="w">  </span><span class="n">parse_args</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* Set random seed. */</span>
+<span class="w">  </span><span class="n">init_rand</span><span class="p">();</span>
+<span class="w">  </span><span class="cm">/* Open the log file. */</span>
+<span class="w">  </span><span class="n">init_log</span><span class="p">(</span><span class="n">log_file</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* Initialize memory. */</span>
+<span class="w">  </span><span class="n">init_mem</span><span class="p">();</span>
+<span class="w">  </span><span class="cm">/* Initialize devices. */</span>
+<span class="w">  </span><span class="n">IFDEF</span><span class="p">(</span><span class="n">CONFIG_DEVICE</span><span class="p">,</span><span class="w"> </span><span class="n">init_device</span><span class="p">());</span>
+<span class="w">  </span><span class="cm">/* Perform ISA dependent initialization. */</span>
+<span class="w">  </span><span class="n">init_isa</span><span class="p">();</span>
+<span class="w">  </span><span class="cm">/* Load the image to memory. This will overwrite the built-in image. */</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">img_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_img</span><span class="p">();</span>
+<span class="w">  </span><span class="cm">/* Initialize differential testing. */</span>
+<span class="w">  </span><span class="n">init_difftest</span><span class="p">(</span><span class="n">diff_so_file</span><span class="p">,</span><span class="w"> </span><span class="n">img_size</span><span class="p">,</span><span class="w"> </span><span class="n">difftest_port</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* Initialize the simple debugger. */</span>
+<span class="w">  </span><span class="n">init_sdb</span><span class="p">();</span>
+<span class="cp">#ifndef CONFIG_ISA_loongarch32r</span>
+<span class="w">  </span><span class="n">IFDEF</span><span class="p">(</span><span class="n">CONFIG_ITRACE</span><span class="p">,</span><span class="w"> </span><span class="n">init_disasm</span><span class="p">(</span>
+<span class="w">    </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_x86</span><span class="p">,</span><span class="w">     </span><span class="s">&quot;i686&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_mips32</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;mipsel&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_riscv32</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;riscv32&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_riscv64</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;riscv64&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bad&quot;</span><span class="p">))))</span><span class="w"> </span><span class="s">&quot;-pc-linux-gnu&quot;</span>
+<span class="w">  </span><span class="p">));</span>
+<span class="cp">#endif</span>
+<span class="w">  </span><span class="cm">/* Display welcome message. */</span>
+<span class="w">  </span><span class="n">welcome</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">init_rand</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">srand</span><span class="p">(</span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_TARGET_AM</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">init_mem</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="cp">#if   defined(CONFIG_PMEM_MALLOC)</span>
+<span class="w">  </span><span class="n">pmem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="n">CONFIG_MSIZE</span><span class="p">);</span>
+<span class="w">  </span><span class="n">assert</span><span class="p">(</span><span class="n">pmem</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef CONFIG_MEM_RANDOM</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">pmem</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">CONFIG_MSIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="w">  </span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;physical memory area [&quot;</span><span class="w"> </span><span class="n">FMT_PADDR</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="n">FMT_PADDR</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">PMEM_LEFT</span><span class="p">,</span><span class="w"> </span><span class="n">PMEM_RIGHT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">init_log</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">log_file</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">log_fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stdout</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">log_file</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fopen</span><span class="p">(</span><span class="n">log_file</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Can not open &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log_file</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log_fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fp</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Log is written to %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log_file</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">log_file</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;stdout&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <div class="admonition note">
 <p class="admonition-title">参数的处理过程</p>
 <p>另外的一个问题是, 这些参数是从哪里来的呢?</p>
@@ -1155,6 +1984,37 @@ $(CFLAGS) -&gt; 剩下的内容
 <p>需要将客户程序读入到内存的什么位置? 为了让客户计算机的 CPU 可以执行客户程序, 因此我们需要一种方式让客户计算机的 CPU 知道客户程序的位置. 我们采取一种最简单的方式: 约定. 具体地, 我们让 monitor 直接把客户程序读入到一个固定的内存位置<code>RESET_VECTOR</code>. <code>RESET_VECTOR</code>的值在<code>nemu/include/memory/paddr.h</code>中定义.</p>
 </li>
 </ol>
+<details class="note">
+<summary>/nemu/src/isa/riscv64/init.c</summary>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;isa.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory/paddr.h&gt;</span>
+
+<span class="c1">// this is not consistent with uint8_t</span>
+<span class="c1">// but it is ok since we do not access the array directly</span>
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="mh">0x00000297</span><span class="p">,</span><span class="w">  </span><span class="c1">// auipc t0,0</span>
+<span class="w">  </span><span class="mh">0x0002b823</span><span class="p">,</span><span class="w">  </span><span class="c1">// sd  zero,16(t0)</span>
+<span class="w">  </span><span class="mh">0x0102b503</span><span class="p">,</span><span class="w">  </span><span class="c1">// ld  a0,16(t0)</span>
+<span class="w">  </span><span class="mh">0x00100073</span><span class="p">,</span><span class="w">  </span><span class="c1">// ebreak (used as nemu_trap)</span>
+<span class="w">  </span><span class="mh">0xdeadbeef</span><span class="p">,</span><span class="w">  </span><span class="c1">// some data</span>
+<span class="p">};</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">restart</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Set the initial program counter. */</span>
+<span class="w">  </span><span class="n">cpu</span><span class="p">.</span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RESET_VECTOR</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* The zero register is always 0. */</span>
+<span class="w">  </span><span class="n">cpu</span><span class="p">.</span><span class="n">gpr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">init_isa</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Load built-in image. */</span>
+<span class="w">  </span><span class="n">memcpy</span><span class="p">(</span><span class="n">guest_to_host</span><span class="p">(</span><span class="n">RESET_VECTOR</span><span class="p">),</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">img</span><span class="p">));</span>
+<span class="w">  </span><span class="cm">/* Initialize this virtual computer system. */</span>
+<span class="w">  </span><span class="n">restart</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <div class="admonition tip">
 <p class="admonition-title">BIOS 和计算机启动</p>
 <p>我们知道内存是一种 RAM, 是一种易失性的存储介质, 这意味着计算机刚启动的时候, 内存中的数据都是无意义的; 而 BIOS 是固化在 ROM/Flash 中的, 它们都是非易失性的存储介质, BIOS 中的内容不会因为断电而丢失.</p>
@@ -1240,6 +2100,65 @@ riscv32-nemu-interpreter: src/monitor/monitor.c:21: welcome: Assertion `0&#39; f
 <div class="highlight"><pre><span></span><code>(nemu)
 </code></pre></div>
 <p>简易调试器是 monitor 的核心功能, 我们可以在命令提示符中输入命令, 对客户计算机的运行状态进行监控和调试. 框架代码已经实现了几个简单的命令, 它们的功能和 GDB 是很类似的.</p>
+<details class="note">
+<summary>nemu/src/engine/interpreter/init.c代码</summary>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cpu/cpu.h&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">sdb_mainloop</span><span class="p">();</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">engine_start</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="cp">#ifdef CONFIG_TARGET_AM</span>
+<span class="w">    </span><span class="n">cpu_exec</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+<span class="cp">#else</span>
+<span class="w">  </span><span class="cm">/* Receive commands from user. */</span>
+<span class="w">    </span><span class="n">sdb_mainloop</span><span class="p">();</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>nemu/src/monitor/sdb/sdb.c 部分代码(未解决“优美地退出”的版本)</summary>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">sdb_mainloop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_batch_mode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">cmd_c</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rl_gets</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str_end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* extract the first token as the command */</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtok</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cmd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* treat the remaining string as the arguments,</span>
+<span class="cm">     * which may need further parsing</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">str_end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="cp">#ifdef CONFIG_DEVICE</span>
+<span class="w">    </span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">sdl_clear_event_queue</span><span class="p">();</span>
+<span class="w">    </span><span class="n">sdl_clear_event_queue</span><span class="p">();</span>
+<span class="cp">#endif</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NR_CMD</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="n">cmd_table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cmd_table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">handler</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NR_CMD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Unknown command &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cmd</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <p>在命令提示符后键入<code>c</code>后, NEMU 开始进入指令执行的主循环<code>cpu_exec()</code> (在<code>nemu/src/cpu/cpu-exec.c</code>中定义). <code>cpu_exec()</code>又会调用<code>execute()</code>, 后者模拟了 CPU 的工作方式: 不断执行指令. 具体地, 代码将在一个 for 循环中不断调用<code>exec_once()</code>函数, 这个函数的功能就是我们在上一小节中介绍的内容: 让 CPU 执行当前 PC 指向的一条指令, 然后更新 PC.</p>
 <div class="admonition note">
 <p class="admonition-title">究竟要执行多久?</p>
@@ -1249,6 +2168,135 @@ riscv32-nemu-interpreter: src/monitor/monitor.c:21: welcome: Assertion `0&#39; f
 <p class="admonition-title">潜在的威胁 (建议二周目思考)</p>
 <p>" 调用<code>cpu_exec()</code>的时候传入了参数<code>-1</code>", 这一做法属于未定义行为吗? 请查阅 C99 手册确认你的想法.</p>
 </div>
+<details class="note">
+<summary>cpu_exec()及相关代码</summary>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="n">cpu_exec代码</span>
+<span class="cm">/* Simulate how the CPU works. */</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">cpu_exec</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">g_print_step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MAX_INST_TO_PRINT</span><span class="p">);</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_END</span><span class="p">:</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_ABORT</span><span class="p">:</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Program execution has ended. To restart the program, exit NEMU and run again.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NEMU_RUNNING</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">timer_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_time</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">execute</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">timer_end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_time</span><span class="p">();</span>
+<span class="w">  </span><span class="n">g_timer</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">timer_end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timer_start</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_RUNNING</span><span class="p">:</span><span class="w"> </span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NEMU_STOP</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_END</span><span class="p">:</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_ABORT</span><span class="p">:</span>
+<span class="w">      </span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;nemu: %s at pc = &quot;</span><span class="w"> </span><span class="n">FMT_WORD</span><span class="p">,</span>
+<span class="w">          </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NEMU_ABORT</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">ANSI_FMT</span><span class="p">(</span><span class="s">&quot;ABORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ANSI_FG_RED</span><span class="p">)</span><span class="w"> </span><span class="o">:</span>
+<span class="w">           </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">halt_ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">ANSI_FMT</span><span class="p">(</span><span class="s">&quot;HIT GOOD TRAP&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ANSI_FG_GREEN</span><span class="p">)</span><span class="w"> </span><span class="o">:</span>
+<span class="w">            </span><span class="n">ANSI_FMT</span><span class="p">(</span><span class="s">&quot;HIT BAD TRAP&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ANSI_FG_RED</span><span class="p">))),</span>
+<span class="w">          </span><span class="n">nemu_state</span><span class="p">.</span><span class="n">halt_pc</span><span class="p">);</span>
+<span class="w">      </span><span class="c1">// fall through</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">NEMU_QUIT</span><span class="p">:</span><span class="w"> </span><span class="n">statistic</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="mf">2.</span><span class="n">execute代码</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">execute</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Decode</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">exec_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">.</span><span class="n">pc</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g_nr_guest_inst</span><span class="w"> </span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="n">trace_and_difftest</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">cpu</span><span class="p">.</span><span class="n">pc</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">NEMU_RUNNING</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="n">IFDEF</span><span class="p">(</span><span class="n">CONFIG_DEVICE</span><span class="p">,</span><span class="w"> </span><span class="n">device_update</span><span class="p">());</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="mf">3.</span><span class="n">exec_once代码</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">exec_once</span><span class="p">(</span><span class="n">Decode</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">vaddr_t</span><span class="w"> </span><span class="n">pc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//vaddr_t is word_t</span>
+<span class="w">  </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="p">;</span><span class="c1">//Decode *s defined at cpu/decode.h</span>
+<span class="w">  </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">snpc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="p">;</span>
+<span class="w">  </span><span class="n">isa_exec_once</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="c1">//function defined at src/isa/$ISA/inst.c</span>
+<span class="w">  </span><span class="n">cpu</span><span class="p">.</span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">dnpc</span><span class="p">;</span>
+<span class="cp">#ifdef CONFIG_ITRACE</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">logbuf</span><span class="p">;</span>
+<span class="w">  </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">logbuf</span><span class="p">),</span><span class="w"> </span><span class="n">FMT_WORD</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">pc</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ilen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">snpc</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">pc</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">inst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">isa</span><span class="p">.</span><span class="n">inst</span><span class="p">.</span><span class="n">val</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilen</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; %02x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">inst</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ilen_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_x86</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">space_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilen_max</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ilen</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">space_len</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">space_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">space_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">space_len</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">memset</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">space_len</span><span class="p">);</span>
+<span class="w">  </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">space_len</span><span class="p">;</span>
+
+<span class="cp">#ifndef CONFIG_ISA_loongarch32r</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">disassemble</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">pc</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nbyte</span><span class="p">);</span>
+<span class="w">  </span><span class="n">disassemble</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">logbuf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">logbuf</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">,</span>
+<span class="w">      </span><span class="n">MUXDEF</span><span class="p">(</span><span class="n">CONFIG_ISA_x86</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">snpc</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">pc</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">isa</span><span class="p">.</span><span class="n">inst</span><span class="p">.</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">ilen</span><span class="p">);</span>
+<span class="cp">#else</span>
+<span class="w">  </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// the upstream llvm does not support loongarch32r</span>
+<span class="cp">#endif</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+
+<span class="mf">4.</span><span class="n">Decoder</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Decode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">vaddr_t</span><span class="w"> </span><span class="n">pc</span><span class="p">;</span>
+<span class="w">  </span><span class="n">vaddr_t</span><span class="w"> </span><span class="n">snpc</span><span class="p">;</span><span class="w"> </span><span class="c1">// static next pc</span>
+<span class="w">  </span><span class="n">vaddr_t</span><span class="w"> </span><span class="n">dnpc</span><span class="p">;</span><span class="w"> </span><span class="c1">// dynamic next pc</span>
+<span class="w">  </span><span class="n">ISADecodeInfo</span><span class="w"> </span><span class="n">isa</span><span class="p">;</span><span class="c1">//ISADecoeInfo is defined at isa/$ISA/include/isa-def.h</span>
+<span class="w">  </span><span class="n">IFDEF</span><span class="p">(</span><span class="n">CONFIG_ITRACE</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">logbuf</span><span class="p">[</span><span class="mi">128</span><span class="p">]);</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Decode</span><span class="p">;</span>
+
+<span class="mf">5.</span><span class="n">isa</span><span class="o">/</span><span class="n">riscv64</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">isa</span><span class="o">-</span><span class="n">def</span><span class="p">.</span><span class="n">h</span>
+<span class="cp">#ifndef __ISA_RISCV64_H__</span>
+<span class="cp">#define __ISA_RISCV64_H__</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;common.h&gt;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">word_t</span><span class="w"> </span><span class="n">gpr</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="w">  </span><span class="n">vaddr_t</span><span class="w"> </span><span class="n">pc</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">riscv64_CPU_state</span><span class="p">;</span>
+
+<span class="c1">// decode</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">inst</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">riscv64_ISADecodeInfo</span><span class="p">;</span>
+
+<span class="cp">#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)</span>
+
+<span class="cp">#endif</span>
+
+<span class="mf">6.</span><span class="n">isa_exec_once</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">isa_exec_once</span><span class="p">(</span><span class="n">Decode</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">isa</span><span class="p">.</span><span class="n">inst</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inst_fetch</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">snpc</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="c1">//inst_fetch defined at include/cpu/ifetch.h</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">decode_exec</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="mf">7.</span><span class="n">include</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">ifetch</span><span class="p">.</span><span class="n">h</span>
+<span class="cp">#ifndef __CPU_IFETCH_H__</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory/vaddr.h&gt;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">inst_fetch</span><span class="p">(</span><span class="n">vaddr_t</span><span class="w"> </span><span class="o">*</span><span class="n">pc</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">inst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vaddr_ifetch</span><span class="p">(</span><span class="o">*</span><span class="n">pc</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="c1">//function defined at src/memory/vaddr.c and paddr.c</span>
+<span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="n">pc</span><span class="p">)</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">inst</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif</span>
+</code></pre></div>
+</details>
 <p>不同的 ISA 有着不同的指令格式和含义, 因此执行指令的代码自然是 ISA 相关的. 这部分代码位于<code>nemu/src/isa/$ISA/inst.c</code>. 关于指令执行的详细说明需要涉及很多细节, 目前你无需关心, 我们将会在 PA2 中进行说明.</p>
 <p>由于刚才我们运行 NEMU 的时候并未给出客户程序的镜像文件, 此时 NEMU 将会运行上文提到的内置客户程序. NEMU 将不断执行指令, 直到遇到以下情况之一, 才会退出指令执行的循环:</p>
 <ul>
@@ -1315,7 +2363,7 @@ riscv32-nemu-interpreter: src/monitor/monitor.c:21: welcome: Assertion `0&#39; f
 </div>
 <div class="admonition note">
 <p class="admonition-title">为 NEMU 编译时添加 GDB 调试信息</p>
-<p>enuconfig 已经为大家准备好相应选项了, 你只需要打开它:</p>
+<p>menuconfig 已经为大家准备好相应选项了, 你只需要打开它:</p>
 <div class="highlight"><pre><span></span><code>Build Options
   [*] Enable debug information
 </code></pre></div>
@@ -1325,6 +2373,41 @@ riscv32-nemu-interpreter: src/monitor/monitor.c:21: welcome: Assertion `0&#39; f
 <p class="admonition-title">优美地退出</p>
 <p>为了测试大家是否已经理解框架代码, 我们给大家设置一个练习: 如果在运行 NEMU 之后直接键入<code>q</code>退出, 你会发现终端输出了一些错误信息. 请分析这个错误信息是什么原因造成的, 然后尝试在 NEMU 中修复它.</p>
 </div>
+<details class="tip">
+<summary>优美地DEBUG</summary>
+<div class="highlight"><pre><span></span><code><span class="n">首先知道</span><span class="err">，</span><span class="n">make</span><span class="w"> </span><span class="n">run之后</span><span class="err">，</span><span class="n">代码会进入sdb_mainloop</span><span class="p">()</span><span class="n">这个函数</span><span class="err">。</span><span class="n">这个函数会解析接下来通过键盘输入的命令来执行对应的程序</span><span class="err">。</span>
+<span class="n">对于q指令</span><span class="err">，</span><span class="n">执行的是cmd_q这个函数</span><span class="err">，</span><span class="n">而这个函数会返回</span><span class="mf">-1.</span>
+<span class="n">所以函数会在</span><span class="w">    </span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NR_CMD</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="n">cmd_table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cmd_table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">handler</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="n">直接返回</span><span class="err">。</span>
+
+<span class="n">函数返回之后会回到main</span><span class="p">.</span><span class="n">c里</span><span class="err">，</span><span class="n">执行return</span><span class="w"> </span><span class="n">is_exit_status_bad</span><span class="p">();</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">is_exit_status_bad</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">good</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NEMU_END</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nemu_state</span><span class="p">.</span><span class="n">halt_ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">||</span>
+<span class="w">    </span><span class="p">(</span><span class="n">nemu_state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NEMU_QUIT</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="n">good</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">通过gdb查看返回值可以看到</span><span class="err">，</span><span class="n">这个函数在执行q的时候</span><span class="err">，</span><span class="n">返回的值</span><span class="w"> </span><span class="o">!</span><span class="n">good</span><span class="w"> </span><span class="n">是1</span><span class="p">.</span>
+
+<span class="n">直接make</span><span class="w"> </span><span class="n">run</span><span class="p">,</span><span class="w"> </span><span class="n">输入q</span><span class="err">，</span><span class="n">会发现报错信息是</span><span class="err">：</span>
+<span class="nl">make</span><span class="p">:</span><span class="w"> </span><span class="o">***</span><span class="w"> </span><span class="p">[</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">future</span><span class="o">/</span><span class="n">cs</span><span class="o">/</span><span class="n">pa</span><span class="o">/</span><span class="n">ics2022</span><span class="o">/</span><span class="n">nemu</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">native</span><span class="p">.</span><span class="n">mk</span><span class="o">:</span><span class="mi">38</span><span class="o">:</span><span class="w"> </span><span class="n">run</span><span class="p">]</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="n">找到对应的代码的内容</span>
+<span class="nl">run</span><span class="p">:</span><span class="w"> </span><span class="n">run</span><span class="o">-</span><span class="n">env</span>
+<span class="w">    </span><span class="n">$</span><span class="p">(</span><span class="n">call</span><span class="w"> </span><span class="n">git_commit</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;run NEMU&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">$</span><span class="p">(</span><span class="n">NEMU_EXEC</span><span class="p">)</span>
+<span class="n">$</span><span class="p">(</span><span class="n">NEMU_EXEC</span><span class="p">)</span><span class="n">暂且理解为一个可执行程序的命令</span><span class="err">。</span><span class="n">make工具去调用它执行程序</span><span class="err">。</span>
+<span class="n">执行程序后</span><span class="err">，</span><span class="n">make</span><span class="w"> </span><span class="n">工具会去检测它的退出状态码</span><span class="err">（</span><span class="n">exit</span><span class="w"> </span><span class="n">status</span><span class="err">）。</span><span class="n">如果不是</span><span class="w"> </span><span class="mi">0</span><span class="err">，</span><span class="n">那么</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">就会认为这个命令执行失败了</span><span class="err">，</span><span class="n">并会报告一个错误</span><span class="err">。</span>
+</code></pre></div>
+</details>
 <h3 id="_7">就是这么简单<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>事实上, TRM 的实现已经都蕴含在上述的介绍中了.</p>
 <ul>
