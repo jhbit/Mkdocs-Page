@@ -807,6 +807,75 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            PA2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA2/2.%E7%A8%8B%E5%BA%8F%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E7%8E%AF%E5%A2%83%E4%B8%8EAM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    运行时环境与AM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -878,6 +947,28 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../songs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Song
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1206,12 +1297,12 @@
 <h5 id="_2">检查画面, 按键和声音<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h5>
 <p>在运行游戏的过程中, 你需要顺便检查一下是否可以看到画面, 响应按键并听到声音. 超级玛丽在初始界面中不会播放声音, 但会在正式进入关卡时播放声音. 如果没有声音, 会影响 PA 的部分选做内容, 但不会影响成绩; 但如果画面不能正常显示, 可能会影响 PA 必做部分的实验内容, 请自行搜索解决方案.</p>
 <p>为了检查按键, 你需要克隆一个新的子项目<code>am-kernels</code>, 里面包含了一些测试程序:</p>
-<div class="highlight"><pre><span></span><code>cd ics2022
-bash init.sh am-kernels
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cd ics2022
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>bash init.sh am-kernels
 </code></pre></div>
 <p>然后运行其中的按键测试程序:</p>
-<div class="highlight"><pre><span></span><code>cd am-kernels/tests/am-tests
-make ARCH=native mainargs=k run
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cd am-kernels/tests/am-tests
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>make ARCH=native mainargs=k run
 </code></pre></div>
 <p>运行后会弹出一个新窗口, 在新窗口中按下按键, 你将会看到程序在终端输出相应的按键信息, 包括按键名, 键盘码, 以及按键状态. 如果你发现输出的按键信息与按下的按键不符, 请自行搜索解决方案 (可采用关键字 "SDL keystroke" 等). 有网友提示问题可能与<a href="https://github.com/NJU-ProjectN/fceux-am/issues/1">中文输入法兼容性问题</a>相关, 供参考.</p>
 <h5 id="_3">觉得编译有点慢?<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h5>
@@ -1221,11 +1312,11 @@ make ARCH=native mainargs=k run
 <h5 id="_4">还是觉得编译有点慢?<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h5>
 <p>我们清除所有编译结果之后重新编译, 源文件并没有发生任何变化, 按道理编译出来的目标文件也应该和上一次编译结果完全相同. 既然这样, 那我们能不能把这些目标文件以某种方式存起来, 下次编译的时候如果发现源文件没有变化, 就直接取出之前的目标文件作为编译结果, 从而跳过编译的步骤呢?</p>
 <p>还真有工具专门做这件事! 这个工具叫<code>ccache</code>:</p>
-<div class="highlight"><pre><span></span><code>apt-get install ccache
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>apt-get install ccache
 </code></pre></div>
 <p>如果你通过<code>man</code>阅读<code>ccache</code>的手册, 你会发现<code>ccache</code>是一个<code>compiler cache</code>. <code>cache</code>是计算机领域中的一个术语, 你将会在后续的 ICS 课程中学习相关的内容.</p>
 <p>为了使用<code>ccache</code>, 你还需要进行一些配置的工作. 首先运行如下命令来查看一个命令的所在路径:</p>
-<div class="highlight"><pre><span></span><code>which gcc
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>which gcc
 </code></pre></div>
 <p>它默认会输出<code>/usr/bin/gcc</code>, 表示当你执行<code>gcc</code>命令时, 实际执行的是<code>/usr/bin/gcc</code>. 作为一个 RTFM 的练习, 接下来你需要阅读<code>man ccache</code>中的内容, 并根据手册的说明, 在<code>.bashrc</code>文件中对某个环境变量进行正确的设置. 如果你的设置正确且生效, 重新运行<code>which gcc</code>, 你将会看到输出变成了<code>/usr/lib/ccache/gcc</code>. 如果你不了解环境变量和<code>.bashrc</code>, STFW.</p>
 <p>现在就可以来体验<code>ccache</code>的效果了. 首先先清除编译结果, 然后重新编译并统计时间. 你会发现这次编译时间反而比之前要更长一些, 这是因为除了需要开展正常的编译工作之外, <code>ccache</code>还需要花时间把目标文件存起来. 接下来再次清除编辑结果, 重新编译并统计时间, 你会发现第二次编译的速度有了非常明显的提升! 这说明<code>ccache</code>确实跳过了完全重复的编译过程, 发挥了加速的作用. 如果和多线程编译共同使用, 编译速度还能进一步加快!</p>
@@ -1238,19 +1329,19 @@ make ARCH=native mainargs=k run
 <li>在 GNU/Linux 中通过 NEMU 运行 Hello World 程序</li>
 </ul>
 <p>这三种情况进行比较.</p>
-<div class="highlight"><pre><span></span><code>                         +---------------------+  +---------------------+
-                         |     Super Mario     |  |    &quot;Hello World&quot;    |
-                         +---------------------+  +---------------------+
-                         |    Simulated NES    |  |      Simulated      |
-                         |       hardware      |  |       hardware      |
-+---------------------+  +---------------------+  +---------------------+
-|    &quot;Hello World&quot;    |  |     NES Emulator    |  |        NEMU         |
-+---------------------+  +---------------------+  +---------------------+
-|      GNU/Linux      |  |      GNU/Linux      |  |      GNU/Linux      |
-+---------------------+  +---------------------+  +---------------------+
-|    Real hardware    |  |    Real hardware    |  |    Real hardware    |
-+---------------------+  +---------------------+  +---------------------+
-          (a)                      (b)                     (c)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>                         +---------------------+  +---------------------+
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                         |     Super Mario     |  |    &quot;Hello World&quot;    |
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                         +---------------------+  +---------------------+
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                         |    Simulated NES    |  |      Simulated      |
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                         |       hardware      |  |       hardware      |
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>+---------------------+  +---------------------+  +---------------------+
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>|    &quot;Hello World&quot;    |  |     NES Emulator    |  |        NEMU         |
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>+---------------------+  +---------------------+  +---------------------+
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>|      GNU/Linux      |  |      GNU/Linux      |  |      GNU/Linux      |
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>+---------------------+  +---------------------+  +---------------------+
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>|    Real hardware    |  |    Real hardware    |  |    Real hardware    |
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>+---------------------+  +---------------------+  +---------------------+
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>          (a)                      (b)                     (c)
 </code></pre></div>
 <p>图中 (a) 展示了 "在 GNU/Linux 中运行 Hello World" 的情况. GNU/Linux 操作系统直接运行在真实的计算机硬件上, 对计算机底层硬件进行了抽象, 同时向上层的用户程序提供接口和服务. Hello World 程序输出信息的时候, 需要用到操作系统提供的接口, 因此 Hello World 程序并不是直接运行在真实的计算机硬件上, 而是运行在操作系统 (在这里是 GNU/Linux) 上.</p>
 <p>图中 (b) 展示了 "在 GNU/Linux 中通过红白机模拟器玩超级玛丽" 的情况. 在 GNU/Linux 看来, 运行在其上的红白机模拟器 NES Emulator 和上面提到的 Hello World 程序一样, 都只不过是一个用户程序而已. 神奇的是, 红白机模拟器的功能是负责模拟出一套完整的红白机硬件, 让超级玛丽可以在其上运行. 事实上, 对于超级玛丽来说, 它并不能区分自己是运行在真实的红白机硬件之上, 还是运行在模拟出来的红白机硬件之上, 这正是 "模拟" 的障眼法.</p>

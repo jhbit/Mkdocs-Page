@@ -645,6 +645,75 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            PA2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA2/2.%E7%A8%8B%E5%BA%8F%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E7%8E%AF%E5%A2%83%E4%B8%8EAM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    运行时环境与AM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -716,6 +785,28 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../songs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Song
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -835,21 +926,21 @@
 <p>为了让强大的 CPU 成为忠诚的奴仆, 先驱还设计了 "指令", 用来指示 CPU 对数据进行何种处理. 这样, 我们就可以通过指令来控制 CPU, 让它做我们想做的事情了.</p>
 <p>有了指令以后, 先驱提出了一个划时代的设想: 能否让程序来自动控制计算机的执行? 为了实现这个设想, 先驱和 CPU 作了一个简单的约定: 当执行完一条指令之后, 就继续执行下一条指令. 但 CPU 怎么知道现在执行到哪一条指令呢? 为此, 先驱为 CPU 创造了一个特殊的计数器, 叫 "程序计数器"(Program Counter, PC). 在 x86 中, 它有一个特殊的名字, 叫<code>EIP</code>(Extended Instruction Pointer).</p>
 <p>从此以后, 计算机就只需要做一件事情:</p>
-<div class="highlight"><pre><span></span><code>while (1) {
-  从PC指示的存储器位置取出指令;
-  执行指令;
-  更新PC;
-}
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>while (1) {
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  从PC指示的存储器位置取出指令;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  执行指令;
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  更新PC;
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>}
 </code></pre></div>
 <p>这样, 我们就有了一个足够简单的计算机了. 我们只要将一段指令序列放置在存储器中, 然后让 PC 指向第一条指令, 计算机就会自动执行这一段指令序列, 永不停止.</p>
 <p>例如, 下面的指令序列可以计算<code>1+2+...+100</code>, 其中<code>r1</code>和<code>r2</code>是两个寄存器, 还有一个隐含的程序计数器<code>PC</code>, 它的初值是<code>0</code>. 为了帮助大家理解, 我们把指令的语义翻译成 C 代码放在右侧, 其中每一行 C 代码前都添加了一个语句标号:</p>
-<div class="highlight"><pre><span></span><code>// PC: instruction    | // label: statement
-0: mov  r1, 0         |  pc0: r1 = 0;
-1: mov  r2, 0         |  pc1: r2 = 0;
-2: addi r2, r2, 1     |  pc2: r2 = r2 + 1;
-3: add  r1, r1, r2    |  pc3: r1 = r1 + r2;
-4: blt  r2, 100, 2    |  pc4: if (r2 &lt; 100) goto pc2;   // branch if less than
-5: jmp 5              |  pc5: goto pc5;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>// PC: instruction    | // label: statement
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>0: mov  r1, 0         |  pc0: r1 = 0;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>1: mov  r2, 0         |  pc1: r2 = 0;
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2: addi r2, r2, 1     |  pc2: r2 = r2 + 1;
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>3: add  r1, r1, r2    |  pc3: r1 = r1 + r2;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>4: blt  r2, 100, 2    |  pc4: if (r2 &lt; 100) goto pc2;   // branch if less than
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>5: jmp 5              |  pc5: goto pc5;
 </code></pre></div>
 <p>计算机执行以上的指令序列, 最后会在<code>PC=5</code>处的指令陷入死循环, 此时计算已经结束, <code>1+2+...+100</code>的结果会存放在寄存器<code>r1</code>中.</p>
 <div class="admonition warning">
@@ -876,24 +967,24 @@
 <p><img alt="" src="https://nju-projectn.github.io/ics-pa-gitbook/ics2022/images/state-machine.png" /></p>
 <p>现在我们就可以通过状态机的视角来解释 "程序在计算机上运行" 的本质了: 给定一个程序, 把它放到计算机的内存中, 就相当于在状态数量为<code>N</code>的状态转移图中指定了一个初始状态, 程序运行的过程就是从这个初始状态开始, 每执行完一条指令, 就会进行一次确定的状态转移. 也就是说, 程序也可以看成一个状态机! 这个状态机是上文提到的大状态机 (状态数量为<code>N</code>) 的子集.</p>
 <p>例如, 假设某程序在上图所示的计算机中运行, 其初始状态为左上角的 8 号状态, 那么这个程序对应的状态机为</p>
-<div class="highlight"><pre><span></span><code>8-&gt;1-&gt;32-&gt;31-&gt;32-&gt;31-&gt;...
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>8-&gt;1-&gt;32-&gt;31-&gt;32-&gt;31-&gt;...
 </code></pre></div>
 <p>这个程序可能是:</p>
-<div class="highlight"><pre><span></span><code>// PC: instruction    | // label: statement
-0: addi r1, r2, 2     |  pc0: r1 = r2 + 2;
-1: subi r2, r1, 1     |  pc1: r2 = r1 - 1;
-2: nop                |  pc2: ;  // no operation
-3: jmp 2              |  pc3: goto pc2;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>// PC: instruction    | // label: statement
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>0: addi r1, r2, 2     |  pc0: r1 = r2 + 2;
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>1: subi r2, r1, 1     |  pc1: r2 = r1 - 1;
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>2: nop                |  pc2: ;  // no operation
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>3: jmp 2              |  pc3: goto pc2;
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">从状态机视角理解程序运行</p>
 <p>以上一小节中<code>1+2+...+100</code>的指令序列为例, 尝试画出这个程序的状态机.</p>
 <p>这个程序比较简单, 需要更新的状态只包括<code>PC</code>和<code>r1</code>, <code>r2</code>这两个寄存器, 因此我们用一个三元组<code>(PC, r1, r2)</code>就可以表示程序的所有状态, 而无需画出内存的具体状态. 初始状态是<code>(0, x, x)</code>, 此处的<code>x</code>表示未初始化. 程序<code>PC=0</code>处的指令是<code>mov r1, 0</code>, 执行完之后<code>PC</code>会指向下一条指令, 因此下一个状态是<code>(1, 0, x)</code>. 如此类推, 我们可以画出执行前 3 条指令的状态转移过程:</p>
 </div>
-<div class="highlight"><pre><span></span><code>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; (3, 0, 1)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; (3, 0, 1)
 </code></pre></div>
-<pre><code>请你尝试继续画出这个状态机, 其中程序中的循环只需要画出前两次循环和最后两次循环即可.
-</code></pre>
+<div class="highlight"><pre><span></span><code>请你尝试继续画出这个状态机, 其中程序中的循环只需要画出前两次循环和最后两次循环即可.
+</code></pre></div>
 <p>通过上面必做题的例子, 你应该更进一步体会到 "程序是如何在计算机上运行" 了. 我们其实可以从两个互补的视角来看待同一个程序:</p>
 <ul>
 <li>一个是以代码 (或指令序列) 为表现形式的静态视角, 大家经常说的 "写程序"/"看代码", 其实说的都是这个静态视角. 这个视角的一个好处是描述精简, 分支, 循环和函数调用的组合使得我们可以通过少量代码实现出很复杂的功能. 但这也可能会使得我们对程序行为的理解造成困难.</li>
