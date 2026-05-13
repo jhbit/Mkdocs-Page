@@ -1,0 +1,2027 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>基础设施 (2) · GitBook - MMY's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-header__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MMY's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              基础设施 (2) · GitBook
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MMY&#39;s Notebook" class="md-nav__button md-logo" aria-label="MMY's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MMY's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Digital_backend
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Digital_backend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Digital_backend/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    参考书
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Lacan
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lacan
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/SeminarI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    研讨班1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/%E6%AC%B2%E6%9C%9B%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    欲望图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/Graph1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/Graph2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/Graph3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Graph3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Lacan/%E5%9B%A0%E4%B8%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    因为
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NEMU PA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            NEMU PA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            PA1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA1/1.%E5%9C%A8%E5%BC%80%E5%A7%8B%E6%84%89%E5%BF%AB%E7%9A%84%20PA%20%E4%B9%8B%E6%97%85%E4%B9%8B%E5%89%8D%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开始之前
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA1/2.%E5%BC%80%E5%A4%A9%E8%BE%9F%E5%9C%B0%E7%9A%84%E7%AF%87%E7%AB%A0%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开天辟地
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA1/3.RTFSC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码架构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA1/4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PA1/5.%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%20%C2%B7%20GitBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    求值
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PA2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            PA2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.RTFSC%282%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RTFSC2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%E7%A8%8B%E5%BA%8F%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E7%8E%AF%E5%A2%83%E4%B8%8EAM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    运行时环境与AM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.基础设施(2).md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础设施
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    输入输出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bluetooth
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bluetooth
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Bluetooth/%E8%8A%AF%E7%89%87%E9%80%89%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    选型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../songs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Song
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of Contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础设施 (2)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础设施 (2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-" class="md-nav__link">
+    <span class="md-ellipsis">
+      bug 诊断的利器 - 踪迹
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="bug 诊断的利器 - 踪迹">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-itrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      指令执行的踪迹 - itrace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ifdef-config_itrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      ifdef CONFIG_ITRACE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ifndef-config_isa_loongarch32r" class="md-nav__link">
+    <span class="md-ellipsis">
+      ifndef CONFIG_ISA_loongarch32r
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#else" class="md-nav__link">
+    <span class="md-ellipsis">
+      else
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endif" class="md-nav__link">
+    <span class="md-ellipsis">
+      endif
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endif_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      endif
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="endif">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-iringbuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      指令环形缓冲区 - iringbuf
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="指令环形缓冲区 - iringbuf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iringbuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现 iringbuf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-mtrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存访问的踪迹 - mtrace
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内存访问的踪迹 - mtrace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mtrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现 mtrace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-ftrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      函数调用的踪迹 - ftrace
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="函数调用的踪迹 - ftrace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      消失的符号
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hello-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻找 "Hello World!"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ftrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现 ftrace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      不匹配的函数调用和返回
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      冗余的符号表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      trace 与性能优化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#am" class="md-nav__link">
+    <span class="md-ellipsis">
+      AM 作为基础设施
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AM 作为基础设施">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#native" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何生成 native 的可执行文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      奇怪的错误码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      这是如何实现的?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      编写可移植的程序
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#klib" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试你的 klib
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="测试你的 klib">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      编写更多的测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      这些库函数这么简单, 我可以不测试吗?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      编写更多的测试 (2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      编写更多的测试 (3)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#differential-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Differential Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Differential Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础设施 - 龙芯杯获胜的秘诀
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-spike" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用 ssh 协议克隆 Spike 仓库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spike" class="md-nav__link">
+    <span class="md-ellipsis">
+      忽略编译 Spike 过程中的如下信息
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nemu-debug-spike-ref-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      修复 NEMU 开启 DEBUG 模式并将 Spike 作为 REF 时发生段错误的 bug
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difftest" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现 DiffTest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      需要校准的指令
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      匪夷所思的 QEMU 行为 (有点难度)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spike_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spike 不支持不对齐的访存
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qemu-ref-nemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用 QEMU 作为 REF 时, 不要同时运行两份 NEMU
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      一键回归测试
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一键回归测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      NEMU 的本质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      捕捉死循环 (有点难度)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h2 id="2"><a href="#基础设施2"></a>基础设施 (2)<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="bug-"><a href="#bug诊断的利器---踪迹"></a>bug 诊断的利器 - 踪迹<a class="headerlink" href="#bug-" title="Permanent link">&para;</a></h3>
+<p>我们已经知道程序是个状态机, 如果程序变得复杂, 这个状态机的转移情况也会变得复杂. 先不说状态机中每个状态的细节, 就连状态机进行了怎么样的转移, 我们也很难完全搞清楚.</p>
+<p>如果通过 GDB 来了解这一过程, 效率就会显得有点低了. 为了提高效率, 我们可以通过<code>printf()</code>来输出我们关心的某些信息. 我们关心程序这个状态机转移的细节, 也说明我们关心的是程序的执行过程. 在软件工程领域, 记录程序执行过程的信息称为<a href="https://en.wikipedia.org/wiki/Tracing_(software)">踪迹 (trace)</a>. 有了踪迹信息, 我们就可以判断程序的执行过程是否符合预期, 从而进行 bug 的诊断.</p>
+<h4 id="-itrace"><a href="#指令执行的踪迹---itrace"></a>指令执行的踪迹 - itrace<a class="headerlink" href="#-itrace" title="Permanent link">&para;</a></h4>
+<p>NEMU 已经实现了一个简单的踪迹功能 -- itrace (instruction trace), 它可以记录客户程序执行的每一条指令. itrace 的实现很简单, 代码只要记录<code>instr_fetch()</code>取到的每一条指令, 然后调用 llvm 项目提供的反汇编功能 (在<code>nemu/src/utils/disasm.cc</code>中实现). itrace 会输出指令的 PC, 二进制表示以及反汇编结果. 框架代码默认已经打开了这个功能, 客户程序执行的指令都会被记录到<code>build/nemu-log.txt</code>中. 查看这个文件, 你就可以知道客户程序是如何运行的了.</p>
+<p>NEMU 可以限制 trace 输出的时机, 你可以手动指定什么时候才输出它们, 甚至还可以自定义输出 trace 的条件. 具体如何指定, RTFSC. 由于目前程序的行为都是确定的, 多次运行会得到相同的结果, 这对我们了解程序什么时候出错是很有帮助的.</p>
+<details class="note">
+<summary>trace输出的时机</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>在Kconfig里定义了ITACE和ITRACE_COND，而ITRACE_COND的类型是string,可以用来进行判断。
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>因为ITRACE和ITRACE_COND最终都会加上CONFIG前缀作为在代码里的最终体现，然而在cpu-exec.c里的对应的代码内容却是如下：
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>#ifdef CONFIG_ITRACE_COND
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    if (ITRACE_COND) { log_write(&quot;%s\n&quot;, _this-&gt;logbuf); }
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>#endif
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>原因在于nemu的Makefile：
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Makefile:48:CFLAGS_TRACE += -DITRACE_COND=$(if $(CONFIG_ITRACE_COND),$(call remove_quote,$(CONFIG_ITRACE_COND)),true)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>这里把-D的ITRACE_COND的值变成了去掉引号的值，即把“true”变成了true作为宏。同理如果想要更改条件，只需要更改Kconfig里的string就可以了。
+</code></pre></div>
+</details>
+<p>对于一些输出规整的 trace, 我们还可以通过<code>grep</code>, <code>awk</code>, <code>sed</code>等文本处理工具来对它们进行筛选和处理. 因此如果你掌握一些用于文本处理的 shell 命令, 你就可以进一步提高调试的效率了.</p>
+<details class="note">
+<summary>关于log输出的文件位置以及内容</summary>
+<p>```C
+log相关的信息起始是在cpu-exec的excute()里的exex_once的函数后执行的。</p>
+<h1 id="ifdef-config_itrace">ifdef CONFIG_ITRACE<a class="headerlink" href="#ifdef-config_itrace" title="Permanent link">&para;</a></h1>
+<p>char *p = s-&gt;logbuf;
+  p += snprintf(p, sizeof(s-&gt;logbuf), FMT_WORD ":", s-&gt;pc);
+  int ilen = s-&gt;snpc - s-&gt;pc;</p>
+<p>int i;
+  uint8_t <em>inst = (uint8_t </em>)&amp;s-&gt;isa.inst.val;</p>
+<p>for (i = ilen - 1; i &gt;= 0; i --) {
+    p += snprintf(p, 4, " %02x", inst[i]);
+  }</p>
+<p>int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
+  int space_len = ilen_max - ilen;</p>
+<p>if (space_len &lt; 0) space_len = 0;
+  space_len = space_len * 3 + 1;
+  memset(p, ' ', space_len);
+  p += space_len;</p>
+<h1 id="ifndef-config_isa_loongarch32r">ifndef CONFIG_ISA_loongarch32r<a class="headerlink" href="#ifndef-config_isa_loongarch32r" title="Permanent link">&para;</a></h1>
+<p>void disassemble(char <em>str, int size, uint64_t pc, uint8_t </em>code, int nbyte);
+  disassemble(p, s-&gt;logbuf + sizeof(s-&gt;logbuf) - p,
+      MUXDEF(CONFIG_ISA_x86, s-&gt;snpc, s-&gt;pc), (uint8_t *)&amp;s-&gt;isa.inst.val, ilen);</p>
+<h1 id="else">else<a class="headerlink" href="#else" title="Permanent link">&para;</a></h1>
+<p>p[0] = '\0'; // the upstream llvm does not support loongarch32r</p>
+<h1 id="endif">endif<a class="headerlink" href="#endif" title="Permanent link">&para;</a></h1>
+<h1 id="endif_1">endif<a class="headerlink" href="#endif_1" title="Permanent link">&para;</a></h1>
+<p>指针p通过sprintf把pc的地址以及instruction的信息打印了出来。后续又调用了disassemble进行了反编译并且把反编译的结果同样存储到了p里。
+而p实际上是Decode类型结构体里的logbuf。</p>
+<p>后续在excute里，通过trace_and_diffset函数，，调用log_write进行了打印：
+而log_write实际的内容是：(在 nemu/include/utils.h里)</p>
+<p>#define log_write(...) IFDEF(CONFIG_TARGET_NATIVE_ELF, \</p>
+<p>do { \
+    extern FILE* log_fp; \
+    extern bool log_enable(); \
+    if (log_enable()) { \
+      fprintf(log_fp, <strong>VA_ARGS</strong>); \
+      fflush(log_fp); \
+    } \
+  } while (0) \
+)</p>
+<p>对于文件的地址log_fp。代码在init_log的输入就是log文件的位置。
+void init_log(const char <em>log_file) {
+  log_fp = stdout;
+  if (log_file != NULL) {
+    FILE </em>fp = fopen(log_file, "w");
+    Assert(fp, "Can not open '%s'", log_file);
+    log_fp = fp;
+  }</p>
+<p>Log("Log is written to %s", log_file ? log_file : "stdout");
+}</p>
+<p>而init_log又是在monitor.c里被调用的，那么从monitor.c里给的地址是：(其实就是命令行参数，在parse_args里)
+  while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {</p>
+</details>
+<p>switch (o) {
+      case 'b': sdb_set_batch_mode(); break;
+      case 'p': sscanf(optarg, "%d", &amp;difftest_port); break;
+      case 'l': log_file = optarg; break;</p>
+<div class="highlight"><pre><span></span><code>这个是在nemu/script/native.mk下的：
+override ARGS ?= --log=$(BUILD_DIR)/nemu-log.txt
+被定义的。
+```
+</code></pre></div>
+<h4 id="-iringbuf">指令环形缓冲区 - iringbuf<a class="headerlink" href="#-iringbuf" title="Permanent link">&para;</a></h4>
+<p>一般来说, 我们只会关心出错现场前的 trace, 在运行一些大程序的时候, 运行前期的 trace 大多时候没有查看甚至输出的必要. 一个很自然的想法就是, 我们能不能在客户程序出错 (例如访问物理内存越界) 的时候输出最近执行的若干条指令呢?</p>
+<p>要实现这个功能其实并不困难, 我们只需要维护一个很简单的数据结构 - 环形缓冲区 (ring buffer) 即可. 具体地, 在每执行一条指令的时候, 就把这条指令的信息写入到环形缓冲区中; 如果缓冲区满了, 就会覆盖旧的内容. 客户程序出错的时候, 就把环形缓冲区中的指令打印出来, 供调试进行参考. 一个输出的示例如下, 其中<code>--&gt;</code>指示了出错的指令:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>      0x80002b00: srli  a2, a2, 1                13 56 16 00
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>      0x80002b04: slli  a1, a1, 1                93 95 15 00
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      0x80002b08: or    a0, s1, a5               33 e5 f4 00
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      0x80002b0c: sub   s0, s0, a5               33 04 f4 40
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>      0x80002b10: jal   -112                     ef f0 1f f9
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      0x80002aa0: lui   a5, 524295               b7 77 00 80
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>      0x80002aa4: lw    a5, 2028(a5)             83 a7 c7 7e
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>      0x80002aa8: addi  sp, sp, -32              13 01 01 fe
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  --&gt; 0x80002aac: sw    s2, 16(sp)               23 28 21 01
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>      0x80002b3c: ret                            67 80 00 00
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>      0x80002b14: add   s2, s2, a0               33 09 a9 00
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>      0x80002b18: bnez  s0, -40                  e3 1c 04 fc
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>      0x80002af0: neg   a5, s0                   b3 07 80 40
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>      0x80002af4: and   a5, a5, s0               b3 f7 87 00
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>      0x80002af8: or    a2, s3, a5               33 e6 f9 00
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>      0x80002afc: or    a1, s4, a5               b3 65 fa 00
+</code></pre></div>
+<h5 id="iringbuf">实现 iringbuf<a class="headerlink" href="#iringbuf" title="Permanent link">&para;</a></h5>
+<p>根据上述内容, 在 NEMU 中实现 iringbuf. 你可以按照自己的喜好来设计输出的格式, 如果你想输出指令的反汇编, 可以参考 itrace 的相关代码; 如果你不知道应该在什么地方添加什么样的代码, 你就需要 RTFSC 了.</p>
+<h4 id="-mtrace">内存访问的踪迹 - mtrace<a class="headerlink" href="#-mtrace" title="Permanent link">&para;</a></h4>
+<p>访问内存占程序执行很大的一部分, 如果你遇到过一些和访存相关的错误 (例如物理内存越界), 你一定想知道程序访存的具体行为, 然后从其中找出不正确的访存, 从而帮助你进行 bug 的诊断. 事实上, 我们可以很容易地对访存的结果进行追踪, 从而记录访存的踪迹 (memory trace).</p>
+<h5 id="mtrace">实现 mtrace<a class="headerlink" href="#mtrace" title="Permanent link">&para;</a></h5>
+<p>这个功能非常简单, 你已经想好如何实现了: 只需要在<code>paddr_read()</code>和<code>paddr_write()</code>中进行记录即可. 你可以自行定义 mtrace 输出的格式.</p>
+<p>不过和最后只输出一次的 iringbuf 不同, 程序一般会执行很多访存指令, 这意味着开启 mtrace 将会产生大量的输出, 因此最好可以在不需要的时候关闭 mtrace. 噢, 那就参考一下 itrace 的相关实现吧: 尝试在 Kconfig 和相关文件中添加相应的代码, 使得我们可以通过 menuconfig 来打开或者关闭 mtrace. 另外也可以实现 mtrace 输出的条件, 例如你可能只会关心某一段内存区间的访问, 有了相关的条件控制功能, mtrace 使用起来就更加灵活了.</p>
+<h4 id="-ftrace">函数调用的踪迹 - ftrace<a class="headerlink" href="#-ftrace" title="Permanent link">&para;</a></h4>
+<p>itrace 和 mtrace 都是从底层状态机视角来追踪程序的运行, 但如果我们想了解程序的语义行为, itrace 和 mtrace 就无法帮助我们了, 因此我们需要一个带有程序语义行为 trace 工具.</p>
+<p>问题是, 我们应该选择怎么样的语义呢? 在程序设计课上, 我们知道一个程序由若干函数构成, 而一个函数则是由若干语句构成, 一条语句又会被编译成若干指令, 因此, 可以清晰地携带程序语义的就只有函数了. 想象一下, 如果我们能设计一个工具 ftrace, 用来追踪程序执行过程中的函数调用和返回, 我们不就可以知道程序大概是如何工作的了吗?</p>
+<p>这其实并不困难, 因为 itrace 已经能够追踪程序执行的所有指令了, 要实现 ftrace, 我们只需要关心函数调用和返回相关的指令就可以了. 我们可以在函数调用指令中记录目标地址, 表示将要调用某个函数; 然后在函数返回指令中记录当前 PC, 表示将要从 PC 所在的函数返回. 我们很容易在相关指令的实现中添加代码来实现这些功能. 但目标地址和 PC 值仍然缺少程序语义, 如果我们能把它们翻译成函数名, 就更容易理解了!</p>
+<p>给定一个位于代码段的地址, 如何得知它位于哪一个函数呢? 这就需要 ELF 文件中符号表 (symbol table) 的帮助了. 符号表是可执行文件的一个 section, 它记录了程序编译时刻的一些信息, 其中就包括变量和函数的信息. 为了实现 ftrace, 我们首先需要了解符号表中都记录了哪些信息.</p>
+<p>以<code>cpu-tests</code>中<code>add</code>这个用户程序为例, 使用 readelf 命令查看 ELF 可执行文件的信息:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>riscv64-linux-gnu-readelf -a add-riscv32-nemu.elf
+</code></pre></div>
+<p>你会看到 readelf 命令输出了很多信息, 这些信息对了解 ELF 的结构有很好的帮助, 我们建议你在课后仔细阅读. 目前我们只需要关心符号表的信息就可以了, 在输出中找到符号表的信息:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Symbol table &#39;.symtab&#39; contains 28 entries:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>   Num:    Value  Size Type    Bind   Vis      Ndx Name
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>     1: 80000000     0 SECTION LOCAL  DEFAULT    1
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>     2: 80000108     0 SECTION LOCAL  DEFAULT    2
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>     3: 8000010c     0 SECTION LOCAL  DEFAULT    3
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>     4: 8000020c     0 SECTION LOCAL  DEFAULT    4
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>     5: 00000000     0 SECTION LOCAL  DEFAULT    5
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>     6: 00000000     0 FILE    LOCAL  DEFAULT  ABS add.c
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>     7: 00000000     0 FILE    LOCAL  DEFAULT  ABS trm.c
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>     8: 80000108     1 OBJECT  LOCAL  DEFAULT    2 mainargs
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>     9: 800000e8    32 FUNC    GLOBAL DEFAULT    1 _trm_init
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    10: 80009000     0 NOTYPE  GLOBAL DEFAULT    4 _stack_pointer
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    11: 80000108     0 NOTYPE  GLOBAL DEFAULT    1 _etext
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    12: 80000000     0 NOTYPE  GLOBAL DEFAULT  ABS _pmem_start
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    13: 8000022c     0 NOTYPE  GLOBAL DEFAULT    4 _bss_start
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    14: 80000109     0 NOTYPE  GLOBAL DEFAULT    2 edata
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    15: 80009000     0 NOTYPE  GLOBAL DEFAULT    4 _heap_start
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    16: 80001000     0 NOTYPE  GLOBAL DEFAULT    4 _stack_top
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    17: 80009000     0 NOTYPE  GLOBAL DEFAULT    4 end
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    18: 80000010    24 FUNC    GLOBAL DEFAULT    1 check
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    19: 80000108     0 NOTYPE  GLOBAL DEFAULT    1 etext
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    20: 80000000     0 FUNC    GLOBAL DEFAULT    1 _start
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    21: 00000000     0 NOTYPE  GLOBAL DEFAULT  ABS _entry_offset
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    22: 80000028   180 FUNC    GLOBAL DEFAULT    1 main
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    23: 80000109     0 NOTYPE  GLOBAL DEFAULT    2 _data
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>    24: 8000010c   256 OBJECT  GLOBAL DEFAULT    3 ans
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>    25: 80009000     0 NOTYPE  GLOBAL DEFAULT    4 _end
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>    26: 800000dc    12 FUNC    GLOBAL DEFAULT    1 halt
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>    27: 8000020c    32 OBJECT  GLOBAL DEFAULT    4 test_data
+</code></pre></div>
+<p>其中每一行代表一个表项, 每一列列出了表项的一些属性, 现在我们只需要关心<code>Type</code>属性为<code>FUNC</code>的表项就可以了. 仔细观察<code>Name</code>属性之后, 你会发现这些表项正好对应了程序中定义的函数, 相应的<code>Value</code>属性正好是它们的起始地址 (你可以与反汇编结果进行对比), 而相应的<code>Size</code>属性则给出了函数的大小.</p>
+<h5 id="_1">消失的符号<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h5>
+<p>我们在<code>am-kernels/tests/cpu-tests/tests/add.c</code>中定义了宏<code>NR_DATA</code>, 同时也在<code>add()</code>函数中定义了局部变量<code>c</code>和形参<code>a</code>, <code>b</code>, 但你会发现在符号表中找不到和它们对应的表项, 为什么会这样? 思考一下, 什么才算是一个符号 (symbol)?</p>
+<p>噢, 通过符号表, 我们可以建立函数名与其地址之间的映射关系! 但 readelf 输出的信息是已经经过解析的, 实际上符号表中<code>Name</code> 属性存放的是字符串在字符串表 (string table) 中的偏移量. 为了查看字符串表, 我们先查看 readelf 输出中 Section Headers 的信息:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Section Headers:
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  [ 1] .text             PROGBITS        80000000 001000 000108 00  AX  0   0  4
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  [ 2] .sdata2.mainargs  PROGBITS        80000108 001108 000001 00   A  0   0  4
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  [ 3] .data.ans         PROGBITS        8000010c 00110c 000100 00  WA  0   0  4
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  [ 4] .data.test_data   PROGBITS        8000020c 00120c 000020 00  WA  0   0  4
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  [ 5] .comment          PROGBITS        00000000 00122c 00001c 01  MS  0   0  1
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  [ 6] .symtab           SYMTAB          00000000 001248 0001c0 10      7   9  4
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>  [ 7] .strtab           STRTAB          00000000 001408 00009b 00      0   0  1
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  [ 8] .shstrtab         STRTAB          00000000 0014a3 000055 00      0   0  1
+</code></pre></div>
+<p>从 Section Headers 的信息可以看到, 字符串表在 ELF 文件偏移为<code>0x1408</code>的位置开始存放. 我们可以通过以下命令直接输出 ELF 文件的十六进制形式:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hd add-riscv32-nemu.elf
+</code></pre></div>
+<p>查看这一命令输出结果中<code>0x1408</code>附近的部分, 我们可以看到, 字符串表只不过是把标识符的字符串拼接起来而已. 现在我们就可以厘清符号表和字符串表之间的关系了:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Section Headers:
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  [ 7] .strtab           STRTAB          00000000 001408 00009b 00      0   0  1
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                                                  |
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                                   +--------------+
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                        ++         V
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>00001400                |V         00 61 64 64 2e 63 00 74  | ........add.c.t|
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>00001410  72 6d 2e 63 00|6d 61 69  6e 61 72 67 73 00 5f 74  |rm.c.mainargs._t|
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>00001420  72 6d 5f 69 6e|69 74 00                    ^      |rm_init._stack_p|
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>                        |                            |
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>                        |                            +----------------+
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>                        |                                             |
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>                        +-----------------------------------------+   |
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Symbol table &#39;.symtab&#39; contains 10 entries:                       |   |
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>   Num:    Value  Size Type    Bind   Vis      Ndx Name           |   |
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>     7: 00000000     0 FILE    LOCAL  DEFAULT  ABS 7 (trm.c)      |   |
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>     8: 80000108     1 OBJECT  LOCAL  DEFAULT    2 13(mainargs) --+   |
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>     9: 800000e8    32 FUNC    GLOBAL DEFAULT    1 22(_trm_init) -----+
+</code></pre></div>
+<h5 id="hello-world">寻找 "Hello World!"<a class="headerlink" href="#hello-world" title="Permanent link">&para;</a></h5>
+<p>在 Linux 下编写一个 Hello World 程序, 编译后通过上述方法找到 ELF 文件的字符串表, 你发现 "Hello World!" 字符串在字符串表中的什么位置? 为什么会这样?</p>
+<p>现在我们就可以把一个给定的地址翻译成函数名了: 由于函数的范围是互不相交的, 我们可以逐项扫描符号表中<code>Type</code>属性为<code>FUNC</code>的每一个表项, 检查给出的地址是否落在区间<code>[Value, Value + Size)</code>内, 若是, 则根据表项中的<code>Name</code>属性在字符串表中找到相应的字符串, 作为函数名返回. 如果没有找到符合要求的符号表表项, 可以返回字符串 "???", 不过这很可能是你的实现错误导致的, 你需要再次检查你的实现.</p>
+<p>以运行<code>cpu-tests</code>中的<code>recursion</code>为例, ftrace 的部分示例输出如下 (你可以结合反汇编结果进行理解):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>0x8000000c: call [_trm_init@0x80000260]
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>0x80000270:   call [main@0x800001d4]
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>0x800001f8:     call [f0@0x80000010]
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>0x8000016c:       call [f2@0x800000a4]
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>0x800000e8:         call [f1@0x8000005c]
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>0x8000016c:           call [f2@0x800000a4]
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>0x800000e8:             call [f1@0x8000005c]
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>0x8000016c:               call [f2@0x800000a4]
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>0x800000e8:                 call [f1@0x8000005c]
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>0x8000016c:                   call [f2@0x800000a4]
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>0x800000e8:                     call [f1@0x8000005c]
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>0x8000016c:                       call [f2@0x800000a4]
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>0x800000e8:                         call [f1@0x8000005c]
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>0x80000058:                         ret  [f0]              # 注释(2)
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>0x800000fc:                       ret  [f2]                # 注释(1)
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>0x80000180:                       call [f2@0x800000a4]
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>0x800000e8:                         call [f1@0x8000005c]
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>0x80000058:                         ret  [f0]
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>0x800000fc:                       ret  [f2]
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>0x800001b0:                     ret  [f3]                  # 注释(3)
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>0x800000fc:                   ret  [f2]
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>0x80000180:                   call [f2@0x800000a4]
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>0x800000e8:                     call [f1@0x8000005c]
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>0x8000016c:                       call [f2@0x800000a4]
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>0x800000e8:                         call [f1@0x8000005c]
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>0x80000058:                         ret  [f0]
+</code></pre></div>
+<h5 id="ftrace">实现 ftrace<a class="headerlink" href="#ftrace" title="Permanent link">&para;</a></h5>
+<p>根据上述内容, 在 NEMU 中实现 ftrace. 你可以自行决定输出的格式. 你需要注意以下内容:</p>
+<ul>
+<li>你需要为 NEMU 传入一个 ELF 文件, 你可以通过在<code>parse_args()</code>中添加相关代码来实现这一功能</li>
+<li>你可能需要在初始化 ftrace 时从 ELF 文件中读出符号表和字符串表, 供你后续使用</li>
+<li>关于如何解析 ELF 文件, 可以参考<code>man 5 elf</code></li>
+<li>如果你选择的是 riscv32, 你还需要考虑如何从<code>jal</code>和<code>jalr</code>指令中正确识别出函数调用指令和函数返回指令</li>
+</ul>
+<details class="note">
+<summary>JAL JALR</summary>
+</details>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    JAL只能用于call
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    JALR只能用于ret
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    ...
+</code></pre></div>
+<h5 id="_2">不匹配的函数调用和返回<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h5>
+<p>如果你仔细观察上文<code>recursion</code>的示例输出, 你会发现一些有趣的现象. 具体地, 注释 (1) 处的<code>ret</code>的函数是和对应的<code>call</code>匹配的, 也就是说, <code>call</code>调用了<code>f2</code>, 而与之对应的<code>ret</code>也是从<code>f2</code>返回; 但注释 (2) 所指示的一组<code>call</code>和<code>ret</code>的情况却有所不同, <code>call</code>调用了<code>f1</code>, 但却从<code>f0</code>返回; 注释 (3) 所指示的一组<code>call</code>和<code>ret</code>也出现了类似的现象, <code>call</code>调用了<code>f1</code>, 但却从<code>f3</code>返回.</p>
+<p>尝试结合反汇编结果, 分析为什么会出现这一现象.</p>
+<h5 id="_3">冗余的符号表<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h5>
+<p>在 Linux 下编写一个 Hello World 程序, 然后使用<code>strip</code>命令丢弃可执行文件中的符号表:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gcc -o hello hello.c
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>strip -s hello
+</code></pre></div>
+<p>用<code>readelf</code>查看 hello 的信息, 你会发现符号表被丢弃了, 此时的 hello 程序能成功运行吗?</p>
+<p>目标文件中也有符号表, 我们同样可以丢弃它:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>gcc -c hello.c
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>strip -s hello.o
+</code></pre></div>
+<p>用<code>readelf</code>查看 hello.o 的信息, 你会发现符号表被丢弃了. 尝试对 hello.o 进行链接:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>gcc -o hello hello.o
+</code></pre></div>
+<p>你发现了什么问题? 尝试对比上述两种情况, 并分析其中的原因.</p>
+<h5 id="trace">trace 与性能优化<a class="headerlink" href="#trace" title="Permanent link">&para;</a></h5>
+<p>我们让大家在 NEMU 实现 trace 工具, 是作为一种基础设施来帮助大家进行调试. 事实上, trace 除了可以帮助大家认识程序如何运行之外, 还可以指导开发者进行程序和系统的优化, 例如:</p>
+<ul>
+<li>可以基于 ftrace 进一步分析出调用<code>memcpy()</code>时的参数情况, 比如<code>dest</code>和<code>src</code>是否对齐, 拷贝的内存长度是长还是短, 然后根据频繁出现的组合对<code>memcpy()</code>的算法实现进行优化</li>
+<li>可以基于 ftrace 统计函数调用的次数, 对访问次数较多的函数进行优化, 可以显著提升程序的性能</li>
+<li>可以基于 itrace 过滤出分支跳转指令的执行情况, 作为分支预测器 (现代处理器中的一个提升性能的部件) 的输入, 来调整分支预测器的实现, 从而提升处理器的性能</li>
+<li>可以基于 mtrace 得到程序的访存序列, 作为缓存 (现代处理器中的另一个提升性能的部件) 模型的输入, 对预取算法和替换算法的优化进行指导(你将会在 Lab4 中体会这一点)</li>
+</ul>
+<p>trace 对性能优化来说如此重要, 是因为 trace 反映了程序运行的真实行为, 如果你拍脑袋优化了程序中一个只会调用 1 次的函数, 可以想象这样的优化对程序总体性能几乎没有任何提升. 而 trace 其实向我们展示了程序运行过程中的细节事件, 如果我们对这些事件进行统计意义上的分析, 我们就可以知道哪些事件才是频繁发生的, 而优化这些频繁发生的事件, 才能从统计意义上提升程序和系统的性能, 这才是性能优化的科学方法.</p>
+<h3 id="am"><a href="#am作为基础设施"></a>AM 作为基础设施<a class="headerlink" href="#am" title="Permanent link">&para;</a></h3>
+<p>编写 klib, 然后在 NEMU 上运行<code>string</code>程序, 看其是否能通过测试. 表面上看, 这个做法似乎没什么不妥当, 然而如果测试不通过, 你在调试的时候肯定会思考: 究竟是 klib 写得不对, 还是 NEMU 有 bug 呢? 如果这个问题得不到解决, 调试的难度就会上升: 很有可能在 NEMU 中调了一周, 最后发现是 klib 的实现有 bug.</p>
+<p>之所以会有这个问题, 是因为软件 (klib) 和硬件 (NEMU) 都是你编写的, 它们的正确性都是不能 100% 保证的. 大家在中学的时候都学习过控制变量法: 如果能把其中一方换成是认为正确的实现, 就可以单独测试另一方的正确性了! 比如我们在真机上对 klib 进行测试, 如果测试没通过, 那就说明是 klib 的问题, 因为我们可以相信真机的硬件实现永远是对的; 相反, 如果测试通过了, 那就说明 klib 没有问题, 而是 NEMU 有 bug.</p>
+<p>一个新的问题是, 我们真的可以很容易地把软件移植到其它硬件上进行测试吗? 聪明的你应该想起来 AM 的核心思想了: 通过一组抽象的 API 把程序和架构解耦. AM 的思想保证了运行在 AM 之上的代码 (包括 klib) 都是架构无关的, 这恰恰增加了代码的可移植性. 想象一下, 如果<code>string.c</code>的代码中有一条只能在 NEMU 中执行的<code>nemu_trap</code>指令, 那么它就无法在真机上运行.</p>
+<p><code>abstract-machine</code>中有一个特殊的架构叫<code>native</code>, 是用 GNU/Linux 默认的运行时环境来实现的 AM API. 例如我们通过<code>gcc hello.c</code>编译程序时, 就会编译到 GNU/Linux 提供的运行时环境; 你在 PA1 试玩的超级玛丽, 也是编译到<code>native</code>上并运行. 和<code>$ISA-nemu</code>相比, <code>native</code>有如下好处:</p>
+<ul>
+<li>直接运行在真机上, 可以相信真机的行为永远是对的</li>
+<li>就算软件有 bug, 在<code>native</code>上调试也比较方便 (例如可以使用 GDB, 比 NEMU 的 monitor 方便很多)</li>
+</ul>
+<p>因此, 与其在<code>$ISA-nemu</code>中直接调试软件, 还不如在<code>native</code>上把软件调对, 然后再换到<code>$ISA-nemu</code>中运行, 来对 NEMU 进行测试. 在<code>abstract-machine</code>中, 我们可以很容易地把程序编译到另一个架构上运行, 例如在<code>am-kernels/tests/cpu-tests/</code>目录下执行</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make ALL=string ARCH=native run
+</code></pre></div>
+<p>即可将<code>string</code>程序编译到<code>native</code>并运行. 由于我们会将程序编译到不同的架构中, 因此你需要注意<code>make</code>命令中的<code>ARCH</code>参数. 如果<code>string</code>程序没有通过测试, 终端将会输出</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make[1]: *** [run] Error 1
+</code></pre></div>
+<p>当然也有可能输出段错误等信息.</p>
+<h5 id="native">如何生成 native 的可执行文件<a class="headerlink" href="#native" title="Permanent link">&para;</a></h5>
+<p>阅读相关 Makefile, 尝试理解<code>abstract-machine</code>是如何生成<code>native</code>的可执行文件的.</p>
+<details class="note">
+<summary>am是如何调用native的</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>首先还是am目录下的Makfile里有关于ARCH的相关的代码判断目前的架构。
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>对于native只有一个值而不是类似riscv32-nemu来说，ISA会被解析为native而后面的PLATFORM会是空值。
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>首先会根据程序的名称name创建对应的img文件，收集.o文件和Link文件等等。
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>后续设置交叉编译的条件，CROSS_COMPLIE宏在对应的架构和平台的Makefile里被定义，同时通过script的arch-platform.mk被include到am下的Makefile中。
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>arch.mk负责定义交叉编译的工具链以及其他一个FLAG选项。
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>platform.mk负责把platform的.c文件（trm.c,timer.c）导入到src里并且生成image.elf、bin并且把反编译文件放到log.txt里。
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>如果是native，那么则没有交叉编译的选项。依旧导入am/src下native相关的.c文件，然后生成镜像。
+</code></pre></div>
+</details>
+<h5 id="_4">奇怪的错误码<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h5>
+<p>为什么错误码是<code>1</code>呢? 你知道<code>make</code>程序是如何得到这个错误码的吗?</p>
+<details class="note">
+<summary>错误码的传递</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>我们知道Makefile在执行的时候会检测程序的退出状态码(exit())，一般而言，如果程序正常运行，那么退出状态码就是0，也就是说，Makefile在执行的时候的子程序会返回0.但是如果出错，根据程序约定，就会返回不同的值。一般而言是返回1。这和进程间通信有关系。
+</code></pre></div>
+</details>
+<p>别高兴太早了, 框架代码编译到<code>native</code>的时候默认链接到 glibc, 我们需要把这些库函数的调用链接到我们编写的 klib 来进行测试. 我们可以通过在<code>abstract-machine/klib/include/klib.h</code> 中通过定义宏<code>__NATIVE_USE_KLIB__</code>来把库函数链接到 klib. 如果不定义这个宏, 库函数将会链接到 glibc, 可以作为正确的参考实现来进行对比.</p>
+<h5 id="_5">这是如何实现的?<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h5>
+<p>为什么定义宏<code>__NATIVE_USE_KLIB__</code>之后就可以把<code>native</code>上的这些库函数链接到 klib? 这具体是如何发生的? 尝试根据你在课堂上学习的链接相关的知识解释这一现象.</p>
+<details class="note">
+<summary>链接？</summary>
+<p>```
+klib/include/klib.h:12://#define <strong>NATIVE_USE_KLIB</strong>
+klib/src/stdio.c:6:#if !defined(<strong>ISA_NATIVE</strong>) || defined(<strong>NATIVE_USE_KLIB</strong>)
+klib/src/string.c:5:#if !defined(<strong>ISA_NATIVE</strong>) || defined(<strong>NATIVE_USE_KLIB</strong>)
+klib/src/stdlib.c:5:#if !defined(<strong>ISA_NATIVE</strong>) || defined(<strong>NATIVE_USE_KLIB</strong>)
+klib/src/stdlib.c:36:#if !(defined(<strong>ISA_NATIVE</strong>) &amp;&amp; defined(<strong>NATIVE_USE_KLIB</strong>))
+klib的src文件会检测是否定义了__NATIVE_USE_KLIB__。</p>
+<p>AM Makefile里关于LINKAGE的定义
+LINKAGE   = $(OBJS) \
+$(addsuffix - $(ARCH).a, $(join \
+  $(addsuffix /build/, $(addprefix $(AM_HOME)/, $(LIBS))), \</p>
+</details>
+<p>$(LIBS) ))
+    LINKAGE的顺序是 $(OBJS) $(LIBS) 之后才是gcc等，如果在这里没找到，才会调用native自己的库去做。</p>
+<div class="highlight"><pre><span></span><code>加入__NATIVE_USE_KLIB__导致native无法正常运行的原因：
+在排查过程中，即便把string.c里的所有代码都注释掉native也会报错，后续排查发现是stdlib.c里的malloc函数的问题，所以实际上需要自己写一个malloc函数。
+
+```
+</code></pre></div>
+<p>好了, 现在你就可以在<code>native</code>上测试 / 调试你的 klib 实现了, 还可以使用<code>putch()</code>进行字符输出来帮助你调试, 甚至是 GDB. 实现正确后, 再将程序编译到<code>$ISA-nemu</code>(记得移除调试时插入的<code>putch()</code>), 对 NEMU 进行测试.</p>
+<h5 id="_6">编写可移植的程序<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h5>
+<p>为了不损害程序的可移植性, 你编写程序的时候不能再做一些架构相关的假设了, 比如 "指针的长度是 4 字节" 将不再成立, 因为在<code>native</code>上指针长度是 8 字节, 按照这个假设编写的程序, 在<code>native</code>上运行很有可能会触发段错误.</p>
+<p>当然, 解决问题的方法还是有的, 至于要怎么做, 老规矩, STFW 吧.</p>
+<h3 id="klib"><a href="#测试你的klib"></a>测试你的 klib<a class="headerlink" href="#klib" title="Permanent link">&para;</a></h3>
+<p><code>string</code>程序只是简单地调用一下 klib 中的函数, 它本身只是作为一个客户程序来测试 NEMU 的实现, 但它并不能对 klib 的实现进行充分的测试. 为此, 你需要编写一些充分的测试用例来专门对 klib 的实现进行测试. 测试用例主要包含测试输入和测试输出, 如果我们希望可以高效地构造测试用例, 我们就需要寻找一种独立于测试对象的方法来得到测试输出.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a> +----&gt; 测试对象 ----&gt; 实际输出
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a> |                        |
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>输入                      +----&gt; 一致?
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a> |                        |
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a> +----&gt; 某种方法 ----&gt; 预期输出
+</code></pre></div>
+<p>在 klib 中, 需要大家实现的函数主要分成三类.</p>
+<ol>
+<li>内存和字符串的写入函数, 例如<code>memset()</code>, <code>strcpy()</code>等.</li>
+<li>内存和字符串的只读函数, 例如<code>memcmp()</code>, <code>strlen()</code>等.</li>
+<li>格式化输出函数, 例如<code>sprintf()</code>等.</li>
+</ol>
+<p>针对第一类函数, 我们应该如何构造一个测试场景, 使得存在一些方法来容易地得到测试输出呢? 注意这些函数都是对一个内存区域进行写入, 考虑如下的数组:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>#define N 32
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>uint8_t data[N];
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>void reset() {
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  int i;
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  for (i = 0; i &lt; N; i ++) {
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    data[i] = i + 1;
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>  }
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>}
+</code></pre></div>
+<p>这样的一个数组, 每个元素都是 1 个字节, 而且它们的值都各不相同. 如果我们在这个数组上进行测试, 只要实际输出有 1 个字节不正确, 都可以大概率被检查出来. 为了得到预期的输出, 我们还要思考测试函数的预期行为: 以上函数都是对数组中的一段连续区间进行写入, 于是我们可以把预期的输出分成三段来检查:</p>
+<ul>
+<li>第一段是函数写入区间的左侧, 这一段区间没有被写入, 因此应该有<code>assert(data[i] == i + 1)</code></li>
+<li>第二段是函数写入的区间本身, 这一段区间的预期结果和函数的具体行为有关</li>
+<li>第三段是函数写入区间的右侧, 这一段区间没有被写入, 因此应该有<code>assert(data[i] == i + 1)</code></li>
+</ul>
+<p>于是我们可以编写两个辅助函数用于检查:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>void check_seq(int l, int r, int val) {
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  int i;
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  for (i = l; i &lt; r; i ++) {
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    assert(data[i] == val + i - l);
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  }
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>}
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>void check_eq(int l, int r, int val) {
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>  int i;
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>  for (i = l; i &lt; r; i ++) {
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    assert(data[i] == val);
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  }
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>}
+</code></pre></div>
+<p>有了这两个函数, 我们就可以遍历各种输入, 并且很容易地编写出测试函数的预期输出了. 例如针对<code>memset()</code>, 我们可以编写如下的测试代码:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>void test_memset() {
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  int l, r;
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  for (l = 0; l &lt; N; l ++) {
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    for (r = l + 1; r &lt;= N; r ++) {
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>      reset();
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>      uint8_t val = (l + r) / 2;
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>      memset(data + l, val, r - l);
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>      check_seq(0, l, 1);
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>      check_eq(l, r, val);
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>      check_seq(r, N, r + 1);
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>    }
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>  }
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>}
+</code></pre></div>
+<h5 id="_7">编写更多的测试<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h5>
+<p>尝试理解上述测试代码是如何进行测试的, 并在<code>am-kernels/tests/</code>目录下新增一个针对 klib 的测试集<code>klib-tests</code>, 测试集的文件结构可以参考<code>am-kernels/tests/am-tests</code>或<code>am-kernels/kernels/hello</code>.</p>
+<p>然后针对上文所述的第一类写入函数编写相应的测试代码. 编写测试的时候需要注意一些地方:</p>
+<ul>
+<li><code>memcpy()</code>的行为在区间重叠的时候是 UB, 你可以在遍历的时候检查区间是否重叠, 若是, 则跳过此次检查; 或者使用另一个相同的数组来作为<code>src</code>, 这样就不会出现重叠的情况</li>
+<li>字符串处理函数需要额外注意<code>\0</code>和缓冲区溢出的问题</li>
+</ul>
+<p>编写后, 你可以先在 native 上用 glibc 的库函数来测试你编写的测试代码, 然后在 native 上用这些测试代码来测试你的 klib 实现, 最后再在 NEMU 上运行这些测试代码来测试你的 NEMU 实现.</p>
+<details class="note">
+<summary>am-test的include</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>在amtest里，通过main的switch语句进行测试：
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>而测试的这些函数并没有在main include的amtest.h里被显式定义。而是通过：
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>#define CASE(id, entry_, ...) \
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>  case id: { \
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    void entry_(); \
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>    entry = entry_; \
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>    __VA_ARGS__; \
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    entry_(); \
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>    break; \
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>  }
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  被定义。
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>  这样的意义是：通过在main.c里调用宏的方式，只要main.c里涉及到这个函数，实际上就相当于是在main.c函数内部对即将要调用的这个函数进行了声明，进行了声明之后，编译器就回去其他文件里找对应的函数匹配。
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>  即便没有.h文件，只要A.c声明了B.c里的函数，就可以调用了。
+</code></pre></div>
+</details>
+<details class="note">
+<summary>如何确定你测试的是klib的代码而不是glibc的？</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>在kilb-test下执行make ARCH=native run mainargs=a之后，在build文件夹里找到二进制文件，通过nm klibtest-native | grep memset，如果结果是
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>cs/pa/ics2022/am-kernels/tests/klib-test/build$ nm klibtest-native | grep memset
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>             U memset@GLIBC_2.2.5
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>0000000000002b60 T test_memset
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>就表示是GLIBC，如果是：
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>0000000000005240 T memset
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>0000000000002b30 T test_memset
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>表示是自己写的klib
+</code></pre></div>
+</details>
+<details class="note">
+<summary>klib各个函数需要注意的点</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>strlen是不包括\0的长度的，只是string的长度。
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>strcpy和strncpy都必须保证src和dst的范围是不重叠的。
+</code></pre></div>
+</details>
+<h5 id="_8">这些库函数这么简单, 我可以不测试吗?<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h5>
+<p>可以. 不过未测试代码永远是错的, 以后你还会使用这些库函数来编写更复杂的程序 (例如 OS), 如果你以后不想被自己坑了, 现在还是好好花时间来测试一下吧. 另外, 如果你以后想优化这些库函数 (例如<code>memcpy()</code>和<code>memset()</code>是以后用得比较多的两个函数), 你可能会编写一个稍微复杂一些的算法, 到了那时候, 你就会发现这些测试是多么重要了.</p>
+<h5 id="2_1">编写更多的测试 (2)<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h5>
+<p>尝试为<code>klib-tests</code>添加针对第二类只读函数的测试, 例如<code>memcmp()</code>, <code>strlen()</code>等. 思考一下, 应该如何得到函数的预期输出?</p>
+<p>最后我们来看格式化输出函数. 以<code>%d</code>为例, 我们需要构造一些输入. 但整数的范围太大了, 不能全部遍历它们, 因此我们需要挑选一些有代表性的整数. <code>limits.h</code>这个 C 标准头文件里面包含了一些最大数和最小数的定义, 你可以打开<code>/usr/include/limits.h</code>来阅读它们. 一些有代表性的整数可以是:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>int data[] = {0, INT_MAX / 17, INT_MAX, INT_MIN, INT_MIN + 1,
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>              UINT_MAX / 17, INT_MAX / 17, UINT_MAX};
+</code></pre></div>
+<p>为了得到相应的预期输出, 我们可以先编写一个 native 程序来用 printf 输出它们, 然后把输出结果整理到测试代码里面. <code>cpu-tests</code>中的预期输出也是这样生成的.</p>
+<h5 id="3">编写更多的测试 (3)<a class="headerlink" href="#3" title="Permanent link">&para;</a></h5>
+<p>尝试为<code>klib-tests</code>添加针对格式化输出函数的测试. 你可以先通过<code>sprintf()</code>把实际输出打印到一个缓冲区中, 然后通过<code>strcmp()</code>来和预期输出进行对比.</p>
+<p>你也可以考虑实现位宽, 精度, 长度修饰符等功能, 然后生成相应的测试用例来进行测试.</p>
+<h3 id="differential-testing"><a href="#differential-testing"></a>Differential Testing<a class="headerlink" href="#differential-testing" title="Permanent link">&para;</a></h3>
+<p>理解指令的执行过程之后, 添加各种指令更多的是工程实现. 工程实现难免会碰到 bug, 实现不正确的时候如何快速进行调试, 其实也属于基础设施的范畴. 思考一下, 译码的时候有那么多指令 (x86 的指令本身就很多), 有一些指令的行为可能还比较复杂 (大部分 x86 指令都很复杂), 如果其中实现有误, 我们该如何发现呢?</p>
+<p>直觉上这貌似不是一件容易的事情, 不过让我们来讨论一下其中的缘由. 假设我们不小心把某一条指令的类型填错了, NEMU 执行到这一条指令的时候, 就会使用错误的类型来进行译码, 从而导致执行的时候拿到了错误的源操作数, 或者是将正确的结果写入了错误的目的操作数. 这样, NEMU 执行这条指令的结果就违反了它原来的语义, 接下来就会导致跟这条指令有依赖关系的其它指令也无法正确地执行. 从违反约定的角度来看, 结果就是 UB. 最终, 我们就会看到客户程序访问内存越界, 陷入死循环, 或者 HIT BAD TRAP, 甚至是 NEMU 触发了段错误.</p>
+<p>我们已经在 PA1 中讨论过调试的方法, 然而对于指令实现的 bug, 我们会发现, 这些调试的方法还是不太奏效: 我们很难通过<code>assert()</code>来表达指令的正确行为, 从而进行自动检查, 而<code>printf()</code>和 GDB 实际上并没有缩短 error 和 failure 的距离.</p>
+<p>如果有一种方法能够表达指令的正确行为, 我们就可以基于这种方法来进行类似<code>assert()</code>的检查了. 那么, 究竟什么地方表达了指令的正确行为呢? 最直接的, 当然就是 ISA 手册了, 但是我们恰恰就是根据 ISA 手册中的指令行为来在 NEMU 中实现指令的, 同一套方法不能既用于实现也用于检查. 如果有一个 ISA 手册的参考实现就好了. 嘿! 我们用的真机不就是根据 ISA 手册实现出来的吗? 我们让在 NEMU 中执行的每条指令也在真机中执行一次, 然后对比 NEMU 和真机的状态, 如果 NEMU 和真机的状态不一致, 我们就捕捉到 error 了!</p>
+<p>这实际上是一种非常奏效的测试方法, 在软件测试领域称为 <a href="https://en.wikipedia.org/wiki/Differential_testing">differential testing</a>(后续简称 DiffTest). 通常来说, 进行 DiffTest 需要提供一个和 DUT(Design Under Test, 测试对象) 功能相同但实现方式不同的 REF(Reference, 参考实现), 然后让它们接受相同的有定义的输入, 观测它们的行为是否相同.</p>
+<p>我们刚才提到了 "状态", 那 "状态" 具体指的是什么呢? 我们在 PA1 中已经认识到, 程序和计算机都可以看成是一个状态机, 状态可以表示成一个二元组<code>S = &lt;R, M&gt;</code>, 其中<code>R</code>是寄存器的值, <code>M</code>是内存的值. 要检查指令的实现是否正确, 只要检查执行指令之后 DUT 和 REF 的状态是否一致就可以了! DiffTest 可以非常及时地捕捉到 error, 第一次发现 NEMU 的状态与真机不一样的时候, 就是因为当前执行的指令实现有误导致的. 这时候其实离 error 非常接近, 防止了 error 进一步传播的同时, 要回溯找到 fault 也容易得多.</p>
+<p>多么美妙的功能啊! 背后还蕴含着计算机本质的深刻原理! 但很遗憾, 不要忘记了, 真机上是运行了操作系统 GNU/Linux 的, 我们无法在<code>native</code>中运行编译到<code>x86-nemu</code>的 AM 程序, 对于 mips32 和 riscv32 的程序, 真机更是无法直接运行. 所以, 我们需要的不仅是一个 ISA 手册的正确实现, 而且需要在上面能正确运行<code>$ISA-nemu</code>的 AM 程序.</p>
+<p>我们在 PA1 中介绍过, NEMU 就是一个全系统模拟器. 我们可以考虑把其它的全系统模拟器作为 REF, 它们是一个模拟的完整计算机系统, 而 NEMU 的目标只是模拟其中的一个子集, 能在 NEMU 上运行的程序, 自然也能在其它模拟器上运行. 因此, 为了通过 DiffTest 的方法测试 NEMU 实现的正确性, 我们让 NEMU 和另一个模拟器逐条指令地执行同一个客户程序. 双方每执行完一条指令, 就检查各自的寄存器和内存的状态, 如果发现状态不一致, 就马上报告错误, 停止客户程序的执行.</p>
+<h5 id="-">基础设施 - 龙芯杯获胜的秘诀<a class="headerlink" href="#-" title="Permanent link">&para;</a></h5>
+<p>DiffTest 的思想非常简单: 找一个正确的实现, 跟它对比结果. 事实上, 你在 PA1 实现的表达式生成器, 里面也蕴含着 DiffTest 的思想: C 程序就是 REF. <code>am-kernels</code>中提供的<code>cpu-tests</code>也是: 这些测试都会先在<code>native</code>上运行, 得到正确的结果, 你其实是把<code>native</code>作为 REF, 来对比程序运行的结果 (HIT GOOD/BAD TRAP).</p>
+<p>当然, 这里介绍的 DiffTest 的粒度就更细致了: 我们不仅仅是对比程序运行的结果, 而是对比每条指令的行为. 这样可以帮助我们快速发现并定位指令实现的 bug. 我们在龙芯杯比赛中继承了这套思想, 把用 verilog/chisel 写的 CPU 作为 DUT, 用已经实现好的 NEMU 作为 REF, 很快就可以发现并修复 verilog/chisel 中的 bug. 借助 DiffTest, 我们在第二届龙芯杯大赛中书写了</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>一周正确实现一个全乱序执行处理器, 并在上面运行自制分时多任务操作系统Nanos和复杂应用程序仙剑奇侠传
+</code></pre></div>
+<p>的<a href="https://github.com/cnyangkun/nscscc2018/blob/master/PPT/%E5%8D%97%E4%BA%AC%E5%A4%A7%E5%AD%A6_%E4%BA%8C%E9%98%9F_%E9%BE%99%E8%8A%AF%E6%9D%AF%E5%86%B3%E8%B5%9B.pptx">神话</a>.</p>
+<p>另一个体现 DiffTest 强大的例子是 2020 年 7 月的一个热门话题, 中国科学院大学五位本科生的超硬核毕业证书: 带着自己设计的处理器芯片毕业. 在教师团队的指导下, 学生借助 DiffTest 让处理器设计与 NEMU 进行在线对比, 5 天成功启动 Linux 并运行 Busybox 套件, 4 天成功启动 Debian 并运行 GCC 和 QEMU 等复杂应用. 学生还分别在 <a href="http://crva.ict.ac.cn/crvs2020">2020 年度联盟技术研讨会</a> (<a href="https://www.bilibili.com/video/BV1c54y1B7ay">video</a>, <a href="http://crva.ict.ac.cn/crvs2020/index/slides/1-2.pdf">slide</a>) 和 <a href="https://events.linuxfoundation.org/riscv-global-forum/program/schedule/">RISC-V 全球论坛</a> (<a href="https://www.youtube.com/watch?v=8K97ahPecqE&amp;list=PL85jopFZCnbNDtFbl72oU0_8vANrljnh7&amp;index=3">video</a>, <a href="https://static.sched.com/hosted_files/riscvglobalforum2020/9c/RISC-V_Global_Forum_2020-HuaqiangWang-NutShell.pdf">slide</a>) 上分享处理器设计的经验, 其中 DiffTest 都是作为关键技术进行分享.</p>
+<p>上述例子反复地体现了基础设施的重要性: 完善的基础设施使得 CPU 设计变得高效简单, 甚至完成了前人无法完成的任务. 有了基础设施, 令人望而却步的处理器硬件设计也可以脱胎换骨, 浴火重生: 你几乎不需要再看那些让你晕头转向的波形来调试硬件代码了. 最近硬件设计领域也掀起一股<a href="https://en.wikipedia.org/wiki/Agile_software_development">敏捷开发</a>的热潮, 基础设施在其中扮演的角色就不言而喻了. 如果你对此感兴趣, 欢迎联系我们, 和我们一同探索基础设施完善的方向.</p>
+<p>为了方便实现 DiffTest, 我们在 DUT 和 REF 之间定义了如下的一组 API:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction);
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>void difftest_regcpy(void *dut, bool direction);
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>void difftest_exec(uint64_t n);
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>void difftest_init();
+</code></pre></div>
+<p>其中寄存器状态<code>dut</code>要求寄存器的成员按照某种顺序排列, 若未按要求顺序排列, <code>difftest_regcpy()</code>的行为是未定义的 (这样就把锅甩给你们了 ^_^). REF 需要实现这些 API, DUT 会使用这些 API 来进行 DiffTest. 在这里, DUT 和 REF 分别是 NEMU 和其它模拟器.</p>
+<h5 id="ssh-spike">使用 ssh 协议克隆 Spike 仓库<a class="headerlink" href="#ssh-spike" title="Permanent link">&para;</a></h5>
+<p>如果你在 2022/02/27 17:00:00 之前获取 NEMU 的框架代码, 可以进行以下修改:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>diff --git a/nemu/tools/spike-diff/Makefile b/nemu/tools/spike-diff/Makefile
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>index c9b1708..b7b2e02 100644
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>@@ -1,4 +1,4 @@
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a> REPO_PATH = repo
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a> ifeq ($(wildcard repo/spike_main),)
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>-  $(shell git clone --depth=1 https://github.com/NJU-ProjectN/riscv-isa-sim $(REPO_PATH))
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>+  $(shell git clone --depth=1 git@github.com:NJU-ProjectN/riscv-isa-sim $(REPO_PATH))
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a> endif
+</code></pre></div>
+<p>NEMU 的框架代码已经准备好 DiffTest 的功能了, 在 menuconfig 中打开相应的选项:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Testing and Debugging
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>  [*] Enable differential testing
+</code></pre></div>
+<p>然后重新编译 NEMU 并运行即可. NEMU 的配置系统会根据 ISA 选择合适的模拟器作为 REF:</p>
+<ul>
+<li>x86: <a href="https://www.linux-kvm.org/page/Main_Page">KVM</a>. KVM 可以借助硬件虚拟化技术直接在硬件上虚拟出一个和真机一样的计算机系统, KVM 为 Linux 的用户程序提供了一套基于<code>ioctl()</code>的 API, 我们可以通过这套 API 让硬件进入这个虚拟化模式, 将客户程序放在其中运行, 并获得客户程序的状态.</li>
+<li>
+<p>mips32: <a href="http://www.qemu.org/">QEMU</a>. QEMU 是一个完整的全系统模拟器, 支持多种 ISA. 但我们只能通过基于 socket 的 GDB 协议与 QEMU 进行通信来获取其状态, 通信开销较大. 为了运行 QEMU, 你还需要安装它:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>apt-get install qemu-system
+</code></pre></div>
+</li>
+<li>
+<p>riscv32: Spike. Spike 是 RISC-V 社区的一款全系统模拟器, 它的工作原理与 NEMU 非常类似. 我们在 Spike 中增加了少量接口来实现 DiffTest 的 API, <a href="https://github.com/NJU-ProjectN/riscv-isa-sim/commit/6d0333725659bbaf3dae7b4012a195d8812a25fb">感谢 2018 级陈璐同学的适配工作</a>. 为了运行 Spike, 你还需要安装另一个工具:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>apt-get install device-tree-compiler
+</code></pre></div>
+</li>
+</ul>
+<h5 id="spike">忽略编译 Spike 过程中的如下信息<a class="headerlink" href="#spike" title="Permanent link">&para;</a></h5>
+<p>以下信息不影响 Spike 的编译结果, 你可以忽略它们.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Makefile:349: warning: overriding recipe for target &#39;disasm.o&#39;
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Makefile:349: warning: ignoring old recipe for target &#39;disasm.o&#39;
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>make[2]: Circular libcustomext.so &lt;- libcustomext.so dependency dropped.
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>make[2]: Circular libsoftfloat.so &lt;- libsoftfloat.so dependency dropped.
+</code></pre></div>
+<h5 id="nemu-debug-spike-ref-bug">修复 NEMU 开启 DEBUG 模式并将 Spike 作为 REF 时发生段错误的 bug<a class="headerlink" href="#nemu-debug-spike-ref-bug" title="Permanent link">&para;</a></h5>
+<p>如果你在 2022/03/15 22:00:00 之前获取 NEMU 的框架代码, 请根据<a href="https://github.com/NJU-ProjectN/nemu/pull/22/files">这里</a>进行修改.</p>
+<p><code>nemu/tools/difftest.mk</code>中已经设置了相应的规则和参数, 会自动进入<code>nemu/tools/</code>下的相应子目录 (kvm-diff, qemu-diff 或 spike-diff) 编译动态库, 并把其作为 NEMU 的<code>--diff</code>选项的参数传入. 打开 DiffTest 后, <code>nemu/src/cpu/difftest/dut.c</code>中的<code>init_difftest()</code>会额外进行以下初始化工作:</p>
+<ul>
+<li>打开传入的动态库文件<code>ref_so_file</code>.</li>
+<li>通过动态链接对动态库中的上述 API 符号进行符号解析和重定位, 返回它们的地址.</li>
+<li>对 REF 的 DIffTest 功能进行初始化, 具体行为因 REF 而异.</li>
+<li>将 DUT 的 guest memory 拷贝到 REF 中.</li>
+<li>将 DUT 的寄存器状态拷贝到 REF 中.</li>
+</ul>
+<p>进行了上述初始化工作之后, DUT 和 REF 就处于相同的状态了. 接下来就可以进行逐条指令执行后的状态对比了, 实现这一功能的是<code>difftest_step()</code>函数 (在<code>nemu/src/cpu/difftest/dut.c</code>中定义). 它会在<code>cpu_exec()</code>的主循环中被调用, 在 NEMU 中执行完一条指令后, 就在<code>difftest_step()</code>中让 REF 执行相同的指令, 然后读出 REF 中的寄存器, 并进行对比. 由于不同 ISA 的寄存器有所不同, 框架代码把寄存器对比抽象成一个 ISA 相关的 API, 即<code>isa_difftest_checkregs()</code>函数 (在<code>nemu/src/isa/$ISA/difftest/dut.c</code>中定义). 你需要实现<code>isa_difftest_checkregs()</code>函数, 把通用寄存器和 PC 与从 DUT 中读出的寄存器的值进行比较. 若对比结果一致, 函数返回<code>true</code>; 如果发现值不一样, 函数返回<code>false</code>, 框架代码会自动停止客户程序的运行.</p>
+<h5 id="difftest">实现 DiffTest<a class="headerlink" href="#difftest" title="Permanent link">&para;</a></h5>
+<p>上文在介绍 API 约定的时候, 提到了寄存器状态<code>r</code>需要把寄存器按照某种顺序排列. 你首先需要 RTFSC, 从中找出这一顺序, 并检查你的 NEMU 实现是否已经满足约束.</p>
+<p>然后在<code>isa_difftest_checkregs()</code>中添加相应的代码, 实现 DiffTest 的核心功能. 实现正确后, 你将会得到一款无比强大的测试工具.</p>
+<p>体会到 DiffTest 的强大之后, 不妨思考一下: 作为一种基础设施, DiffTest 能帮助你节省多少调试的时间呢?</p>
+<p>咦? 我们不需要对内存的状态进行比较吗? 事实上, 获取 REF 中指令修改的内存位置并不是一件容易的事情, 而对比整个内存又会带来很大的开销, 所以我们就不对内存的状态进行比较了. 事实上, NEMU 中的简化实现也会导致某些寄存器的状态与 REF 的结果不一致, 例如 x86 的 EFLAGS, NEMU 只实现了 EFLAGS 中的少量标志位, 同时也简化了某些指令对 EFLAGS 的更新. 另外, 一些特殊的系统寄存器也没有完整实现. 因此, 我们实现的 DiffTest 并不是完整地对比 REF 和 NEMU 的状态, 但是不管是内存还是特殊寄存器, 只要客户程序的一条指令修改了它们, 在不久的将来肯定也会再次用到它们, 到时候一样能检测出状态的不同. 因此, 我们其实牺牲了一些比较的精度, 来换取性能的提升, 但即使这样, 由于 DiffTest 需要与 REF 进行通信并让 REF 执行指令, 还是会降低 NEMU 的运行速度. 因此除非是在进行调试, 否则不建议打开 DiffTest 的功能来运行 NEMU.</p>
+<p>NEMU 的简化会导致某些指令的行为与 REF 有所差异, 因而无法进行对比. 为了解决这个问题, 框架中准备了<code>difftest_skip_ref()</code>和<code>difftest_skip_dut()</code>这两个函数:</p>
+<ul>
+<li>有的指令不能让 REF 直接执行, 或者执行后的行为肯定与 NEMU 不同, 例如<code>nemu_trap</code>指令, 在 REF 中, 执行后将会抛出一个调试异常. 此时可以通过<code>difftest_skip_ref()</code>进行校准, 执行它后, 在<code>difftest_step()</code>中会让 REF 跳过当前指令的执行, 同时把 NEMU 的当前的寄存器状态直接同步到 REF 中, 效果相当于 "该指令的执行结果以 NEMU 的状态为准".</li>
+<li>由于实现的特殊性, QEMU 在少数时候会把几条指令打包一起执行. 这时候, 我们调用一次<code>difftest_step()</code>, QEMU 就会执行多条指令. 但由于 NEMU 的<code>fetch_decode_exec_updatepc()</code>是一次执行一条指令, 这样就会引入偏差. 此时可以通过<code>difftest_skip_dut(int nr_ref, int nr_dut)</code>来进行校准, 执行它后, 会马上让 REF 单步执行<code>nr_ref</code>次, 然后期望 NEMU 可以在<code>nr_dut</code>条指令之内追上 REF 的状态, 期间会跳过其中所有指令的检查.</li>
+</ul>
+<h5 id="_9">需要校准的指令<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h5>
+<p>PA2 中需要校准的指令有:</p>
+<ul>
+<li>x86: 无</li>
+<li>riscv32: 无</li>
+<li>mips32: 各种跳转指令<ul>
+<li>这是因为<code>mips32-NEMU</code>没有实现分支延迟槽, 可以通过<code>difftest_skip_dut(2, 1)</code>来校准</li>
+</ul>
+</li>
+</ul>
+<h5 id="qemu">匪夷所思的 QEMU 行为 (有点难度)<a class="headerlink" href="#qemu" title="Permanent link">&para;</a></h5>
+<p>在一些旧版的 mips32-QEMU 中, 仅在上述指令的 PC 值后 12 位为<code>0xffc</code>时, 才会进行指令打包. 这个打包条件看上去非常奇怪, 你知道可能的原因是什么吗?</p>
+<h5 id="spike_1">Spike 不支持不对齐的访存<a class="headerlink" href="#spike_1" title="Permanent link">&para;</a></h5>
+<p>RISC-V 作为一个 RISC 架构, 通常是不支持不对齐访存的, 在 Spike 中执行一条地址不对齐的访存指令将会抛出一个异常. 但 NEMU 为了简化, 没有实现这样的功能, 因此如果让 NEMU 和 Spike 同时执行这样的指令, DiffTest 将会报错. 不过这很可能是你的软件实现 (例如 klib) 有问题, 请检查并修改相关代码.</p>
+<h5 id="qemu-ref-nemu">使用 QEMU 作为 REF 时, 不要同时运行两份 NEMU<a class="headerlink" href="#qemu-ref-nemu" title="Permanent link">&para;</a></h5>
+<p>DiffTest 会通过一个固定的端口连接到 QEMU, 同时运行两份打开 DiffTest 的 NEMU 会出现以下信息:</p>
+<p>Failed to find an available port: Address already in use</p>
+<p>如果你确信没有同时运行两份 NEMU, 但仍然遇到上述信息, 可以通过执行以下命令把残留在后台的 QEMU 杀掉</p>
+<p>pkill -9 qemu</p>
+<h3 id="_10"><a href="#一键回归测试"></a>一键回归测试<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>在实现指令的过程中, 你需要逐个测试用例地运行. 但在指令实现正确之后, 是不是意味着可以和这些测试用例说再见呢? 显然不是. 以后你还需要在 NEMU 中加入新的功能, 为了保证加入的新功能没有影响到已有功能的实现, 你还需要重新运行这些测试用例. 在软件测试中, 这个过程称为<a href="https://en.wikipedia.org/wiki/Regression_testing">回归测试</a>.</p>
+<p>既然将来还要重复运行这些测试用例, 而手动重新运行每一个测试显然是一种效率低下的做法. 为了提高效率, 我们为<code>cpu-tests</code>提供了一键回归测试的功能:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>make ARCH=$ISA-nemu run
+</code></pre></div>
+<p>即可自动批量运行<code>cpu-tests</code>中的所有测试, 并报告每个测试用例的运行结果.</p>
+<h5 id="nemu">NEMU 的本质<a class="headerlink" href="#nemu" title="Permanent link">&para;</a></h5>
+<p>你已经知道, NEMU 是一个用来执行其它程序的程序. 在可计算理论中, 这种程序有一个专门的名词, 叫通用程序 (Universal Program), 它的通俗含义是: 其它程序能做的事情, 它也能做. 通用程序的存在性有专门的证明, 我们在这里不做深究, 但是, 我们可以写出 NEMU, 可以用 Docker / 虚拟机做实验, 乃至我们可以在计算机上做各种各样的事情, 其背后都蕴含着通用程序的思想: NEMU 和各种模拟器只不过是通用程序的实例化, 我们也可以毫不夸张地说, 计算机就是一个通用程序的实体化. 通用程序的存在性为计算机的出现奠定了理论基础, 是可计算理论中一个极其重要的结论, 如果通用程序的存在性得不到证明, 我们就没办法放心地使用计算机, 同时也不能义正辞严地说 "机器永远是对的".</p>
+<p>我们编写的 NEMU 最终会被编译成 x86 机器代码, 用 x86 指令来模拟客户指令的执行. 事实上在 1983 年, <a href="http://en.wikipedia.org/wiki/Martin_Davis">Martin Davis 教授</a>就在他出版的 "Computability, complexity, and languages: fundamentals of theoretical computer science" 一书中提出了一种仅有三种指令的程序设计语言 L 语言, 并且证明了 L 语言和其它所有编程语言的计算能力等价. L 语言中的三种指令分别是:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>V = V + 1
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>V = V - 1
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>IF V != 0 GOTO LABEL
+</code></pre></div>
+<p>用 x86 指令来描述, 就是<code>inc</code>, <code>dec</code>和<code>jne</code>三条指令.</p>
+<p>令人更惊讶的是, Martin Davis 教授还证明了, 在不考虑物理限制的情况下 (认为内存容量无限多, 每一个内存单元都可以存放任意大的数), 用 L 语言也可以编写出一个和 NEMU 类似的通用程序! 而且这个用 L 语言编写的通用程序的框架, 竟然还和 NEMU 中的<code>cpu_exec()</code>函数如出一辙: 取指, 译码, 执行... 这其实并不是巧合, 而是<a href="http://en.wikipedia.org/wiki/Simulation#Computer_science">模拟 (Simulation)</a> 在计算机科学中的应用.</p>
+<p>早在 Martin Davis 教授提出 L 语言之前, 科学家们就已经在探索什么问题是可以计算的了. 回溯到 19 世纪 30 年代, 为了试图回答这个问题, 不同的科学家提出并研究了不同的计算模型, 包括 <a href="http://en.wikipedia.org/wiki/Godel">Gödel</a>, <a href="http://en.wikipedia.org/wiki/Jacques_Herbrand">Herbrand</a> 和 <a href="http://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Kleen</a> 研究的<a href="http://en.wikipedia.org/wiki/%CE%9C-recursive_function">递归函数</a>, <a href="http://en.wikipedia.org/wiki/Alonzo_Church">Church</a> 提出的<a href="http://en.wikipedia.org/wiki/Lambda_calculus">λ- 演算</a>, <a href="http://en.wikipedia.org/wiki/Alan_Turing">Turing</a> 提出的<a href="http://en.wikipedia.org/wiki/Turing_machine">图灵机</a>, 后来发现这些模型在计算能力上都是等价的; 到了 40 年代, 计算机就被制造出来了. 后来甚至还有人证明了, 如果使用无穷多个算盘拼接起来进行计算, 其计算能力和图灵机等价! 我们可以从中得出一个推论, 通用程序在不同的计算模型中有不同的表现形式. NEMU 作为一个通用程序, 在 19 世纪 30 年代有着非凡的意义. 如果你能在 90 年前设计出 NEMU, 说不定 "图灵奖" 就要用你的名字来命名了. <a href="https://zhuanlan.zhihu.com/p/270155475">计算的极限</a>这一系列科普文章叙述了可计算理论的发展过程, 感兴趣的同学可以阅读它, 体会人类的文明 (当然一些数学功底还是需要的). 如果你对可计算理论感兴趣, 可以选修宋方敏老师的计算理论导引课程.</p>
+<p>把思绪回归到 PA 中, 通用程序的性质告诉我们, NEMU 的潜力是无穷的. 为了创造出一个缤纷多彩的世界, 你觉得 NEMU 还缺少些什么呢?</p>
+<h5 id="_11">捕捉死循环 (有点难度)<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h5>
+<p>NEMU 除了作为模拟器之外, 还具有简单的调试功能, 可以设置断点, 查看程序状态. 如果让你为 NEMU 添加如下功能</p>
+<p>当用户程序陷入死循环时, 让用户程序暂停下来, 并输出相应的提示信息</p>
+<p>你觉得应该如何实现? 如果你感到疑惑, 在互联网上搜索相关信息.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
