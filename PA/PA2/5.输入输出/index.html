@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../3.%E7%A8%8B%E5%BA%8F%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E7%8E%AF%E5%A2%83%E4%B8%8EAM/">
+        <link rel="prev" href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%282%29/">
       
       
         <link rel="next" href="../../../Bluetooth/%E8%8A%AF%E7%89%87%E9%80%89%E5%9E%8B/">
@@ -754,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../4.基础设施(2).md" class="md-nav__link">
+      <a href="../4.%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%20%282%29/" class="md-nav__link">
         
   
   
@@ -2381,17 +2381,17 @@
 <p>事实上, 在<code>$ISA-nemu</code>中, 我们之前提到的<code>putch()</code>函数, 就是通过串口输出的. 然而 AM 却把<code>putch()</code>放在 TRM, 而不是 IOE 中, 这让人觉得有点奇怪. 的确, 可计算理论中提出的最原始的 TRM 并不包含输出的能力, 但对于一个现实的计算机系统来说, 输出是一个最基本的功能, 没有输出, 用户甚至无法知道程序具体在做什么. 因此在 AM 中, <code>putch()</code>的加入让 TRM 具有输出字符的能力, 被扩充后的 TRM 更靠近一个实用的机器, 而不再是只会计算的数学模型.</p>
 <details class="note">
 <summary>关于puch()函数</summary>
-</details>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    在anstract-machine的src/native/trm.c里的putch函数实际调用的是glibc里的putchar()/putc()函数。
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    而在src/platform/nemu/trm.c里实际调用的是：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">在anstract</span><span class="o">-</span><span class="n">machine的src</span><span class="o">/</span><span class="n">native</span><span class="o">/</span><span class="n">trm</span><span class="p">.</span><span class="n">c里的putch函数实际调用的是glibc里的putchar</span><span class="p">()</span><span class="o">/</span><span class="n">putc</span><span class="p">()</span><span class="n">函数</span><span class="err">。</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">而在src</span><span class="o">/</span><span class="n">platform</span><span class="o">/</span><span class="n">nemu</span><span class="o">/</span><span class="n">trm</span><span class="p">.</span><span class="n">c里实际调用的是</span><span class="err">：</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    void putch(char ch) {
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>      outb(SERIAL_PORT, ch);
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    }
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>outb的实现是在abstract-machine/am/src/riscv/riscv.h：
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="kt">void</span><span class="w"> </span><span class="n">putch</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="n">outb</span><span class="p">(</span><span class="n">SERIAL_PORT</span><span class="p">,</span><span class="w"> </span><span class="n">ch</span><span class="p">);</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">}</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">outb的实现是在abstract</span><span class="o">-</span><span class="n">machine</span><span class="o">/</span><span class="n">am</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">riscv</span><span class="o">/</span><span class="n">riscv</span><span class="p">.</span><span class="n">h</span><span class="err">：</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>static inline void outb(uintptr_t addr, uint8_t  data) { *(volatile uint8_t  *)addr = data; }
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">outb</span><span class="p">(</span><span class="kt">uintptr_t</span><span class="w"> </span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w">  </span><span class="o">*</span><span class="p">)</span><span class="n">addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
+</details>
 <p>abstract-machine/am/src/platform/nemu/trm.c中的<code>putch()</code>会将字符输出到串口. 如果你选择了 x86, 为了让程序使用串口进行输出, 你还需要在 NEMU 中实现端口映射 I/O.</p>
 <h5 id="hello-world">运行 Hello World<a class="headerlink" href="#hello-world" title="Permanent link">&para;</a></h5>
 <p>如果你选择了 x86, 你需要实现<code>in</code>, <code>out</code>指令. 具体地, 你需要 RTFSC, 然后在<code>in</code>指令和<code>out</code>指令的实现中正确调用<code>pio_read()</code>和<code>pio_write()</code>. 如果你选择的是 mips32 和 riscv32, 你不需要实现额外的代码, 因为 NEMU 的框架代码已经支持 MMIO 了.</p>
@@ -2493,34 +2493,34 @@
 <p>在<code>abstract-machine/am/src/platform/nemu/ioe/input.c</code>中实现<code>AM_INPUT_KEYBRD</code>的功能. 实现后, 在<code>$ISA-nemu</code>中运行<code>am-tests</code>中的<code>readkey test</code>测试. 如果你的实现正确, 在程序运行时弹出的新窗口中按下按键, 你将会看到程序输出相应的按键信息, 包括按键名, 键盘码, 以及按键状态.</p>
 <details class="note">
 <summary>nemu端键盘的定义</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>// Note that this is not the standard
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="err">//</span><span class="w"> </span><span class="err">Note</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">standard</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>#define _KEYS(f) \
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  f(ESCAPE) f(F1) f(F2) f(F3) f(F4) f(F5) f(F6) f(F7) f(F8) f(F9) f(F10) f(F11) f(F12) \
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>f(GRAVE) f(1) f(2) f(3) f(4) f(5) f(6) f(7) f(8) f(9) f(0) f(MINUS) f(EQUALS) f(BACKSPACE) \
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>f(TAB) f(Q) f(W) f(E) f(R) f(T) f(Y) f(U) f(I) f(O) f(P) f(LEFTBRACKET) f(RIGHTBRACKET) f(BACKSLASH) \
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>f(CAPSLOCK) f(A) f(S) f(D) f(F) f(G) f(H) f(J) f(K) f(L) f(SEMICOLON) f(APOSTROPHE) f(RETURN) \
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>f(LSHIFT) f(Z) f(X) f(C) f(V) f(B) f(N) f(M) f(COMMA) f(PERIOD) f(SLASH) f(RSHIFT) \
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>f(LCTRL) f(APPLICATION) f(LALT) f(SPACE) f(RALT) f(RCTRL) \
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>f(UP) f(DOWN) f(LEFT) f(RIGHT) f(INSERT) f(DELETE) f(HOME) f(END) f(PAGEUP) f(PAGEDOWN)
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c">#define _KEYS(f) \</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="err">f(ESCAPE)</span><span class="w"> </span><span class="err">f(F1)</span><span class="w"> </span><span class="err">f(F2)</span><span class="w"> </span><span class="err">f(F3)</span><span class="w"> </span><span class="err">f(F4)</span><span class="w"> </span><span class="err">f(F5)</span><span class="w"> </span><span class="err">f(F6)</span><span class="w"> </span><span class="err">f(F7)</span><span class="w"> </span><span class="err">f(F8)</span><span class="w"> </span><span class="err">f(F9)</span><span class="w"> </span><span class="err">f(F10)</span><span class="w"> </span><span class="err">f(F11)</span><span class="w"> </span><span class="err">f(F12)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="err">f(GRAVE)</span><span class="w"> </span><span class="err">f(1)</span><span class="w"> </span><span class="err">f(2)</span><span class="w"> </span><span class="err">f(3)</span><span class="w"> </span><span class="err">f(4)</span><span class="w"> </span><span class="err">f(5)</span><span class="w"> </span><span class="err">f(6)</span><span class="w"> </span><span class="err">f(7)</span><span class="w"> </span><span class="err">f(8)</span><span class="w"> </span><span class="err">f(9)</span><span class="w"> </span><span class="err">f(0)</span><span class="w"> </span><span class="err">f(MINUS)</span><span class="w"> </span><span class="err">f(EQUALS)</span><span class="w"> </span><span class="err">f(BACKSPACE)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="err">f(TAB)</span><span class="w"> </span><span class="err">f(Q)</span><span class="w"> </span><span class="err">f(W)</span><span class="w"> </span><span class="err">f(E)</span><span class="w"> </span><span class="err">f(R)</span><span class="w"> </span><span class="err">f(T)</span><span class="w"> </span><span class="err">f(Y)</span><span class="w"> </span><span class="err">f(U)</span><span class="w"> </span><span class="err">f(I)</span><span class="w"> </span><span class="err">f(O)</span><span class="w"> </span><span class="err">f(P)</span><span class="w"> </span><span class="err">f(LEFTBRACKET)</span><span class="w"> </span><span class="err">f(RIGHTBRACKET)</span><span class="w"> </span><span class="err">f(BACKSLASH)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">f(CAPSLOCK)</span><span class="w"> </span><span class="err">f(A)</span><span class="w"> </span><span class="err">f(S)</span><span class="w"> </span><span class="err">f(D)</span><span class="w"> </span><span class="err">f(F)</span><span class="w"> </span><span class="err">f(G)</span><span class="w"> </span><span class="err">f(H)</span><span class="w"> </span><span class="err">f(J)</span><span class="w"> </span><span class="err">f(K)</span><span class="w"> </span><span class="err">f(L)</span><span class="w"> </span><span class="err">f(SEMICOLON)</span><span class="w"> </span><span class="err">f(APOSTROPHE)</span><span class="w"> </span><span class="err">f(RETURN)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="err">f(LSHIFT)</span><span class="w"> </span><span class="err">f(Z)</span><span class="w"> </span><span class="err">f(X)</span><span class="w"> </span><span class="err">f(C)</span><span class="w"> </span><span class="err">f(V)</span><span class="w"> </span><span class="err">f(B)</span><span class="w"> </span><span class="err">f(N)</span><span class="w"> </span><span class="err">f(M)</span><span class="w"> </span><span class="err">f(COMMA)</span><span class="w"> </span><span class="err">f(PERIOD)</span><span class="w"> </span><span class="err">f(SLASH)</span><span class="w"> </span><span class="err">f(RSHIFT)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="err">f(LCTRL)</span><span class="w"> </span><span class="err">f(APPLICATION)</span><span class="w"> </span><span class="err">f(LALT)</span><span class="w"> </span><span class="err">f(SPACE)</span><span class="w"> </span><span class="err">f(RALT)</span><span class="w"> </span><span class="err">f(RCTRL)</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="err">f(UP)</span><span class="w"> </span><span class="err">f(DOWN)</span><span class="w"> </span><span class="err">f(LEFT)</span><span class="w"> </span><span class="err">f(RIGHT)</span><span class="w"> </span><span class="err">f(INSERT)</span><span class="w"> </span><span class="err">f(DELETE)</span><span class="w"> </span><span class="err">f(HOME)</span><span class="w"> </span><span class="err">f(END)</span><span class="w"> </span><span class="err">f(PAGEUP)</span><span class="w"> </span><span class="err">f(PAGEDOWN)</span>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>#define _KEY_NAME(k) _KEY_##k,
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="c">#define _KEY_NAME(k) _KEY_##k,</span>
 <a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>// It&#39;s conflicted on macos with sys/_types/_key_t.h
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>#ifdef __APPLE__
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>  #undef _KEY_T
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>#endif
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="err">//</span><span class="w"> </span><span class="err">It&#39;s</span><span class="w"> </span><span class="err">conflicted</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">macos</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">sys/_types/_key_t.h</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="c">#ifdef __APPLE__</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c">  #undef _KEY_T</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c">#endif</span>
 <a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>enum {
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>  _KEY_NONE = 0,
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>  MAP(_KEYS, _KEY_NAME)
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>};
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="err">enum</span><span class="w"> </span><span class="err">{</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">  </span><span class="nv">_KEY_NONE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">  </span><span class="err">MAP(_KEYS,</span><span class="w"> </span><span class="err">_KEY_NAME)</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="err">};</span>
 <a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>
-<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>1.
-<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>MAP(_KEYS, _KEY_NAME) _KEYS(_KEY_NAME)
-<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>2.
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="err">1.</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="err">MAP(_KEYS,</span><span class="w"> </span><span class="err">_KEY_NAME)</span><span class="w"> </span><span class="err">_KEYS(_KEY_NAME)</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="err">2.</span>
 <a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>
-<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>通过一系列宏的嵌套，使得这些键盘都按照枚举顺序开始一个个加
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="err">通过一系列宏的嵌套，使得这些键盘都按照枚举顺序开始一个个加</span>
 </code></pre></div>
 </details>
 <h5 id="_11">如何检测多个键同时被按下?<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h5>
@@ -2812,8 +2812,6 @@
     
     
       <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
