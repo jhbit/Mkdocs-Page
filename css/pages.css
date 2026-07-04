@@ -1,16 +1,23 @@
-/* 正文居中 */
-.md-content {
-  display: flex;
-  justify-content: center;   /* 主轴居中 */
+/*设置页面宽度为网页宽度*/
+.md-grid {
+  max-width: 75rem;  /* 1200px = 75rem */
 }
-
+/* 正文居中 */
 .md-content__inner {
   width: 100%;
-  max-width: 820px;      /* 你觉得舒服的最大宽度 */
+  max-width: 960px;      /* 你觉得舒服的最大宽度 */
   box-sizing: border-box;
+  margin: 0 auto;
 }
-
-/* 右侧目录整体变窄 */
+/*左侧栏*/
+.md-sidebar--primary {
+  width: 12rem !important;  /* 120px */
+}
+/*左侧栏字体大小设为 1rem（新增）*/
+.md-sidebar--primary .md-nav__link {
+  font-size: 0.9rem !important;
+}
+/* 右侧目录*/
 .md-sidebar--secondary {
   width: 12rem !important;
   padding-top: 1.5rem !important;  /* 去掉顶部空白 */
@@ -37,7 +44,7 @@
 减小 .md-nav__item 的 line-height 和 .md-nav__link 的 padding：*/
 
 .md-sidebar--secondary .md-nav--secondary .md-nav__list .md-nav__item {
-  font-size: 0.55rem !important;
+  font-size: 0.8rem !important;
   line-height: 1.1 !important;
   padding: 0 !important;
 }
@@ -91,6 +98,8 @@
 
 /* 用 Material 的 CSS 变量覆盖字体 */
 :root {
+  --md-content-max-width: 100%;      /* 内容区域不设最大宽度 */
+  --md-content-padding: 1rem;        /* 左右内边距，按需调整 */
   --md-text-font: "JetBrains Mono", monospace;
 }
 
@@ -104,4 +113,198 @@
   margin-right: 0.3rem;
 }
 
+/* 标题样式：加粗 + 递减大小 + 渐变色 */
+.md-typeset h1 {
+  font-size: 1.8em !important;
+  font-weight: 700 !important;
+  color: #1a5276 !important;
+}
+.md-typeset h2 {
+  font-size: 1.5em !important;
+  font-weight: 700 !important;
+  color: #2874a6 !important;
+}
+.md-typeset h3 {
+  font-size: 1.3em !important;
+  font-weight: 700 !important;
+  color: #17a589 !important;
+}
+.md-typeset h4 {
+  font-size: 1.15em !important;
+  font-weight: 700 !important;
+  color: #d4ac0d !important;
+}
+.md-typeset h5 {
+  font-size: 1.05em !important;
+  font-weight: 700 !important;
+  color: #8e44ad !important;
+}
+.md-typeset h6 {
+  font-size: 0.95em !important;
+  font-weight: 700 !important;
+  color: #7f8c8d !important;
+}
 
+/* 暗色模式标题颜色 */
+[data-md-color-scheme="slate"] .md-typeset h1 { color: #5dade2 !important; }
+[data-md-color-scheme="slate"] .md-typeset h2 { color: #85c1e9 !important; }
+[data-md-color-scheme="slate"] .md-typeset h3 { color: #76d7c4 !important; }
+[data-md-color-scheme="slate"] .md-typeset h4 { color: #f4d03f !important; }
+[data-md-color-scheme="slate"] .md-typeset h5 { color: #bb8fce !important; }
+[data-md-color-scheme="slate"] .md-typeset h6 { color: #aab7b8 !important; }
+
+/* 让admonition内字体与外部一致 */
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: inherit !important;
+}
+
+/* 让admonition内的代码块字体与外部一致 */
+.md-typeset .admonition code,
+.md-typeset details code {
+  font-size: inherit !important;
+}
+
+.md-typeset .admonition pre,
+.md-typeset details pre,
+.md-typeset .admonition pre > code,
+.md-typeset details pre > code {
+  font-size: inherit !important;
+}
+
+/* 代码块自动换行，不产生左右滚动 */
+.md-typeset pre > code {
+  overflow: visible !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+}
+
+/* 顶栏标题打字机动画 */
+.md-header__title .md-ellipsis {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  width: 0;
+  position: relative;
+  animation: headerTyping 2s steps(14) forwards;
+}
+
+/* 用 ::after 做光标，独立控制高度 */
+.md-header__title .md-ellipsis::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1em;               /* ← 光标高度 = 文字高度 */
+  background: currentColor;
+  vertical-align: text-bottom;
+  margin-left: 0px;
+  animation: blink 0.5s step-end 4, hideCursor 0s 2s forwards;
+}
+
+@keyframes headerTyping {
+  from { width: 0; }
+  to { width: 16ch; }Plan
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes hideCursor {
+  to { opacity: 0; }
+}
+
+
+/* ========== 首页 Hero 样式 ========== */
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+}
+
+/* 标题：打字机效果 */
+.hero-title {
+  font-size: 3em !important;
+  font-weight: 700 !important;
+  color: #1a5276 !important;
+  border-right: 3px solid #1a5276;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  line-height: 1.5;
+  animation:
+    heroTyping 2s steps(16) forwards,
+    heroBlink 0.5s step-end 4,
+    heroHideCursor 0s 2s forwards;
+}
+
+@keyframes heroTyping {
+  from { width: 0; }
+  to { width: 25ch; }
+}
+
+@keyframes heroBlink {
+  50% { border-color: transparent; }
+}
+
+@keyframes heroHideCursor {
+  to { border-color: transparent; }
+}
+
+/* 副标题 */
+.hero-subtitle {
+  font-size: 1.2em;
+  color: #666;
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: heroFadeIn 1s 2.2s forwards;
+}
+
+/* 导航按钮 */
+.hero-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+  opacity: 0;
+  animation: heroFadeIn 1s 2.8s forwards;
+}
+
+.hero-btn {
+  padding: 0.6rem 1.5rem;
+  border: 2px solid #1a5276;
+  border-radius: 4px;
+  color: #1a5276;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.hero-btn:hover {
+  background: #1a5276;
+  color: #fff;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 暗色模式 */
+[data-md-color-scheme="slate"] .hero-title {
+  color: #5dade2 !important;
+  border-right-color: #5dade2;
+}
+[data-md-color-scheme="slate"] .hero-subtitle { color: #aaa; }
+[data-md-color-scheme="slate"] .hero-btn {
+  border-color: #5dade2;
+  color: #5dade2;
+}
+[data-md-color-scheme="slate"] .hero-btn:hover {
+  background: #5dade2;
+  color: #000;
+}
